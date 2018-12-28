@@ -117,6 +117,8 @@ int main(int argc, char** argv)
 
     bool sdl_running = true;
 
+    unsigned long long sdl_iteration = 0;
+
     while (sdl_running)
     {
     	// Remember the time at the start of the frame. At the end of the 
@@ -202,6 +204,16 @@ int main(int argc, char** argv)
 			int frame_sleep_time = round(1000.0f / 60.0f - frame_elapsed_time);
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(frame_sleep_time));
+		}
+
+		// Increment the iteration counter. Do not use the iteration counter
+		// as a precise time measurement!
+
+		sdl_iteration++;
+
+		if (sdl_iteration % 60 == 0)
+		{
+			std::cout << "Running at " << 1000.0f / frame_elapsed_time << " Hz" << std::endl;
 		}
     }
 
