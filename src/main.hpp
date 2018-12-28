@@ -38,5 +38,8 @@
 #include <program.hpp>
 #include <program.cpp>
 
+#include <image.hpp>
+#include <image.cpp>
+
 #include <texture.hpp>
 #include <texture.cpp>
