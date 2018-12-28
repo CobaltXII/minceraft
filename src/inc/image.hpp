@@ -17,7 +17,7 @@ std::vector<std::string> all_tex =
 
 	"bookshelf",
 
-	"birck",
+	"brick",
 
 	"coal_ore",
 
