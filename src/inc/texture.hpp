@@ -4,13 +4,13 @@
 #include <map>
 
 // Generates a std::map that maps block texture names to layer indices in a 2D
-// texture array.
+// texture array. Returns the OpenGL identifier of that 2D texture array.
 
-std::map<std::string, float> mcu_load_texture_array_map(int x_res, int y_res, int channels, std::vector<std::string> paths)
+std::map<std::string, float> block_texture_name_to_layer;
+
+GLuint mcu_load_block_texture_array(int x_res, int y_res, int channels)
 {
-	std::map<std::string, float> out;
-
-	GLsizei layers = paths.size();
+	GLsizei layers = all_tex.size();
 
 	// Allocate space for the texels.
 
@@ -29,7 +29,7 @@ std::map<std::string, float> mcu_load_texture_array_map(int x_res, int y_res, in
 	{
 		// Load the sub-texture.
 
-		std::string path = "../tex/" + paths[i] + ".png";
+		std::string path = "../tex/" + all_tex[i] + ".png";
 
 		int sub_x_res;
 		int sub_y_res;
@@ -69,7 +69,7 @@ std::map<std::string, float> mcu_load_texture_array_map(int x_res, int y_res, in
 
 		// Add to map.
 
-		out.emplace(paths[i], float(i));
+		block_texture_name_to_layer.emplace(all_tex[i], float(i));
 	}
 
 	// Generate the texture array.
@@ -106,5 +106,5 @@ std::map<std::string, float> mcu_load_texture_array_map(int x_res, int y_res, in
 
 	// Return the output std::map.
 
-	return out;
+	return texture_array;
 }
