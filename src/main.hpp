@@ -12,3 +12,6 @@
 // cross-platform functions that allow easy access to the operating system.
 
 #include <SDL.h>
+
+#include <shader.hpp>
+#include <shader.cpp>
