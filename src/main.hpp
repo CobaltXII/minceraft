@@ -37,3 +37,6 @@
 
 #include <program.hpp>
 #include <program.cpp>
+
+#include <texture.hpp>
+#include <texture.cpp>
