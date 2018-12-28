@@ -8,8 +8,17 @@
 
 std::map<std::string, float> block_texture_name_to_layer;
 
-GLuint mcu_load_block_texture_array(int x_res, int y_res, int channels)
+GLuint mc_load_block_texture_array()
 {
+	// Define the expected properties of each sub-texture.
+	
+	int x_res = 16;
+	int y_res = 16;
+
+	int channels = 4;
+
+	// The texture array must have one layer for each texture in all_tex.
+
 	GLsizei layers = all_tex.size();
 
 	// Allocate space for the texels.
