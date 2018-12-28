@@ -32,7 +32,7 @@ GLuint mc_load_program(std::string vertex_path, std::string fragment_path)
 
 		std::cout << crash_information;
 
-		exit(10);
+		exit(8);
 	}
 
 	glDeleteShader(vertex_shader);
