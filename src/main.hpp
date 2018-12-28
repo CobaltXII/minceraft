@@ -15,3 +15,6 @@
 
 #include <shader.hpp>
 #include <shader.cpp>
+
+#include <program.hpp>
+#include <program.cpp>
