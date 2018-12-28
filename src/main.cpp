@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 		sdl_x_res,
 		sdl_y_res,
 
-		SDL_WINDOW_OPENGL
+		SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL
 	);
 
 	// Make sure the SDL_Window* was created successfully.
