@@ -119,6 +119,11 @@ int main(int argc, char** argv)
 
     while (sdl_running)
     {
+    	// Remember the time at the start of the frame. At the end of the 
+    	// frame, this timestamp will be used to cap the framerate.
+
+    	auto frame_start_time = std::chrono::high_resolution_clock::now();
+
     	// Poll events.
 
     	SDL_Event e;
@@ -187,6 +192,17 @@ int main(int argc, char** argv)
 		// appear on the screen.
 
 		SDL_GL_SwapWindow(sdl_window);
+
+		// Cap the framerate to 60 Hz.
+
+		float frame_elapsed_time = std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - frame_start_time).count();
+
+		if (frame_elapsed_time < 1000.0f / 60.0f)
+		{
+			int frame_sleep_time = round(1000.0f / 60.0f - frame_elapsed_time);
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(frame_sleep_time));
+		}
     }
 
     // Destroy all OpenGL related objects.
