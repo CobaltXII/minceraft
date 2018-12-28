@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 // GLAD is used as the loader for OpenGL functions. On operating systems such
 // as OS X, a loader is not necessarily needed. However, on most other 
