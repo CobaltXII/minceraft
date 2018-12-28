@@ -23,6 +23,15 @@
 
 #include <SDL.h>
 
+// stb_image is used as the image loading library. It makes it as simple as 
+// one function call to load a .png image.
+
+#define STB_IMAGE_IMPLEMENTATION
+
+#include <stb/stb_image.h>
+
+// Local headers.
+
 #include <shader.hpp>
 #include <shader.cpp>
 
