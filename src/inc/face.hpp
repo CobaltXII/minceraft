@@ -31,3 +31,10 @@ struct face_info
 		l_back = _l_back;
 	}
 };
+// Generates a face_info* where each all of the six faces correspond to the
+// same layer.
+
+face_info* make_face_info_all(float all)
+{
+	return new face_info(all, all, all, all, all, all);
+}
