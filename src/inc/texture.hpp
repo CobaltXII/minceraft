@@ -6,7 +6,7 @@
 // Generates a std::map that maps block texture names to layer indices in a 2D
 // texture array. Returns the OpenGL identifier of that 2D texture array.
 
-std::map<std::string, float> block_texture_name_to_layer;
+std::map<std::string, float> block_name_to_layer;
 
 GLuint load_block_texture_array()
 {
@@ -78,7 +78,7 @@ GLuint load_block_texture_array()
 
 		// Add to map.
 
-		block_texture_name_to_layer.emplace(all_tex[i], float(i));
+		block_name_to_layer.emplace(all_tex[i], float(i));
 	}
 
 	// Generate the texture array.
