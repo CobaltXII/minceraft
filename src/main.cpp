@@ -104,6 +104,10 @@ int main(int argc, char** argv)
         exit(5);
     }
 
+    // Load the block texture array.
+
+    GLuint block_texture_array = mc_load_block_texture_array();
+
     // Create variables to represent the position of the mouse pointer, and
     // state of the mouse buttons.
 
