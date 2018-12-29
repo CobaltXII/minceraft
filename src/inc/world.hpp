@@ -1,3 +1,5 @@
+#include <iostream>
+
 // A world struct hold information about a worlds dimensions and block data. 
 // It makes it easy and efficient to modify and read the properties of every
 // voxel it contains.
@@ -157,3 +159,38 @@ struct world
 		voxel_set_artificial(voxels[x + x_res * (y + y_res * z)], artificial);
 	}
 };
+
+// Allocate an empty world of a given resolution. Each voxel in the world will
+// be set to 0.
+
+world* allocate_world(unsigned int x_res, unsigned int y_res, unsigned int z_res)
+{
+	world* new_world = new world();
+
+	new_world->voxels = (voxel*)malloc(x_res * y_res * z_res * sizeof(voxel));
+
+	if (!new_world->voxels)
+	{
+		std::cout << "Could not allocate enough memory for a new world." << std::endl;
+
+		exit(13);
+	}
+
+	memset(new_world->voxels, 0, x_res * y_res * z_res * sizeof(voxel));
+
+	new_world->x_res = x_res;
+	new_world->y_res = y_res;
+	new_world->z_res = z_res;
+
+	return new_world;
+}
+
+// Deallocate a world*'s voxels, and then delete the pointer to the underlying
+// world object.
+
+void deallocate_world(world* to_be_annihilated)
+{
+	free(to_be_annihilated->voxels);
+
+	delete to_be_annihilated;
+}
