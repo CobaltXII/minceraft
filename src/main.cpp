@@ -104,6 +104,13 @@ int main(int argc, char** argv)
         exit(5);
     }
 
+    // Set up preliminaries for backface culling. Backface culling is a way to
+    // speed up rendering by culling triangles that face away from the viewer.
+
+    glCullFace(GL_BACK);
+
+	glFrontFace(GL_CW);
+
     // Load the block texture array.
 
     GLuint block_texture_array = mc_load_block_texture_array();
@@ -381,6 +388,10 @@ int main(int argc, char** argv)
 
 				glEnable(GL_DEPTH_TEST);
 
+				// Enable backface culling.
+
+				glEnable(GL_CULL_FACE);
+
 				// Bind the block shader program to the current state.
 
 				glUseProgram(block_shader_program);
@@ -425,6 +436,10 @@ int main(int argc, char** argv)
 				// Unbind the block shader program from the current state.
 
 				glUseProgram(0);
+
+				// Disable backface culling.
+
+				glDisable(GL_CULL_FACE);
 
 				// Disable depth testing.
 
