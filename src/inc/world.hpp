@@ -135,4 +135,13 @@ struct world
 
 		voxel_set_natural(voxels[x + x_res * (y + y_res * z)], natural);
 	}
+
+	// Set the artificial lighting information of the voxel at the specified 
+	// coordinates.
+
+	inline void set_artificial(unsigned int x, unsigned int y, unsigned int z, unsigned char artificial)
+	{
+		voxel_set_artificial(voxels[x + x_res * (y + y_res * z)], artificial);
+	}
+
 };
