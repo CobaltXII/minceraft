@@ -43,3 +43,6 @@
 
 #include <texture.hpp>
 #include <texture.cpp>
+
+#include <block.hpp>
+#include <block.cpp>
