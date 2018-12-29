@@ -4,13 +4,13 @@
 // Load a shader program from two files. One is a vertex shader, and one is a
 // fragment shader. Geometry shader support is not implemented.
 
-GLuint mc_load_program(std::string vertex_path, std::string fragment_path)
+GLuint load_program(std::string vertex_path, std::string fragment_path)
 {
 	GLuint shader_program = glCreateProgram();
 
-	GLuint vertex_shader = mcu_load_shader(vertex_path, GL_VERTEX_SHADER);
+	GLuint vertex_shader = load_shader(vertex_path, GL_VERTEX_SHADER);
 
-	GLuint fragment_shader = mcu_load_shader(fragment_path, GL_FRAGMENT_SHADER);
+	GLuint fragment_shader = load_shader(fragment_path, GL_FRAGMENT_SHADER);
 
 	glAttachShader(shader_program, vertex_shader);
 

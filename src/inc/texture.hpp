@@ -8,7 +8,7 @@
 
 std::map<std::string, float> block_texture_name_to_layer;
 
-GLuint mc_load_block_texture_array()
+GLuint load_block_texture_array()
 {
 	// Define the expected properties of each sub-texture.
 	

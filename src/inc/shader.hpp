@@ -7,7 +7,7 @@
 // characters as a suffix, otherwise OpenGL will not parse the contents
 // correctly.
 
-std::string mcu_load_file(std::string path)
+std::string load_file(std::string path)
 {
 	std::ifstream file(path);
 
@@ -27,11 +27,11 @@ std::string mcu_load_file(std::string path)
 
 // Load a shader from a file.
 
-GLuint mcu_load_shader(std::string path, GLenum shader_type)
+GLuint load_shader(std::string path, GLenum shader_type)
 {
 	GLuint shader = glCreateShader(shader_type);
 
-	std::string file_contents = mcu_load_file(path);
+	std::string file_contents = load_file(path);
 
 	const GLchar* file_data = file_contents.c_str();
 
