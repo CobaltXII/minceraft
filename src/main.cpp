@@ -227,17 +227,17 @@ int main(int argc, char** argv)
 
 			// What is the layer number of each face?
 
-			float layer_top = float(0);
+			float layer_top = block_texture_name_to_layer.at("grass_top");
 
-			float layer_bottom = float(1);
+			float layer_bottom = block_texture_name_to_layer.at("dirt");
 
-			float layer_left = float(2);
+			float layer_left = block_texture_name_to_layer.at("grass_side");
 
-			float layer_right = float(3);
+			float layer_right = block_texture_name_to_layer.at("grass_side");
 
-			float layer_front = float(4);
+			float layer_front = block_texture_name_to_layer.at("grass_side");
 
-			float layer_back = float(5);
+			float layer_back = block_texture_name_to_layer.at("grass_side");
 
 			// What is the lighting value of each face?
 
