@@ -405,11 +405,19 @@ int main(int argc, char** argv)
 
 					glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
 
+					// Calculate the looking direction of the camera.
+
+					float rot_x_deg = (float(sdl_mouse_y) - (float(sdl_y_res) / 2.0f)) / float(sdl_y_res) * 180.0f;
+					float rot_y_deg = (float(sdl_mouse_x) - (float(sdl_x_res) / 2.0f)) / float(sdl_x_res) * 360.0f;
+
 					// Generate the view matrix.
 
 					glm::mat4 matrix_view = glm::mat4(1.0f);
 
-					matrix_view = glm::translate(matrix_view, glm::vec3(0.0f, 0.0f, -5.0f));
+					matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
+					matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
+
+					// Generate the model matrix.
 
 					matrix_view = glm::rotate(matrix_view, glm::radians(sin(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 					matrix_view = glm::rotate(matrix_view, glm::radians(cos(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
