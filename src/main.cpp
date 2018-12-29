@@ -479,6 +479,8 @@ int main(int argc, char** argv)
 
     // Destroy all OpenGL related objects.
 
+    glDeleteProgram(block_shader_program);
+
     SDL_GL_DeleteContext(gl_context);
 
     // Destroy all SDL related objects.
