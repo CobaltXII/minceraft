@@ -108,6 +108,10 @@ int main(int argc, char** argv)
 
     GLuint block_texture_array = mc_load_block_texture_array();
 
+    // Load the block shader program.
+
+    GLuint block_shader_program = mc_load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
+
     // Create variables to represent the position of the mouse pointer, and
     // state of the mouse buttons.
 
