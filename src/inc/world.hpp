@@ -36,4 +36,18 @@ struct world
 	{
 		return voxel_get_id(voxels[x + x_res * (y + y_res * z)]);
 	}
+
+	// Get the block_id information of the voxel at the specified coordinates,
+	// if the coordinates are within the bounds of the world. If not, return 
+	// id_null.
+
+	inline block_id get_id_safe(unsigned int x, unsigned int y, unsigned int z)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return id_null;
+		}
+
+		return voxel_get_id(voxels[x + x_res * (y + y_res * z)]);
+	}
 };
