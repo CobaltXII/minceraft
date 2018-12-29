@@ -50,5 +50,8 @@
 #include <voxel.hpp>
 #include <voxel.cpp>
 
+#include <world.hpp>
+#include <world.cpp>
+
 #include <face.hpp>
 #include <face.cpp>
