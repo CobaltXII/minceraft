@@ -16,4 +16,6 @@ void main()
 	{
 		discard;
 	}
+
+	fragment_color = vec4(fragment_color.xyz * frag_lighting, fragment_color.w);
 }
