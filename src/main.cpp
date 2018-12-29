@@ -192,9 +192,10 @@ int main(int argc, char** argv)
 			}
 		}
 
-		// Clear the OpenGL context.
+		// Clear the OpenGL context to the default Minceraft sky color. This
+		// might be changed to use a 'time-of-day' variable instead.
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
