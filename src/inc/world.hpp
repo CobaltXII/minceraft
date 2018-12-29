@@ -9,4 +9,11 @@ struct world
 	unsigned int x_res;
 	unsigned int y_res;
 	unsigned int z_res;
+
+	// Get the voxel at the specified coordinates.
+
+	inline voxel get(unsigned int x, unsigned int y, unsigned int z)
+	{
+		return voxels[x + x_res * (y + y_res * z)];
+	}
 };
