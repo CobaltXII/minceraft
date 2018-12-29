@@ -50,4 +50,13 @@ struct world
 
 		return voxel_get_id(voxels[x + x_res * (y + y_res * z)]);
 	}
+
+	// Get the natural lighting information of the voxel at the specified 
+	// coordinates.
+
+	inline unsigned char get_natural(unsigned int x, unsigned int y, unsigned int z)
+	{
+		return voxel_get_natural(voxels[x + x_res * (y + y_res * z)]);
+	}
+
 };
