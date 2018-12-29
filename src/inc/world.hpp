@@ -94,4 +94,11 @@ struct world
 
 		return voxel_get_artificial(voxels[x + x_res * (y + y_res * z)]);
 	}
+
+	// Set the block_id information of the voxel at the specified coordinates.
+
+	inline void set_id(unsigned int x, unsigned int y, unsigned int z, block_id id)
+	{
+		voxel_set_id(voxels[x + x_res * (y + y_res * z)], id);
+	}
 };
