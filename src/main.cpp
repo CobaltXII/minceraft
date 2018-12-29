@@ -245,13 +245,13 @@ int main(int argc, char** argv)
 
 			float lighting_bottom = 1.0f;
 
-			float lighting_left = 0.5f;
+			float lighting_left = 0.75f;
 
-			float lighting_right = 0.5f;
+			float lighting_right = 0.75f;
 
-			float lighting_front = 0.75f;
+			float lighting_front = 0.9f;
 
-			float lighting_back = 0.75f;
+			float lighting_back = 0.9f;
 
 			// What is the offset of the cube?
 
