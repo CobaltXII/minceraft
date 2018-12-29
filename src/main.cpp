@@ -199,6 +199,257 @@ int main(int argc, char** argv)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		{
+			// Allocate a block of memory to hold the vertices of a cube.
+
+			float* cube_vertices = (float*)malloc(6 * 2 * 3 * 7 * sizeof(float));
+
+			// Which faces should be generated?
+
+			bool visible_top = true;
+
+			bool visible_bottom = true;
+
+			bool visible_left = true;
+
+			bool visible_right = true;
+
+			bool visible_front = true;
+
+			bool visible_back = true;
+
+			// What is the layer number of each face?
+
+			float layer_top = float(0);
+
+			float layer_bottom = float(1);
+
+			float layer_left = float(2);
+
+			float layer_right = float(3);
+
+			float layer_front = float(4);
+
+			float layer_back = float(5);
+
+			// What is the lighting value of each face?
+
+			float lighting_top = 1.0f;
+
+			float lighting_bottom = 1.0f;
+
+			float lighting_left = 0.5f;
+
+			float lighting_right = 0.5f;
+
+			float lighting_front = 0.75f;
+
+			float lighting_back = 0.75f;
+
+			// What is the offset of the cube?
+
+			float ox = -0.5f;
+			float oy = -0.5f;
+			float oz = -0.5f;
+
+			// It is really simple and efficient to use pointer arithmetic to
+			// write to blocks of memory. So, that's what this function will 
+			// use.
+
+			float* ptr = cube_vertices;
+
+			// Generate the faces.
+
+			if (visible_top)
+			{
+				// Top face.
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+			}
+
+			if (visible_bottom)
+			{
+				// Bottom face.
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+			}
+
+			if (visible_left)
+			{
+				// Left face.
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+			}
+
+			if (visible_right)
+			{
+				// Right face.
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+			}
+
+			if (visible_front)
+			{
+				// Front face.
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+			}
+
+			if (visible_back)
+			{
+				// Back face.
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
+				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+			}
+
+			// How much of the allocated memory was used (in bytes)?
+
+			unsigned int cube_vertices_size = (ptr - cube_vertices) * sizeof(float);
+
+			// Generate a VAO and a VBO to reference the vertex data of the
+			// cube after it is uploaded to the GPU.
+
+			GLuint cube_vao;
+			GLuint cube_vbo;
+
+			glGenVertexArrays(1, &cube_vao);
+
+			glGenBuffers(1, &cube_vbo);
+
+			// Bind the VAO and the VBO to the current state.
+
+			glBindVertexArray(cube_vao);
+
+			glBindBuffer(GL_ARRAY_BUFFER, cube_vbo);
+
+			// Upload the vertex data to the GPU.
+
+			glBufferData(GL_ARRAY_BUFFER, cube_vertices_size, cube_vertices, GL_STATIC_DRAW);
+
+			// Enable the appropriate vertex attributes.
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(0 * sizeof(float)));
+
+			glEnableVertexAttribArray(0);
+
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+
+			glEnableVertexAttribArray(1);
+
+			glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(6 * sizeof(float)));
+
+			glEnableVertexAttribArray(2);
+
+			{
+				// Enable depth testing.
+
+				glEnable(GL_DEPTH_TEST);
+
+				// Bind the block shader program to the current state.
+
+				glUseProgram(block_shader_program);
+
+				{
+					// Calculate the aspect ratio.
+
+					float aspect_ratio = (float)sdl_x_res / (float)sdl_y_res;
+
+					// Generate the projection matrix.
+
+					glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
+
+					// Generate the view matrix.
+
+					glm::mat4 matrix_view = glm::mat4(1.0f);
+
+					matrix_view = glm::translate(matrix_view, glm::vec3(0.0f, 0.0f, -5.0f));
+
+					matrix_view = glm::rotate(matrix_view, glm::radians(sin(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+					matrix_view = glm::rotate(matrix_view, glm::radians(cos(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+					// Pass the matrices to the block shader program.
+
+					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
+
+					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
+				}
+
+				// Bind the block_texture_array to the current state.
+
+				glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
+
+				// Draw the cube_vertices as an array of triangles.
+
+				glDrawArrays(GL_TRIANGLES, 0, cube_vertices_size / sizeof(float) / 7);
+
+				// Unbind the block_texture_array from the current state.
+
+				glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+				// Unbind the block shader program from the current state.
+
+				glUseProgram(0);
+
+				// Disable depth testing.
+
+				glDisable(GL_DEPTH_TEST);
+			}
+
+			// Unbind the VAO and the VBO from the current state.
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glBindVertexArray(0);
+
+			// Destroy the VAO and the VBO, since they are no longer going to
+			// be used.
+
+			glDeleteBuffers(1, &cube_vbo);
+
+			glDeleteVertexArrays(1, &cube_vao);
+
+			// Free the block of memory allocated to hold the vertices of a
+			// cube.
+
+			free(cube_vertices);
+		}
+
 		// Swap the back buffer to the front, so that the last frame will 
 		// appear on the screen.
 
