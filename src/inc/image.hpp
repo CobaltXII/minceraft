@@ -55,6 +55,8 @@ std::vector<std::string> all_tex =
 
 	"oak_log_side",
 
+	"oak_log_top",
+
 	"oak_planks",
 
 	"sand",
