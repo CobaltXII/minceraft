@@ -144,4 +144,16 @@ struct world
 		voxel_set_artificial(voxels[x + x_res * (y + y_res * z)], artificial);
 	}
 
+	// Set the artificial lighting information of the voxel at the specified 
+	// coordinates, if the coordinates are within the bounds of the world.
+
+	inline void set_artificial_safe(unsigned int x, unsigned int y, unsigned int z, unsigned char artificial)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return;
+		}
+
+		voxel_set_artificial(voxels[x + x_res * (y + y_res * z)], artificial);
+	}
 };
