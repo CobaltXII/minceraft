@@ -1,5 +1,6 @@
 #version 330 core
 
+uniform sampler2DArray block_texture_array;
 out vec4 fragment_color;
 
 void main()
