@@ -114,4 +114,13 @@ struct world
 
 		voxel_set_id(voxels[x + x_res * (y + y_res * z)], id);
 	}
+
+	// Set the natural lighting information of the voxel at the specified 
+	// coordinates.
+
+	inline void set_natural(unsigned int x, unsigned int y, unsigned int z, unsigned char natural)
+	{
+		voxel_set_natural(voxels[x + x_res * (y + y_res * z)], natural);
+	}
+
 };
