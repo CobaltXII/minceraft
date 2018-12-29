@@ -271,78 +271,78 @@ int main(int argc, char** argv)
 			{
 				// Top face.
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 			}
 
 			if (visible_bottom)
 			{
 				// Bottom face.
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 			}
 
 			if (visible_left)
 			{
 				// Left face.
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 			}
 
 			if (visible_right)
 			{
 				// Right face.
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 			}
 
 			if (visible_front)
 			{
 				// Front face.
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 1.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 			}
 
 			if (visible_back)
 			{
 				// Back face.
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-				*(ptr++) = 0.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 
-				*(ptr++) = 0.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 1.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-				*(ptr++) = 1.0f + ox; *(ptr++) = 0.0f + oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 0.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -1.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+				*(ptr++) = 1.0f + ox; *(ptr++) = -0.0f - oy; *(ptr++) = 0.0f + oz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 			}
 
 			// How much of the allocated memory was used (in bytes)?
