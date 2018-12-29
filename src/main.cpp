@@ -111,11 +111,18 @@ int main(int argc, char** argv)
 
 	glFrontFace(GL_CW);
 
-    // Load the block texture array.
+    // Load the block texture array. The block texture array is an array of 2D
+    // textures. There is one texture for each block texture in the game.
 
     GLuint block_texture_array = load_block_texture_array();
 
-    // Load the block shader program.
+    // Load the block face_info array. The block face_info array contains a
+    // face_info* object for each block in the game.
+
+    load_block_face_info_array();
+
+    // Load the block shader program. The block shader program is used when
+    // rendering blocks.
 
     GLuint block_shader_program = load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
 
@@ -228,19 +235,23 @@ int main(int argc, char** argv)
 
 			bool visible_back = true;
 
+			// Which face_info* object does this cube utilize?
+
+			face_info* cube_face_info = block_face_info[block_id((sdl_iteration / 60) % id_last)];
+
 			// What is the layer number of each face?
 
-			float layer_top = block_name_to_layer.at("grass_top");
+			float layer_top = cube_face_info->l_top;
 
-			float layer_bottom = block_name_to_layer.at("dirt");
+			float layer_bottom = cube_face_info->l_bottom;
 
-			float layer_left = block_name_to_layer.at("grass_side");
+			float layer_left = cube_face_info->l_left;
 
-			float layer_right = block_name_to_layer.at("grass_side");
+			float layer_right = cube_face_info->l_right;
 
-			float layer_front = block_name_to_layer.at("grass_side");
+			float layer_front = cube_face_info->l_front;
 
-			float layer_back = block_name_to_layer.at("grass_side");
+			float layer_back = cube_face_info->l_back;
 
 			// What is the lighting value of each face?
 
