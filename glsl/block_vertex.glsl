@@ -10,13 +10,15 @@ uniform mat4 matrix_projection;
 
 uniform mat4 matrix_view;
 
+uniform mat4 matrix_model;
+
 out vec3 frag_texture;
 
 out float frag_lighting;
 
 void main()
 {
-	gl_Position = matrix_projection * matrix_view * vec4(vertex_position, 1.0f);
+	gl_Position = matrix_projection * matrix_view * matrix_model * vec4(vertex_position, 1.0f);
 
 	frag_texture = vertex_texture;
 
