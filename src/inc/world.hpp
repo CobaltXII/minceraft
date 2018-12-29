@@ -81,4 +81,17 @@ struct world
 		return voxel_get_artificial(voxels[x + x_res * (y + y_res * z)]);
 	}
 
+	// Get the artificial lighting information of the voxel at the specified 
+	// coordinates, if the coordinates are within the bounds of the world. If
+	// not, return 0.
+
+	inline unsigned char get_artificial_safe(unsigned int x, unsigned int y, unsigned int z)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return 0;
+		}
+
+		return voxel_get_artificial(voxels[x + x_res * (y + y_res * z)]);
+	}
 };
