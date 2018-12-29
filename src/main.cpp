@@ -419,14 +419,18 @@ int main(int argc, char** argv)
 
 					// Generate the model matrix.
 
-					matrix_view = glm::rotate(matrix_view, glm::radians(sin(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-					matrix_view = glm::rotate(matrix_view, glm::radians(cos(SDL_GetTicks() / 500.0f) * 50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -5.0f));
+
+					matrix_model = glm::rotate(matrix_model, glm::radians(sin(SDL_GetTicks() / 1000.0f) * 90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+					matrix_model = glm::rotate(matrix_model, glm::radians(cos(SDL_GetTicks() / 1000.0f) * 90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 					// Pass the matrices to the block shader program.
 
 					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
 
 					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
+
+					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
 				}
 
 				// Bind the block_texture_array to the current state.
