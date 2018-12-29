@@ -47,5 +47,8 @@
 #include <block.hpp>
 #include <block.cpp>
 
+#include <voxel.hpp>
+#include <voxel.cpp>
+
 #include <face.hpp>
 #include <face.cpp>
