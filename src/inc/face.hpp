@@ -45,3 +45,10 @@ face_info* make_face_info_cap(float cap, float side)
 {
 	return new face_info(cap, cap, side, side, side, side);
 }
+// Generates a face_info* that uses top for the top face, uses bottom for the
+// bottom face, and uses side for the remaining four faces.
+
+face_info* make_face_info_caps(float top, float bottom, float side)
+{
+	return new face_info(top, bottom, side, side, side, side);
+}
