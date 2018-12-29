@@ -10,5 +10,10 @@ out vec4 fragment_color;
 
 void main()
 {
-	fragment_color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	fragment_color = texture(block_texture_array, frag_texture);
+
+	if (fragment_color.w == 0.0f)
+	{
+		discard;
+	}
 }
