@@ -16,4 +16,17 @@ struct world
 	{
 		return voxels[x + x_res * (y + y_res * z)];
 	}
+
+	// Get the voxel at the specified coordinates, if the coordinates are 
+	// within the bounds of the world. If not, return 0.
+
+	inline voxel get_safe(unsigned int x, unsigned int y, unsigned int z)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return 0;
+		}
+
+		return voxels[x + x_res * (y + y_res * z)];
+	}
 };
