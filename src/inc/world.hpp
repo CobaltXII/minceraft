@@ -29,4 +29,11 @@ struct world
 
 		return voxels[x + x_res * (y + y_res * z)];
 	}
+
+	// Get the block_id information of the voxel at the specified coordinates.
+
+	inline block_id get_id(unsigned int x, unsigned int y, unsigned int z)
+	{
+		return voxel_get_id(voxels[x + x_res * (y + y_res * z)]);
+	}
 };
