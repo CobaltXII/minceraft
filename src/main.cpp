@@ -128,11 +128,14 @@ int main(int argc, char** argv)
     bool sdl_mouse_l = false;
     bool sdl_mouse_r = false;
 
+    // The sdl_iteration counter is incremented every frame. It should never
+    // be used for timing purposes, use SDL_GetTicks for that.
+
+    unsigned long long sdl_iteration = 0;
+
     // Enter the main loop.
 
     bool sdl_running = true;
-
-    unsigned long long sdl_iteration = 0;
 
     while (sdl_running)
     {
