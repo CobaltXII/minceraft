@@ -72,4 +72,13 @@ struct world
 
 		return voxel_get_natural(voxels[x + x_res * (y + y_res * z)]);
 	}
+
+	// Get the artificial lighting information of the voxel at the specified 
+	// coordinates.
+
+	inline unsigned char get_artificial(unsigned int x, unsigned int y, unsigned int z)
+	{
+		return voxel_get_artificial(voxels[x + x_res * (y + y_res * z)]);
+	}
+
 };
