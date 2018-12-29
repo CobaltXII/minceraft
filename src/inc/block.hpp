@@ -89,7 +89,7 @@ enum block_id
 
 	id_black_wool,
 
-	id_last
+	id_null
 };
 
 // Conversion from block_id to std::string.

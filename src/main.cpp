@@ -237,7 +237,7 @@ int main(int argc, char** argv)
 
 			// Which face_info* object does this cube utilize?
 
-			face_info* cube_face_info = block_face_info[block_id((sdl_iteration / 60) % id_last)];
+			face_info* cube_face_info = block_face_info[block_id((sdl_iteration / 60) % id_null)];
 
 			// What is the layer number of each face?
 
