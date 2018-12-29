@@ -1,3 +1,5 @@
+#include <vector>
+
 // A struct of type face_info represents the layer (w coordinate) of each face
 // of a block. It is used to map the correct texture on to each face of a 
 // block.
@@ -31,6 +33,7 @@ struct face_info
 		l_back = _l_back;
 	}
 };
+
 // Generates a face_info* where each all of the six faces correspond to the
 // same layer.
 
@@ -38,6 +41,7 @@ face_info* make_face_info_all(float all)
 {
 	return new face_info(all, all, all, all, all, all);
 }
+
 // Generates a face_info* that uses cap for the top and bottom faces, and uses
 // side for the remaining four faces.
 
@@ -45,6 +49,7 @@ face_info* make_face_info_cap(float cap, float side)
 {
 	return new face_info(cap, cap, side, side, side, side);
 }
+
 // Generates a face_info* that uses top for the top face, uses bottom for the
 // bottom face, and uses side for the remaining four faces.
 
