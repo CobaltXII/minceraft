@@ -123,7 +123,7 @@ int main(int argc, char** argv)
 
     // Allocate a new world*.
 
-    world* the_world = allocate_world(32, 32, 16);
+    world* the_world = allocate_world(32, 32, 32);
 
     for (int x = 0; x < the_world->x_res; x++)
     for (int y = 0; y < the_world->y_res; y++)
@@ -144,6 +144,21 @@ int main(int argc, char** argv)
     // Allocate a new accessor* from the_world.
 
     accessor* the_accessor = allocate_accessor(the_world);
+
+    // Define variables to hold the looking direction of the player.
+
+    float rot_x_deg = 0.0f;
+    float rot_y_deg = 0.0f;
+
+    // Define variables to hold the position and velocity of the player.
+
+    float player_x = float(the_world->x_res) / 2.0f;
+    float player_y = float(the_world->y_res) / 2.0f;
+    float player_z = float(the_world->z_res) / 2.0f;
+
+    float player_vx = 0.0f;
+    float player_vy = 0.0f;
+    float player_vz = 0.0f; 
 
     // Create variables to store the position of the mouse pointer and the 
     // state of the mouse buttons.
