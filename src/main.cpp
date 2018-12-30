@@ -264,7 +264,16 @@ int main(int argc, char** argv)
 
 				if (key == SDLK_ESCAPE)
 				{
-					sdl_running = false;
+					if (sdl_mouse_relative)
+					{
+						SDL_SetRelativeMouseMode(SDL_FALSE);
+
+						sdl_mouse_relative = SDL_GetRelativeMouseMode();
+					}
+					else
+					{
+						sdl_running = false;
+					}
 				}
 			}
 		}
