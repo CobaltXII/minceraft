@@ -52,3 +52,6 @@
 
 #include <mesh.hpp>
 #include <mesh.cpp>
+
+#include <chunk.hpp>
+#include <chunk.cpp>
