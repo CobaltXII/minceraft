@@ -18,6 +18,8 @@ INCLUDE_DIRECTORIES(
 
     ${CMAKE_SOURCE_DIR}/lib
 
+    ${CMAKE_SOURCE_DIR}/src
+
     ${CMAKE_SOURCE_DIR}/src/inc
 
     ${OPENGL_INCLUDE_DIRS}
@@ -32,6 +34,8 @@ SET(SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
 
     ${CMAKE_SOURCE_DIR}/src/glad/glad.c
+
+    ${CMAKE_SOURCE_DIR}/src/FastNoise/FastNoise.cpp
 )
 
 ADD_EXECUTABLE(minceraft ${SOURCE_FILES})

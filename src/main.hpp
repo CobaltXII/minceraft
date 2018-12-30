@@ -24,6 +24,10 @@
 
 #include <stb/stb_image.h>
 
+// FastNoise is used as the noise library.
+
+#include <FastNoise/FastNoise.h>
+
 // Local headers.
 
 #include <shader.hpp>
