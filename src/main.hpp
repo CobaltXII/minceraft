@@ -62,3 +62,6 @@
 
 #include <accessor.hpp>
 #include <accessor.cpp>
+
+#include <generator.hpp>
+#include <generator.cpp>
