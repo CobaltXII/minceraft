@@ -125,3 +125,19 @@ chunk* allocate_chunk
 
 	return the_chunk;
 }
+
+// Deallocate a chunk.
+
+void deallocate_chunk(chunk* to_be_annihilated)
+{
+	// Delete the target_vao and the target_vbo from the GPU.
+
+	glDeleteVertexArrays(1, &to_be_annihilated->target_vao);
+
+	glDeleteBuffers(1, &to_be_annihilated->target_vbo);
+
+	// Delete the pointer to the chunk.
+
+	delete to_be_annihilated;
+}
+
