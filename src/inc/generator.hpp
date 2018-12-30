@@ -16,6 +16,10 @@ void generate_world(world* out, unsigned int seed)
 
 	noise.SetFractalOctaves(4);
 
+	// A small easter egg: sometimes mushroom worlds will spawn!
+
+	bool mushroom_world = rand() % 1024 == 0;
+
 	// Generate the base terrain.
 
 	float frequency = 4.0f;
@@ -59,7 +63,14 @@ void generate_world(world* out, unsigned int seed)
 			}
 			else
 			{
-				out->set_id_safe(int(x), int(y), int(z), id_grass);
+				if (mushroom_world)
+				{
+					out->set_id_safe(int(x), int(y), int(z), id_mycelium);
+				}
+				else
+				{
+					out->set_id_safe(int(x), int(y), int(z), id_grass);
+				}
 
 				out->set_id_safe_if_not_air(int(x), int(y) + 1, int(z), id_dirt);
 				out->set_id_safe_if_not_air(int(x), int(y) + 2, int(z), id_dirt);
@@ -70,7 +81,7 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
-	// Add water.
+	// Add water and beaches.
 
 	for (float x = 0.0f; x < float(out->x_res); x += 1.0f)
 	for (float y = 0.0f; y < float(out->y_res); y += 1.0f)
@@ -82,7 +93,7 @@ void generate_world(world* out, unsigned int seed)
 			{
 				out->set_id(int(x), int(y), int(z), id_water);
 			}
-			else if (out->get_id(int(x), int(y), int(z)) == id_grass)
+			else if (out->get_id(int(x), int(y), int(z)) == id_grass || out->get_id(int(x), int(y), int(z)) == id_mycelium)
 			{
 				out->set_id(int(x), int(y), int(z), id_sand);
 			}
@@ -90,6 +101,11 @@ void generate_world(world* out, unsigned int seed)
 	}
 
 	// Plant trees.
+
+	if (mushroom_world)
+	{
+		goto done_trees;
+	}
 
 	for (int i = 0; i < out->x_res * out->z_res / 32; i++)
 	{
@@ -125,8 +141,8 @@ void generate_world(world* out, unsigned int seed)
 
 				if (out->get_id(x, y, z) == id_grass)
 				{
-					// It's grass, we may plant a tree if there are enough blocks available above 
-					// the grass.
+					// It's grass, we may plant a tree if there are enough 
+					// blocks available above the grass.
 
 					if (rand() % 2 == 0)
 					{
@@ -155,7 +171,8 @@ void generate_world(world* out, unsigned int seed)
 						out->set_id_safe_if_air(x, y - 6, z - 1, tree_leaf);
 						out->set_id_safe_if_air(x, y - 6, z + 1, tree_leaf);
 
-						// This is the square at the layer second from the top.
+						// This is the square at the layer second from the 
+						// top.
 
 						for (int j = -1; j <= 1; j++)
 						{
@@ -170,7 +187,8 @@ void generate_world(world* out, unsigned int seed)
 							}
 						}
 
-						// These are the squares at the third and fourth layer from the top.
+						// These are the squares at the third and fourth 
+						// layer from the top.
 
 						for (int j = -2; j <= 2; j++)
 						{
@@ -214,7 +232,8 @@ void generate_world(world* out, unsigned int seed)
 						out->set_id_safe_if_air(x, y - 7, z - 1, tree_leaf);
 						out->set_id_safe_if_air(x, y - 7, z + 1, tree_leaf);
 
-						// This is the square at the layer second from the top.
+						// This is the square at the layer second from the 
+						// top.
 
 						for (int j = -1; j <= 1; j++)
 						{
@@ -229,7 +248,8 @@ void generate_world(world* out, unsigned int seed)
 							}
 						}
 
-						// These are the squares at the third and fourth layer from the top.
+						// These are the squares at the third and fourth 
+						// layer from the top.
 
 						for (int j = -2; j <= 2; j++)
 						{
@@ -245,8 +265,8 @@ void generate_world(world* out, unsigned int seed)
 							}
 						}
 
-						// This is the square at the fifth layer from the top. It has it's corners
-						// removed.
+						// This is the square at the fifth layer from the top.
+						// It has it's corners removed.
 
 						for (int j = -2; j <= 2; j++)
 						{
@@ -272,7 +292,113 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
-	// Do natural lighting calculations.
+	done_trees:
+
+	// Plant large mushrooms.
+
+	int mushroom_count = out->x_res * out->z_res / 1024;
+
+	if (mushroom_world)
+	{
+		mushroom_count = out->z_res * out->z_res / 32;
+	}
+
+	for (int i = 0; i < mushroom_count; i++)
+	{
+		mushroom:
+
+		int x = rand() % out->x_res;
+		int z = rand() % out->z_res;
+
+		for (int y = 0; y < out->y_res; y++)
+		{
+			if (out->get_id(x, y, z) != id_air)
+			{
+				// Okay, found something that is not air.
+
+				if (out->get_id(x, y, z) == id_grass || out->get_id(x, y, z) == id_mycelium)
+				{
+					// It's grass, we may plant a mushroom if there are enough
+					// blocks available above the grass.
+
+					if (!out->in_bounds(x, y - 6, z))
+					{
+						goto mushroom;
+					}
+
+					if (rand() % 5 != 0)
+					{
+						// Red mushroom. This is the trunk.
+
+						out->set_id_safe_if_air(x, y - 1, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 2, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 3, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 4, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 5, z, id_mushroom_stem);
+
+						// These are the five squares.
+
+						for (int j = -1; j <= 1; j++)
+						{
+							for (int k = -1; k <= 1; k++)
+							{
+								// Top square.
+
+								out->set_id_safe_if_air(x + j, y - 6, z + k, id_red_mushroom_block);
+
+								// Left square.
+
+								out->set_id_safe_if_air(x - 2, y - 4 + j, z + k, id_red_mushroom_block);
+
+								out->set_id_safe_if_air(x - 1, y - 4 + j, z + k, id_air);
+
+								// Right square.
+
+								out->set_id_safe_if_air(x + 2, y - 4 + j, z + k, id_red_mushroom_block);
+
+								out->set_id_safe_if_air(x + 1, y - 4 + j, z + k, id_air);
+
+								// Front square.
+
+								out->set_id_safe_if_air(x + k, y - 4 + j, z - 2, id_red_mushroom_block);
+
+								out->set_id_safe_if_air(x + k, y - 4 + j, z - 1, id_air);
+
+								// Back square.
+
+								out->set_id_safe_if_air(x + k, y - 4 + j, z + 2, id_red_mushroom_block);
+
+								out->set_id_safe_if_air(x + k, y - 4 + j, z + 1, id_air);
+							}
+						}
+					}
+					else
+					{
+						// Brown mushroom. This is the trunk.
+
+						out->set_id_safe_if_air(x, y - 1, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 2, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 3, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 4, z, id_mushroom_stem);
+						out->set_id_safe_if_air(x, y - 5, z, id_mushroom_stem);
+
+						for (int j = -3; j <= 3; j++)
+						{
+							for (int k = -3; k <= 3; k++)
+							{
+								if ((j == 3 && k == 3) || (j == 3 && k == -3) || (j == -3 && k == 3) || (j == -3 && k == -3))
+								{
+									continue;
+								}
+
+								out->set_id_safe_if_air(x + j, y - 6, z + k, id_brown_mushroom_block);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	for (unsigned int x = 0; x < out->x_res; x++)
 	for (unsigned int y = 0; y < out->y_res; y++)
