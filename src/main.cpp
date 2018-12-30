@@ -257,6 +257,47 @@ int main(int argc, char** argv)
 
 		rot_x_deg += (rot_x_deg_want - rot_x_deg) / 16.0f;
 		rot_y_deg += (rot_y_deg_want - rot_y_deg) / 16.0f;
+
+		// Get the keyboard state.
+
+		const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+		// Handle player movement.
+
+		if (keys[SDL_SCANCODE_W])
+		{
+			player_vx -= sin(glm::radians(-rot_y_deg)) * acceleration;
+			player_vz -= cos(glm::radians(-rot_y_deg)) * acceleration;
+
+			player_vy -= sin(glm::radians(-rot_x_deg)) * acceleration;
+		}
+		else if (keys[SDL_SCANCODE_S])
+		{
+			player_vx += sin(glm::radians(-rot_y_deg)) * acceleration;
+			player_vz += cos(glm::radians(-rot_y_deg)) * acceleration;
+
+			player_vy += sin(glm::radians(-rot_x_deg)) * acceleration;
+		}
+
+		if (keys[SDL_SCANCODE_A])
+		{
+			player_vx -= sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+			player_vz -= cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+		}
+		else if (keys[SDL_SCANCODE_D])
+		{
+			player_vx += sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+			player_vz += cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+		}
+
+		if (keys[SDL_SCANCODE_SPACE])
+		{
+			player_vy -= acceleration;
+		}
+		else if (keys[SDL_SCANCODE_LSHIFT])
+		{
+			player_vy += acceleration;
+		}
 		// Clear the OpenGL context to the default Minceraft sky color.
 
 		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
