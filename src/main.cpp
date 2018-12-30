@@ -298,6 +298,17 @@ int main(int argc, char** argv)
 		{
 			player_vy += acceleration;
 		}
+
+		// Update the player's velocity and position.
+
+		player_vx *= friction;
+		player_vy *= friction;
+		player_vz *= friction;
+
+		player_x += player_vx;
+		player_y += player_vy;
+		player_z += player_vz;
+
 		// Clear the OpenGL context to the default Minceraft sky color.
 
 		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
