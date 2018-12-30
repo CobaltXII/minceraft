@@ -158,6 +158,24 @@ struct world
 		}
 	}
 
+	// Set the block_id information of the voxel at the specified coordinates,
+	// if the coordinates are within the bounds of the world, and if the 
+	// current block_id of the voxel at the specified coordinates is not 
+	// id_air.
+
+	inline void set_id_safe_if_not_air(unsigned int x, unsigned int y, unsigned int z, block_id id)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return;
+		}
+
+		if (get_id(x, y, z) != id_air)
+		{
+			voxel_set_id(voxels[x + x_res * (y + y_res * z)], id);
+		}
+	}
+
 	// Set the natural lighting information of the voxel at the specified 
 	// coordinates.
 
