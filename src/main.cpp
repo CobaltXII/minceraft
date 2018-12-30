@@ -123,7 +123,7 @@ int main(int argc, char** argv)
 
     // Allocate a new world*.
 
-    world* the_world = allocate_world(32, 32, 32);
+    world* the_world = allocate_world(128, 128, 128);
 
     for (int x = 0; x < the_world->x_res; x++)
     for (int y = 0; y < the_world->y_res; y++)
@@ -168,14 +168,16 @@ int main(int argc, char** argv)
 
 	const float friction = 0.9f;
 
-    // Create variables to store the position of the mouse pointer and the 
-    // state of the mouse buttons.
+    // Create variables to store the position of the mouse pointer, the state 
+    // of the mouse buttons, and the relative mouse mode.
 
     int sdl_mouse_x = 0;
     int sdl_mouse_y = 0;
 
     bool sdl_mouse_l = false;
     bool sdl_mouse_r = false;
+
+    bool sdl_mouse_relative = false;
 
     // The sdl_iteration counter is incremented every frame.
 
@@ -208,8 +210,25 @@ int main(int argc, char** argv)
 			{
 				// The mouse moved.
 
-				sdl_mouse_x = e.motion.x;
-				sdl_mouse_y = e.motion.y;
+				if (sdl_mouse_relative)
+				{
+					sdl_mouse_x += e.motion.xrel;
+					sdl_mouse_y += e.motion.yrel;
+
+					if (sdl_mouse_y > sdl_y_res - 1)
+					{
+						sdl_mouse_y = sdl_y_res - 1;
+					}
+					else if (sdl_mouse_y < 0)
+					{
+						sdl_mouse_y = 0;
+					}
+				}
+				else
+				{
+					sdl_mouse_x = e.motion.x;
+					sdl_mouse_y = e.motion.y;
+				}
 			}
 			else if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -248,6 +267,16 @@ int main(int argc, char** argv)
 					sdl_running = false;
 				}
 			}
+		}
+
+		// Enable relative mouse mode when the left mouse button is down and
+		// relative mouse mode is currently off.
+
+		if (sdl_mouse_relative == false && sdl_mouse_l == true)
+		{
+			SDL_SetRelativeMouseMode(SDL_TRUE);
+
+			sdl_mouse_relative = SDL_GetRelativeMouseMode();
 		}
 
 		// Calculate the looking direction of the camera.
