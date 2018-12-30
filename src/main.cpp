@@ -342,11 +342,6 @@ int main(int argc, char** argv)
 
 				glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
 
-				// Calculate the looking direction of the camera.
-
-				float rot_x_deg = (float(sdl_mouse_y) - (float(sdl_y_res) / 2.0f)) / float(sdl_y_res) * 180.0f;
-				float rot_y_deg = (float(sdl_mouse_x) - (float(sdl_x_res) / 2.0f)) / float(sdl_x_res) * 360.0f;
-
 				// Generate the view matrix.
 
 				glm::mat4 matrix_view = glm::mat4(1.0f);
@@ -356,9 +351,9 @@ int main(int argc, char** argv)
 
 				// Generate the model matrix.
 
-				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-16.0f, +16.0f, -48.0f));
+				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-player_x, player_y, -player_z));
 
-				// Pass the matrices to the block shader program.
+				// Pass the matrices to the block_shader_program.
 
 				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
 
