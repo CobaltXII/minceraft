@@ -23,8 +23,8 @@ int main(int argc, char** argv)
 
 	// The dimensions of the SDL_Window*.
 
-	int sdl_x_res = 840;
-	int sdl_y_res = 525;
+	int sdl_x_res = 950;
+	int sdl_y_res = 540;
 
 	// Create the SDL_Window*.
 
@@ -125,21 +125,7 @@ int main(int argc, char** argv)
 
     world* the_world = allocate_world(128, 128, 128);
 
-    for (int x = 0; x < the_world->x_res; x++)
-    for (int y = 0; y < the_world->y_res; y++)
-    for (int z = 0; z < the_world->z_res; z++)
-    {
-    	if (rand() % 5 == 0)
-    	{
-    		the_world->set_id(x, y, z, block_id(rand() % id_null));
-    	}
-    	else
-    	{
-    		the_world->set_id(x, y, z, id_air);
-    	}
-
-    	the_world->set_natural(x, y, z, 15);
-    }
+    generate_world(the_world, time(NULL));
 
     // Allocate a new accessor* from the_world.
 
@@ -408,12 +394,37 @@ int main(int argc, char** argv)
 
 			glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
 
-			// Render all of the chunks in the_accessor.
+			// Render all of the chunks' vertex arrays in the_accessor.
 
 			for (int i = 0; i < the_accessor->chunk_count; i++)
 			{
 				render_chunk(the_accessor->the_chunks[i]);
 			}
+
+			// Disable writing to the depth buffer.
+
+			glDepthMask(GL_FALSE);
+
+			// Enable alpha blending.
+
+			glEnable(GL_BLEND);
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			// Render all of the chunks' water vertex arrays in the_accessor.
+
+			for (int i = 0; i < the_accessor->chunk_count; i++)
+			{
+				render_chunk_water(the_accessor->the_chunks[i]);
+			}
+
+			// Enable writing to the depth buffer.
+
+			glDepthMask(GL_TRUE);
+
+			// Disable alpha blending.
+
+			glDisable(GL_BLEND);
 
 			// Unbind the block_texture_array from the current state.
 
