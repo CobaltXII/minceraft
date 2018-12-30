@@ -126,7 +126,7 @@ chunk* allocate_chunk
 	return the_chunk;
 }
 
-// Deallocate a chunk.
+// Deallocate a chunk*.
 
 void deallocate_chunk(chunk* to_be_annihilated)
 {
@@ -141,7 +141,7 @@ void deallocate_chunk(chunk* to_be_annihilated)
 	delete to_be_annihilated;
 }
 
-// Render a chunk.
+// Render a chunk*.
 
 void render_chunk(chunk* the_chunk)
 {

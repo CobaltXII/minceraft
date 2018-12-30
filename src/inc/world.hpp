@@ -173,8 +173,8 @@ struct world
 	}
 };
 
-// Allocate an empty world of a given resolution. Each voxel in the world will
-// be set to 0.
+// Allocate an empty world* of a given resolution. Each voxel in the world 
+// will be set to 0.
 
 world* allocate_world(unsigned int x_res, unsigned int y_res, unsigned int z_res)
 {
@@ -198,8 +198,7 @@ world* allocate_world(unsigned int x_res, unsigned int y_res, unsigned int z_res
 	return new_world;
 }
 
-// Deallocate a world*'s voxels, and then delete the pointer to the world 
-// object.
+// Deallocate a world*'s voxels, and then delete the world*.
 
 void deallocate_world(world* to_be_annihilated)
 {
