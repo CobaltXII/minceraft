@@ -362,6 +362,10 @@ int main(int argc, char** argv)
 				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
 			}
 
+			// Pass the fog distance to the block_shader_program.
+
+			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), pow(sqrt(float(the_world->x_res * the_world->x_res)), 1.85f));
+
 			// Bind the block_texture_array to the current state.
 
 			glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
