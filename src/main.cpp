@@ -99,7 +99,11 @@ int main(int argc, char** argv)
         exit(5);
     }
 
-    // Set up preliminaries for backface culling.
+    // Set up depth clamping.
+
+    glEnable(GL_DEPTH_CLAMP);
+
+    // Set up backface culling.
 
     glCullFace(GL_BACK);
 
