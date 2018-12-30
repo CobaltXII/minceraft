@@ -117,9 +117,9 @@ int main(int argc, char** argv)
 
     GLuint block_shader_program = load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
 
-    // Allocate a new world.
+    // Allocate a new world*.
 
-    world* the_world = allocate_world(16, 16, 16);
+    world* the_world = allocate_world(32, 32, 16);
 
     for (int x = 0; x < the_world->x_res; x++)
     for (int y = 0; y < the_world->y_res; y++)
@@ -136,6 +136,10 @@ int main(int argc, char** argv)
 
     	the_world->set_natural(x, y, z, 15);
     }
+
+    // Allocate a new accessor* from the_world.
+
+    accessor* the_accessor = allocate_accessor(the_world);
 
     // Create variables to store the position of the mouse pointer and the 
     // state of the mouse buttons.
@@ -219,93 +223,90 @@ int main(int argc, char** argv)
 			}
 		}
 
-		// Clear the OpenGL context to the default Minceraft sky color. This
-		// might be changed to use a 'time-of-day' variable instead.
+		// Clear the OpenGL context to the default Minceraft sky color.
 
 		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		{
-			// Allocate a chunk that represents the entire world.
+		// Render the world.
 
-			chunk* the_chunk = allocate_chunk(the_world, 0, 0, 0, the_world->x_res, the_world->y_res, the_world->z_res);
+		{
+			// Enable depth testing.
+
+			glEnable(GL_DEPTH_TEST);
+
+			// Enable backface culling.
+
+			glEnable(GL_CULL_FACE);
+
+			// Bind the block shader program to the current state.
+
+			glUseProgram(block_shader_program);
+
+			// Calculate the projection, view, and model matrices, and pass 
+			// them to the block_shader_program.
 
 			{
-				// Enable depth testing.
+				// Calculate the aspect ratio.
 
-				glEnable(GL_DEPTH_TEST);
+				float aspect_ratio = (float)sdl_x_res / (float)sdl_y_res;
 
-				// Enable backface culling.
+				// Generate the projection matrix.
 
-				glEnable(GL_CULL_FACE);
+				glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
 
-				// Bind the block shader program to the current state.
+				// Calculate the looking direction of the camera.
 
-				glUseProgram(block_shader_program);
+				float rot_x_deg = (float(sdl_mouse_y) - (float(sdl_y_res) / 2.0f)) / float(sdl_y_res) * 180.0f;
+				float rot_y_deg = (float(sdl_mouse_x) - (float(sdl_x_res) / 2.0f)) / float(sdl_x_res) * 360.0f;
 
-				{
-					// Calculate the aspect ratio.
+				// Generate the view matrix.
 
-					float aspect_ratio = (float)sdl_x_res / (float)sdl_y_res;
+				glm::mat4 matrix_view = glm::mat4(1.0f);
 
-					// Generate the projection matrix.
+				matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
+				matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
 
-					glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
+				// Generate the model matrix.
 
-					// Calculate the looking direction of the camera.
+				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-16.0f, +16.0f, -48.0f));
 
-					float rot_x_deg = (float(sdl_mouse_y) - (float(sdl_y_res) / 2.0f)) / float(sdl_y_res) * 180.0f;
-					float rot_y_deg = (float(sdl_mouse_x) - (float(sdl_x_res) / 2.0f)) / float(sdl_x_res) * 360.0f;
+				// Pass the matrices to the block shader program.
 
-					// Generate the view matrix.
+				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
 
-					glm::mat4 matrix_view = glm::mat4(1.0f);
+				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
 
-					matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
-					matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
-
-					// Generate the model matrix.
-
-					glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, +8.0f, -48.0f));
-
-					// Pass the matrices to the block shader program.
-
-					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
-
-					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
-
-					glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
-				}
-
-				// Bind the block_texture_array to the current state.
-
-				glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
-
-				// Render the chunk.
-
-				render_chunk(the_chunk);
-
-				// Unbind the block_texture_array from the current state.
-
-				glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-				// Unbind the block shader program from the current state.
-
-				glUseProgram(0);
-
-				// Disable backface culling.
-
-				glDisable(GL_CULL_FACE);
-
-				// Disable depth testing.
-
-				glDisable(GL_DEPTH_TEST);
+				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
 			}
 
-			// Deallocate the chunk.
+			// Bind the block_texture_array to the current state.
 
-			deallocate_chunk(the_chunk);
+			glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
+
+			// Render all of the chunks in the_accessor.
+
+			for (int i = 0; i < the_accessor->chunk_count; i++)
+			{
+				render_chunk(the_accessor->the_chunks[i]);
+			}
+
+			// Unbind the block_texture_array from the current state.
+
+			glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+			// Unbind the block shader program from the current state.
+
+			glUseProgram(0);
+
+			// Disable backface culling.
+
+			glDisable(GL_CULL_FACE);
+
+			// Disable depth testing.
+
+			glDisable(GL_DEPTH_TEST);
 		}
 
 		// Swap the back buffer to the front.
