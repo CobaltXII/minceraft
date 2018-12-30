@@ -60,3 +60,18 @@ accessor* allocate_accessor(world* the_world)
 	return the_accessor;
 }
 
+// Deallocate an accessor*.
+
+void deallocate_accessor(accessor* the_accessor)
+{
+	// Destroy all of the contained chunks.
+
+	for (int i = 0; i < the_accessor->chunk_count; i++)
+	{
+		deallocate_chunk(the_accessor->the_chunks[i]);
+	}
+
+	// Delete the accessor*.
+
+	delete the_accessor;
+}
