@@ -23,6 +23,8 @@ enum block_id
 
 	id_sand,
 
+	id_sandstone,
+
 	id_gravel,
 
 	id_brick,
@@ -137,6 +139,8 @@ std::vector<std::string> block_id_to_string =
 
 	"sand",
 
+	"sandstone",
+
 	"gravel",
 
 	"brick",
@@ -225,6 +229,8 @@ std::vector<std::string> block_id_to_block_name =
 	"Mycelium",
 
 	"Sand",
+
+	"Sandstone",
 
 	"Gravel",
 

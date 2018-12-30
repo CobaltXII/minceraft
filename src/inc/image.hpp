@@ -61,6 +61,12 @@ std::vector<std::string> all_tex =
 
 	"sand",
 
+	"sandstone_bottom",
+
+	"sandstone_side",
+
+	"sandstone_top",
+
 	"stone",
 
 	"water_0",

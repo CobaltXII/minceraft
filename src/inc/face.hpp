@@ -86,6 +86,8 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("sand")),
 
+		make_face_info_caps(block_name_to_layer.at("sandstone_top"), block_name_to_layer.at("sandstone_bottom"), block_name_to_layer.at("sandstone_side")),
+
 		make_face_info_all(block_name_to_layer.at("gravel")),
 
 		make_face_info_all(block_name_to_layer.at("brick")),
