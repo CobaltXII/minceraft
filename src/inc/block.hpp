@@ -92,6 +92,30 @@ enum block_id
 	id_null
 };
 
+// Returns true if the given block_id has any non-opaque pixels. Otherwise,
+// returns false.
+
+inline bool is_transparent(block_id id)
+{
+	if 
+	(
+		id == id_air || 
+
+		id == id_oak_leaves || 
+
+		id == id_birch_leaves || 
+
+		id == id_water ||
+
+		id == id_null
+	)
+	{
+		return true;
+	}
+
+	return false;
+} 
+
 // Conversion from block_id to std::string.
 
 std::vector<std::string> block_id_to_string =
