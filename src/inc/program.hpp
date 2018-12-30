@@ -2,7 +2,7 @@
 #include <string>
 
 // Load a shader program from two files. One is a vertex shader, and one is a
-// fragment shader. Geometry shader support is not implemented.
+// fragment shader.
 
 GLuint load_program(std::string vertex_path, std::string fragment_path)
 {

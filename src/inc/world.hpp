@@ -1,6 +1,6 @@
 #include <iostream>
 
-// A world struct hold information about a worlds dimensions and block data. 
+// A world struct holds information about a world's dimensions and block data.
 // It makes it easy and efficient to modify and read the properties of every
 // voxel it contains.
 
@@ -198,8 +198,8 @@ world* allocate_world(unsigned int x_res, unsigned int y_res, unsigned int z_res
 	return new_world;
 }
 
-// Deallocate a world*'s voxels, and then delete the pointer to the underlying
-// world object.
+// Deallocate a world*'s voxels, and then delete the pointer to the world 
+// object.
 
 void deallocate_world(world* to_be_annihilated)
 {

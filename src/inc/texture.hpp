@@ -17,7 +17,7 @@ GLuint load_block_texture_array()
 
 	int channels = 4;
 
-	// The texture array must have one layer for each texture in all_tex.
+	// The texture array must have one layer for each texture path in all_tex.
 
 	GLsizei layers = all_tex.size();
 
@@ -68,7 +68,7 @@ GLuint load_block_texture_array()
 			exit(12); 
 		}
 
-		// Copy the sub-texture texels to the texel array.
+		// Copy the sub-texture's texels to the texel array.
 
 		memcpy(texels + (i * x_res * y_res * channels), sub_data, x_res * y_res * channels);
 
@@ -76,7 +76,8 @@ GLuint load_block_texture_array()
 
 		stbi_image_free(sub_data);
 
-		// Add to map.
+		// Add a map entry that has a key of the sub-texture's name and a 
+		// value of the sub-texture's layer index to the map.
 
 		block_name_to_layer.emplace(all_tex[i], float(i));
 	}
@@ -86,6 +87,8 @@ GLuint load_block_texture_array()
 	GLuint texture_array = 0;
 
 	glGenTextures(1, &texture_array);
+
+	// Bind the texture array to the current state.
 
 	glBindTexture(GL_TEXTURE_2D_ARRAY, texture_array);
 
@@ -105,7 +108,7 @@ GLuint load_block_texture_array()
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	// Unbind the texture array.
+	// Unbind the texture array from the current state.
 
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
@@ -113,7 +116,7 @@ GLuint load_block_texture_array()
 
 	free(texels);
 
-	// Return the output std::map.
+	// Return the reference to the texture array.
 
 	return texture_array;
 }

@@ -1,8 +1,6 @@
 // A voxel can be represented with 16 bits of data. The last 8 bits hold the
-// block_id information (that allows 256 distinct block_id values). The first 
-// 4 bits hold the natural light information, and the second 4 bits hold the 
-// artificial light information. That allows for 16 unique lighting values for
-// each lighting component, and 256 unique lighting permutations in total.
+// block_id information. The first 4 bits hold the natural light information, 
+// and the second 4 bits hold the artificial light information.
 
 typedef unsigned short voxel;
 

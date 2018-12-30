@@ -1,6 +1,6 @@
-// Convert a subset of a world into a vertex array (also called a mesh). The
-// generated vertex array is stored in target, and it's size (in floats) is
-// stored in target_size_in_floats.
+// Convert a subset of a world into a vertex array. The generated vertex 
+// array is stored in target, and it's size in floats is stored in 
+// target_size_in_floats.
 
 void world_subset_to_mesh
 (
@@ -43,8 +43,6 @@ void world_subset_to_mesh
 				block_id voxel_id = input->get_id(cx, cy, cz);
 
 				// Ignore voxels that have a block_id equivalent to id_air.
-				// Voxels that have a block_id equivalent to id_air are fully
-				// transparent, and do not need to be rendered.
 
 				if (voxel_id == id_air)
 				{
@@ -56,8 +54,8 @@ void world_subset_to_mesh
 
 				face_info* cube_face_info = block_face_info[voxel_id];
 
-				// Get the layer index corresponding to each face of the 
-				// current voxel.
+				// Get the layer (w coordinate) corresponding to each face of 
+				// the current voxel.
 
 				float layer_top = cube_face_info->l_top;
 
@@ -84,7 +82,7 @@ void world_subset_to_mesh
 				float voxel_light = std::max(voxel_light_natural, voxel_light_artificial);
 
 				// Calculate the lighting value of each face by multiplying 
-				// the lighting value of the current voxel by a constant
+				// the final lighting value of the current voxel by a constant
 				// coefficient.
 
 				float lighting_top = 1.0f * voxel_light;

@@ -92,8 +92,7 @@ enum block_id
 	id_null
 };
 
-// Returns true if the given block_id has any non-opaque pixels. Otherwise,
-// returns false.
+// Returns true if the block is not opaque. Otherwise, returns false.
 
 inline bool is_transparent(block_id id)
 {
@@ -114,7 +113,7 @@ inline bool is_transparent(block_id id)
 	}
 
 	return false;
-} 
+}
 
 // Conversion from block_id to std::string.
 

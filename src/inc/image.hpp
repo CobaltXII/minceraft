@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-// A list of all the files in /tex (excluding file extensions).
+// A list of all the files in tex/ (excluding file extensions).
 
 std::vector<std::string> all_tex =
 {

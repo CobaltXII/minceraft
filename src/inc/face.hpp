@@ -1,7 +1,7 @@
 #include <vector>
 
 // A struct of type face_info represents the layer (w coordinate) of each face
-// of a block. It is used to map the correct texture on to each face of a 
+// of a block. It is used to map the correct texture onto each face of a 
 // block.
 
 struct face_info
