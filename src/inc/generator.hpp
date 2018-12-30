@@ -69,4 +69,24 @@ void generate_world(world* out, unsigned int seed)
 			break;
 		}
 	}
+
+	// Add water.
+
+	for (float x = 0.0f; x < float(out->x_res); x += 1.0f)
+	for (float y = 0.0f; y < float(out->y_res); y += 1.0f)
+	for (float z = 0.0f; z < float(out->z_res); z += 1.0f)
+	{
+		if (y / float(out->y_res) > 0.5f)
+		{
+			if (out->get_id(int(x), int(y), int(z)) == id_air)
+			{
+				out->set_id(int(x), int(y), int(z), id_water);
+			}
+			else if (out->get_id(int(x), int(y), int(z)) == id_grass)
+			{
+				out->set_id(int(x), int(y), int(z), id_sand);
+			}
+		}
+	}
+
 }
