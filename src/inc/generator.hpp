@@ -89,4 +89,12 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
+	// Do natural lighting calculations.
+
+	for (unsigned int x = 0; x < out->x_res; x++)
+	for (unsigned int y = 0; y < out->y_res; y++)
+	for (unsigned int z = 0; z < out->z_res; z++)
+	{
+		out->set_natural(x, y, z, 15);
+	}
 }
