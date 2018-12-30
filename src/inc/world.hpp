@@ -158,6 +158,19 @@ struct world
 
 		voxel_set_artificial(voxels[x + x_res * (y + y_res * z)], artificial);
 	}
+
+	// Check if this world may reference a voxel at the given coordinates. If
+	// so, return true. Else, return false.
+
+	inline bool in_bounds(unsigned int x, unsigned int y, unsigned int z)
+	{
+		if (x < 0 || y < 0 || z < 0 || x > x_res - 1 || y > y_res - 1 || z > z_res - 1)
+		{
+			return false;
+		}
+
+		return true;
+	}
 };
 
 // Allocate an empty world of a given resolution. Each voxel in the world will
