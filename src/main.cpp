@@ -160,6 +160,14 @@ int main(int argc, char** argv)
     float player_vy = 0.0f;
     float player_vz = 0.0f; 
 
+	// Define the player's acceleration constant.
+
+	const float acceleration = 0.025f;
+
+	// Define the player's friction constant.
+
+	const float friction = 0.9f;
+
     // Create variables to store the position of the mouse pointer and the 
     // state of the mouse buttons.
 
