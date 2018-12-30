@@ -50,8 +50,11 @@
 #include <voxel.hpp>
 #include <voxel.cpp>
 
+#include <face.hpp>
+#include <face.cpp>
+
 #include <world.hpp>
 #include <world.cpp>
 
-#include <face.hpp>
-#include <face.cpp>
+#include <mesh.hpp>
+#include <mesh.cpp>
