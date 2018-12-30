@@ -364,7 +364,7 @@ int main(int argc, char** argv)
 
 				// Generate the projection matrix.
 
-				glm::mat4 matrix_projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.128f, 256.0f);
+				glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 256.0f);
 
 				// Generate the view matrix.
 
