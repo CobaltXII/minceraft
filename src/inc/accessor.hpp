@@ -90,6 +90,25 @@ struct accessor
 				}
 			}
 		}
+
+		if ((id == id_air) != (old_id == id_air))
+ 		{
+ 			// Update lighting.
+
+ 			propagate_skylight_strip
+ 			(
+ 				the_world, 
+
+ 				the_chunks, 
+
+ 				chunk_x_res,
+ 				chunk_y_res,
+ 				chunk_z_res,
+
+ 				x, 
+ 				z
+ 			);
+ 		}
 	}
 };
 
