@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 		sdl_x_res,
 		sdl_y_res,
 
-		SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL
+		SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL
 	);
 
 	// Make sure the SDL_Window* was created successfully.
@@ -215,6 +215,10 @@ int main(int argc, char** argv)
     	// frame, this timestamp will be used to cap the framerate.
 
     	auto frame_start_time = std::chrono::high_resolution_clock::now();
+
+    	// Get the size of the sdl_window*, in case it was resized.
+
+    	SDL_GetWindowSize(sdl_window, &sdl_x_res, &sdl_y_res);
 
     	// Poll events.
 
