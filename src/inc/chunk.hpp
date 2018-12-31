@@ -83,6 +83,8 @@ chunk* allocate_chunk
 
 	the_chunk->water_target_size_in_floats = water_target_size_in_floats;
 
+	the_chunk->modified = false;
+
 	{
 		// Generate a target_vao and a target_vbo to reference the vertex data
 		// of the enclosed region after it is uploaded to the GPU.
