@@ -30,9 +30,13 @@ struct accessor
 		{
 			// Something actually changed.
 
+			int cx = x / 16;
+			int cy = y / 16;
+			int cz = z / 16;
+
 			the_world->set_id(x, y, z, id);
 
-			the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+			the_chunks[cx + chunk_x_res * (cy + chunk_y_res * cz)]->modified = true;
 
 			// If the new block_id is transparent, neighboring chunks may need
 			// to be updated as well.
@@ -47,42 +51,42 @@ struct accessor
 
 				if (x != 0 && xc == 0)
 				{
-					the_chunks[(x / 16 - 1) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+					the_chunks[(cx - 1) + chunk_x_res * (cy + chunk_y_res * cz)]->modified = true;
 				}
 
 				// Positive X.
 
 				if (x != the_world->x_res - 1 && xc == 15)
 				{
-					the_chunks[(x / 16 + 1) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+					the_chunks[(cx + 1) + chunk_x_res * (cy + chunk_y_res * cz)]->modified = true;
 				}
 
 				// Negative Y.
 
 				if (y != 0 && yc == 0)
 				{
-					the_chunks[(x / 16) + chunk_x_res * ((y / 16 - 1) + chunk_y_res * (z / 16))]->modified = true;
+					the_chunks[cx + chunk_x_res * ((cy - 1) + chunk_y_res * cz)]->modified = true;
 				}
 
 				// Positive Y.
 
 				if (y != the_world->y_res - 1 && yc == 15)
 				{
-					the_chunks[(x / 16) + chunk_x_res * ((y / 16 + 1) + chunk_y_res * (z / 16))]->modified = true;
+					the_chunks[cx + chunk_x_res * ((cy + 1) + chunk_y_res * cz)]->modified = true;
 				}
 
 				// Negative Z.
 
 				if (z != 0 && zc == 0)
 				{
-					the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16 - 1))]->modified = true;
+					the_chunks[cx + chunk_x_res * (cy + chunk_y_res * (cz - 1))]->modified = true;
 				}
 
 				// Positive Z.
 
 				if (z != the_world->z_res - 1 && zc == 15)
 				{
-					the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16 + 1))]->modified = true;
+					the_chunks[cx + chunk_x_res * (cy + chunk_y_res * (cz + 1))]->modified = true;
 				}
 			}
 		}
