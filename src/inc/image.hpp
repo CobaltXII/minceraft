@@ -29,6 +29,8 @@ std::vector<std::string> all_tex =
 
 	"emerald_ore",
 
+	"glass",
+
 	"gold_ore",
 
 	"grass_side",

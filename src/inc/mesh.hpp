@@ -8,6 +8,10 @@ inline bool hide_face(block_id face, block_id neighbor)
 	{
 		hide = false;
 	}
+	else if (face == id_glass && neighbor == id_glass)
+	{
+		hide = false;
+	}
 
 	return hide;
 }

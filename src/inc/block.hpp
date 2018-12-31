@@ -91,6 +91,8 @@ enum block_id
 
 	id_black_wool,
 
+	id_glass,
+
 	id_null
 };
 
@@ -107,6 +109,8 @@ inline bool is_transparent(block_id id)
 		id == id_birch_leaves || 
 
 		id == id_water ||
+
+		id == id_glass ||
 
 		id == id_null
 	)
@@ -205,7 +209,9 @@ std::vector<std::string> block_id_to_string =
 
 	"red_wool",
 
-	"black_wool"
+	"black_wool",
+
+	"glass",
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -296,5 +302,7 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Red Wool",
 
-	"Black Wool"
+	"Black Wool",
+
+	"Glass"
 };
