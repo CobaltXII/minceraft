@@ -13,6 +13,80 @@ struct accessor
 	unsigned int chunk_z_res;
 
 	unsigned int chunk_count;
+
+	// Set the block_id information of the voxel at the specified coordinates,
+	// if the coordinates are within the bounds of the world.
+
+	inline void set_id_safe(unsigned int x, unsigned int y, unsigned int z, block_id id)
+	{
+		if (!the_world->in_bounds(x, y, z))
+		{
+			return;
+		}
+
+		block_id old_id = the_world->get_id(x, y, z);
+
+		if (old_id != id)
+		{
+			// Something actually changed.
+
+			the_world->set_id(x, y, z, id);
+
+			the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+
+			// If the new block_id is transparent, neighboring chunks may need
+			// to be updated as well.
+
+			if (is_transparent(id))
+			{
+				unsigned int xc = x % 16;
+				unsigned int yc = y % 16;
+				unsigned int zc = z % 16;
+
+				// Negative X.
+
+				if (x != 0 && xc == 0)
+				{
+					the_chunks[(x / 16 - 1) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+				}
+
+				// Positive X.
+
+				if (x != the_world->x_res - 1 && xc == 15)
+				{
+					the_chunks[(x / 16 + 1) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
+				}
+
+				// Negative Y.
+
+				if (y != 0 && yc == 0)
+				{
+					the_chunks[(x / 16) + chunk_x_res * ((y / 16 - 1) + chunk_y_res * (z / 16))]->modified = true;
+				}
+
+				// Positive Y.
+
+				if (y != the_world->y_res - 1 && yc == 15)
+				{
+					the_chunks[(x / 16) + chunk_x_res * ((y / 16 + 1) + chunk_y_res * (z / 16))]->modified = true;
+				}
+
+				// Negative Z.
+
+				if (z != 0 && zc == 0)
+				{
+					the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16 - 1))]->modified = true;
+				}
+
+				// Positive Z.
+
+				if (z != the_world->z_res - 1 && zc == 15)
+				{
+					the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16 + 1))]->modified = true;
+				}
+			}
+		}
+	}
 };
 
 // Create an accessor* from a world*.
