@@ -60,6 +60,9 @@
 #include <chunk.hpp>
 #include <chunk.cpp>
 
+#include <skylight.hpp>
+#include <skylight.cpp>
+
 #include <accessor.hpp>
 #include <accessor.cpp>
 
