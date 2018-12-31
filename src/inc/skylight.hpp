@@ -19,7 +19,9 @@ void propagate_skylight(world* out)
 			{
 				out->set_natural(x, y, z, natural);
 
-				if (out->get_id(x, y, z) != id_air)
+				block_id current = out->get_id(x, y, z);
+
+				if (current != id_air && current != id_glass)
 				{
 					natural = 0;
 				}
@@ -167,7 +169,9 @@ void propagate_skylight_strip
 
 				the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
 
-				if (the_world->get_id(x, y, z) != id_air)
+				block_id current = the_world->get_id(x, y, z);
+
+				if (current != id_air && current != id_glass)
 				{
 					natural = 0;
 				}
