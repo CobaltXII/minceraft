@@ -184,7 +184,7 @@ int main(int argc, char** argv)
 
 	// Define the player's acceleration constant.
 
-	const float acceleration = 0.1f;
+	const float acceleration = 0.025f;
 
 	// Define the player's friction constant.
 
@@ -455,7 +455,7 @@ int main(int argc, char** argv)
 
 			// Pass the fog distance to the block_shader_program.
 
-			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), float(the_world->x_res * the_world->x_res));
+			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), float(the_world->x_res * the_world->x_res) / 2.0f);
 
 			// Bind the block_texture_array to the current state.
 
