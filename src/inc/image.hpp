@@ -73,6 +73,22 @@ std::vector<std::string> all_tex =
 
 	"water_1",
 
+	"water_2",
+
+	"water_3",
+
+	"water_4",
+
+	"water_5",
+
+	"water_6",
+
+	"water_7",
+
+	"water_8",
+
+	"water_9",
+
 	"water_10",
 
 	"water_11",
@@ -92,8 +108,6 @@ std::vector<std::string> all_tex =
 	"water_18",
 
 	"water_19",
-
-	"water_2",
 
 	"water_20",
 
@@ -115,23 +129,9 @@ std::vector<std::string> all_tex =
 
 	"water_29",
 
-	"water_3",
-
 	"water_30",
 
 	"water_31",
-
-	"water_4",
-
-	"water_5",
-
-	"water_6",
-
-	"water_7",
-
-	"water_8",
-
-	"water_9",
 
 	"wool_colored_black",
 

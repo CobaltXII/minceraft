@@ -266,17 +266,17 @@ void world_subset_to_water_mesh
 				// Get the layer (w coordinate) corresponding to each face of 
 				// the current voxel.
 
-				float layer_top = cube_face_info->l_top;
+				float layer_top = -cube_face_info->l_top;
 
-				float layer_bottom = cube_face_info->l_bottom;
+				float layer_bottom = -cube_face_info->l_bottom;
 
-				float layer_left = cube_face_info->l_left;
+				float layer_left = -cube_face_info->l_left;
 
-				float layer_right = cube_face_info->l_right;
+				float layer_right = -cube_face_info->l_right;
 
-				float layer_front = cube_face_info->l_front;
+				float layer_front = -cube_face_info->l_front;
 
-				float layer_back = cube_face_info->l_back;
+				float layer_back = -cube_face_info->l_back;
 
 				// Get the natural and artificial floating-point lighting 
 				// values of the current voxel.

@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
 	SDL_Window* sdl_window = SDL_CreateWindow
 	(
-		"Minceraft 0.0.0",
+		"Minceraft 0.2.45",
 
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -455,7 +455,11 @@ int main(int argc, char** argv)
 
 			// Pass the fog distance to the block_shader_program.
 
-			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), float(the_world->x_res * the_world->x_res) / 2.0f);
+			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), the_world->x_res * the_world->x_res / 2.0f);
+
+			// Pass the current time (in seconds) to the block_shader_program.
+
+			glUniform1f(glGetUniformLocation(block_shader_program, "time_in_seconds"), SDL_GetTicks() / 1000.0f);
 
 			// Bind the block_texture_array to the current state.
 

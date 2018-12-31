@@ -16,6 +16,10 @@ uniform mat4 matrix_view;
 
 uniform mat4 matrix_model;
 
+// Input time (in seconds).
+
+uniform float time_in_seconds;
+
 // Output to the fragment shader.
 
 out vec3 frag_texture;
@@ -37,6 +41,20 @@ void main()
 	// the fragment shader.
 
 	frag_texture = vertex_texture;
+
+	if (frag_texture.z < 0.0f)
+	{
+		// Animate the water.
+
+		float frame = mod(floor(time_in_seconds * 10.0f), 61.0f);
+
+		if (frame > 30.0f)
+		{
+			frame = 61.0f - frame;
+		}
+
+		frag_texture.z = abs(frag_texture.z) + frame;
+	}
 
 	frag_lighting = vertex_lighting;
 
