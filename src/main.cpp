@@ -123,7 +123,7 @@ int main(int argc, char** argv)
 
     // Allocate a new world*.
 
-    world* the_world = allocate_world(128, 128, 128);
+    world* the_world = allocate_world(512, 128, 512);
 
     generate_world(the_world, time(NULL));
 
@@ -472,6 +472,8 @@ int main(int argc, char** argv)
     // Destroy all Minceraft related objects.
 
     deallocate_world(the_world);
+
+    deallocate_accessor(the_accessor);
 
     // Destroy all OpenGL related objects.
 
