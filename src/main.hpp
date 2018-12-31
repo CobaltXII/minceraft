@@ -31,43 +31,29 @@
 // Local headers.
 
 #include <shader.hpp>
-#include <shader.cpp>
 
 #include <program.hpp>
-#include <program.cpp>
 
 #include <image.hpp>
-#include <image.cpp>
 
 #include <texture.hpp>
-#include <texture.cpp>
 
 #include <block.hpp>
-#include <block.cpp>
 
 #include <voxel.hpp>
-#include <voxel.cpp>
 
 #include <face.hpp>
-#include <face.cpp>
 
 #include <world.hpp>
-#include <world.cpp>
 
 #include <mesh.hpp>
-#include <mesh.cpp>
 
 #include <chunk.hpp>
-#include <chunk.cpp>
 
 #include <skylight.hpp>
-#include <skylight.cpp>
 
 #include <accessor.hpp>
-#include <accessor.cpp>
 
 #include <generator.hpp>
-#include <generator.cpp>
 
 #include <file.hpp>
-#include <file.cpp>
