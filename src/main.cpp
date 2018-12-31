@@ -184,7 +184,7 @@ int main(int argc, char** argv)
 
 	// Define the player's acceleration constant.
 
-	const float acceleration = 0.025f;
+	const float acceleration = 0.1f;
 
 	// Define the player's friction constant.
 
