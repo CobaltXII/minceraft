@@ -121,15 +121,9 @@ int main(int argc, char** argv)
 
     GLuint block_shader_program = load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
 
-    // Allocate a new world*.
+    // Create an empty pointer to a world*.
 
-    world* the_world = allocate_world(512, 128, 512);
-
-    generate_world(the_world, time(NULL));
-
-    // Allocate a new accessor* from the_world.
-
-    accessor* the_accessor = allocate_accessor(the_world);
+    world* the_world = nullptr;
 
     // Define variables to hold the looking direction of the player.
 
@@ -138,13 +132,55 @@ int main(int argc, char** argv)
 
     // Define variables to hold the position and velocity of the player.
 
-    float player_x = float(the_world->x_res) / 2.0f;
-    float player_y = float(the_world->y_res) / 2.0f;
-    float player_z = float(the_world->z_res) / 2.0f;
+    float player_x = 0.0f;
+    float player_y = 0.0f;
+    float player_z = 0.0f;
 
     float player_vx = 0.0f;
     float player_vy = 0.0f;
     float player_vz = 0.0f; 
+
+    // If the save file exists, load the_world from the save file. Otherwise,
+    // generate a new world and save it to the save file.
+
+    if (std::ifstream("level.dat").good())
+    {
+    	load_world_from_file
+    	(
+    		the_world, 
+
+    		player_x,
+    		player_y,
+    		player_z,
+
+    		"level.dat"
+    	);
+    }
+    else
+    {
+    	the_world = allocate_world(512, 128, 512);
+
+    	generate_world(the_world, time(NULL));
+
+    	player_x = float(the_world->x_res) / 2.0f;
+    	player_y = float(the_world->y_res) / 2.0f;
+    	player_z = float(the_world->z_res) / 2.0f;
+
+    	save_world_to_file
+    	(
+    		the_world, 
+
+    		player_x,
+    		player_y,
+    		player_z,
+
+    		"level.dat"
+    	);
+    }
+
+    // Allocate a new accessor* from the_world.
+
+    accessor* the_accessor = allocate_accessor(the_world);
 
 	// Define the player's acceleration constant.
 
@@ -364,7 +400,7 @@ int main(int argc, char** argv)
 
 				// Generate the projection matrix.
 
-				glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 256.0f);
+				glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 1024.0f);
 
 				// Generate the view matrix.
 
@@ -468,6 +504,19 @@ int main(int argc, char** argv)
 			std::cout << "Running at " << 1000.0f / frame_elapsed_time << " Hz" << std::endl;
 		}
     }
+
+    // Save the world to the save file.
+
+    save_world_to_file
+	(
+		the_world, 
+
+		player_x,
+		player_y,
+		player_z,
+
+		"level.dat"
+	);
 
     // Destroy all Minceraft related objects.
 
