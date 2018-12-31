@@ -373,6 +373,33 @@ int main(int argc, char** argv)
 		player_y += player_vy;
 		player_z += player_vz;
 
+		// Update all modified chunks.
+
+		for (int i = 0; i < the_accessor->chunk_count; i++)
+		{
+			chunk*& the_chunk = the_accessor->the_chunks[i];
+
+			if (the_chunk->modified)
+			{
+				chunk* new_chunk = allocate_chunk
+				(
+					the_world,
+
+					the_chunk->x,
+					the_chunk->y,
+					the_chunk->z,
+
+					the_chunk->x_res,
+					the_chunk->y_res,
+					the_chunk->z_res
+				);
+
+				deallocate_chunk(the_chunk);
+
+				the_chunk = new_chunk;
+			}
+		}
+
 		// Clear the OpenGL context to the default Minceraft sky color.
 
 		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
