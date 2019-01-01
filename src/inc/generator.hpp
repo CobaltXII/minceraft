@@ -84,30 +84,119 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
-	// Add water and beaches.
+	// Create beaches and top-level water.
+
+	std::vector<std::tuple<unsigned int, unsigned int, unsigned int>> flood_water;
 
 	for (float x = 0.0f; x < float(out->x_res); x += 1.0f)
-	for (float y = 0.0f; y < float(out->y_res); y += 1.0f)
 	for (float z = 0.0f; z < float(out->z_res); z += 1.0f)
+	for (float y = 0.0f; y < float(out->y_res); y += 1.0f)
 	{
-		if (y / float(out->y_res) > 0.5f)
+		block_id current_block = out->get_id(int(x), int(y), int(z));
+
+		if (current_block != id_air)
 		{
-			if (out->get_id(int(x), int(y), int(z)) == id_air)
-			{
-				out->set_id(int(x), int(y), int(z), id_water);
-			}
-			else if (out->get_id(int(x), int(y), int(z)) == id_grass || out->get_id(int(x), int(y), int(z)) == id_mycelium)
+			if ((current_block == id_grass || current_block == id_mycelium) && y / float(out->y_res) > 0.5f)
 			{
 				out->set_id(int(x), int(y), int(z), id_sand);
 			}
+
+			break;
+		}
+		else if (y / float(out->y_res) > 0.5f)
+		{
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x, y, z));
+
+			out->set_id(int(x), int(y), int(z), id_water);
+			
+			break;
 		}
 	}
 
-	// Plant trees.
+	// Create submerged beaches and flood water.
 
-	if (mushroom_world)
+	while (flood_water.size() > 0)
 	{
-		goto done_trees;
+		unsigned int x = std::get<0>(flood_water[flood_water.size() - 1]);
+		unsigned int y = std::get<1>(flood_water[flood_water.size() - 1]);
+		unsigned int z = std::get<2>(flood_water[flood_water.size() - 1]);
+
+		flood_water.pop_back();
+
+		// Right neighbor.
+
+		block_id right = out->get_id_safe(x + 1, y, z);
+
+		if (right == id_air)
+		{
+			out->set_id(x + 1, y, z, id_water);
+
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x + 1, y, z));
+		}
+		else if (right != id_water)
+		{
+			out->set_id_safe(x + 1, y, z, id_sand);
+		}
+
+		// Left neighbor.
+
+		block_id left = out->get_id_safe(x - 1, y, z);
+
+		if (left == id_air)
+		{
+			out->set_id(x - 1, y, z, id_water);
+
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x - 1, y, z));
+		}
+		else if (left != id_water)
+		{
+			out->set_id_safe(x - 1, y, z, id_sand);
+		}
+
+		// Front neighbor.
+
+		block_id front = out->get_id_safe(x, y, z + 1);
+
+		if (front == id_air)
+		{
+			out->set_id(x, y, z + 1, id_water);
+
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x, y, z + 1));
+		}
+		else if (front != id_water)
+		{
+			out->set_id_safe(x, y, z + 1, id_sand);
+		}
+
+		// Back neighbor.
+
+		block_id back = out->get_id_safe(x, y, z - 1);
+
+		if (back == id_air)
+		{
+			out->set_id(x, y, z - 1, id_water);
+
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x, y, z - 1));
+		}
+		else if (back != id_water)
+		{
+			out->set_id_safe(x, y, z - 1, id_sand);
+		}
+
+		// Bottom neighbor.
+
+		block_id bottom = out->get_id_safe(x, y + 1, z);
+
+		if (bottom == id_air)
+		{
+			out->set_id(x, y + 1, z, id_water);
+
+			flood_water.push_back(std::tuple<unsigned int, unsigned int, unsigned int>(x, y + 1, z));
+		}
+		else if (bottom != id_water)
+		{
+			out->set_id_safe(x, y + 1, z, id_sand);
+		}
 	}
 
 	// Plant trees.
@@ -399,7 +488,7 @@ void generate_world(world* out, unsigned int seed)
 						}
 					}
 				}
-				
+
 				break;
 			}
 		}
