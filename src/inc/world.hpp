@@ -112,6 +112,21 @@ struct world
 		return voxel_get_artificial(voxels[x + x_res * (y + y_res * z)]);
 	}
 
+	// Get the artificial lighting information of the voxel at the second 
+	// specified coordinates, if the second specified coordinates are within
+	// the bounds of the world. If not, return the natural lighting 
+	// information of the voxel at the first specified coordinates.
+
+	inline unsigned char get_artificial_edge(unsigned int x1, unsigned int y1, unsigned int z1, unsigned int x2, unsigned int y2, unsigned int z2)
+	{
+		if (x2 < 0 || y2 < 0 || z2 < 0 || x2 > x_res - 1 || y2 > y_res - 1 || z2 > z_res - 1)
+		{
+			return voxel_get_artificial(voxels[x1 + x_res * (y1 + y_res * z1)]);
+		}
+
+		return voxel_get_artificial(voxels[x2 + x_res * (y2 + y_res * z2)]);
+	}
+
 	// Set the block_id information of the voxel at the specified coordinates.
 
 	inline void set_id(unsigned int x, unsigned int y, unsigned int z, block_id id)
