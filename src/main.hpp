@@ -1,6 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 // GLM is used as the mathematics library.
 
