@@ -155,6 +155,18 @@ int main(int argc, char** argv)
     float player_vy = 0.0f;
     float player_vz = 0.0f; 
 
+    // Define the player's acceleration constant.
+
+	const float acceleration = 0.025f;
+
+	// Define the player's friction constant.
+
+	const float friction = 0.9f;
+
+    // When the block_timer is 0, a block may be destroyed or placed.
+
+    int block_timer = 0;
+
     // If the save file exists, load the_world from the save file. Otherwise,
     // generate a new world and save it to the save file.
 
@@ -197,13 +209,9 @@ int main(int argc, char** argv)
 
     accessor* the_accessor = allocate_accessor(the_world);
 
-	// Define the player's acceleration constant.
+    // Define the view distance.
 
-	const float acceleration = 0.025f;
-
-	// Define the player's friction constant.
-
-	const float friction = 0.9f;
+    float view_distance = 256.0f;
 
     // Create variables to store the position of the mouse pointer, the state 
     // of the mouse buttons, and the relative mouse mode.
@@ -470,7 +478,7 @@ int main(int argc, char** argv)
 
 			// Pass the fog distance to the block_shader_program.
 
-			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), the_world->x_res * the_world->x_res / 2.0f);
+			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance);
 
 			// Pass the current time (in seconds) to the block_shader_program.
 
@@ -484,7 +492,20 @@ int main(int argc, char** argv)
 
 			for (int i = 0; i < the_accessor->chunk_count; i++)
 			{
-				render_chunk(the_accessor->the_chunks[i]);
+				chunk* the_chunk = the_accessor->the_chunks[i];
+
+				float ccx = the_chunk->x + (the_chunk->x_res / 2);
+				float ccy = the_chunk->y + (the_chunk->y_res / 2);
+				float ccz = the_chunk->z + (the_chunk->z_res / 2);
+
+				float dx = ccx - player_x;
+				float dy = ccy - player_y;
+				float dz = ccz - player_z;
+
+				if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
+				{
+					render_chunk(the_chunk);
+				}
 			}
 
 			// Disable writing to the depth buffer.
@@ -501,7 +522,20 @@ int main(int argc, char** argv)
 
 			for (int i = 0; i < the_accessor->chunk_count; i++)
 			{
-				render_chunk_water(the_accessor->the_chunks[i]);
+				chunk* the_chunk = the_accessor->the_chunks[i];
+
+				float ccx = the_chunk->x + (the_chunk->x_res / 2);
+				float ccy = the_chunk->y + (the_chunk->y_res / 2);
+				float ccz = the_chunk->z + (the_chunk->z_res / 2);
+
+				float dx = ccx - player_x;
+				float dy = ccy - player_y;
+				float dz = ccz - player_z;
+
+				if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
+				{
+					render_chunk_water(the_chunk);
+				}
 			}
 
 			// Enable writing to the depth buffer.
