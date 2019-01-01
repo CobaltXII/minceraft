@@ -1,6 +1,6 @@
-// Returns true if a face should be hidden, otherwise returns false.
+// Returns true if a face should be shown, otherwise returns false.
 
-inline bool hide_face(block_id face, block_id neighbor)
+inline bool show_face(block_id face, block_id neighbor, int face_id)
 {
 	bool hide = is_transparent(neighbor);
 
@@ -108,17 +108,17 @@ void world_subset_to_mesh
 				// that are never going to be rendered (hidden faces) to be 
 				// culled.
 
-				bool visible_top = hide_face(voxel_id, input->get_id_safe(cx, cy - 1, cz));
+				bool visible_top = show_face(voxel_id, input->get_id_safe(cx, cy - 1, cz), 0);
 
-				bool visible_bottom = hide_face(voxel_id, input->get_id_safe(cx, cy + 1, cz));
+				bool visible_bottom = show_face(voxel_id, input->get_id_safe(cx, cy + 1, cz), 1);
 
-				bool visible_left = hide_face(voxel_id, input->get_id_safe(cx - 1, cy, cz));
+				bool visible_left = show_face(voxel_id, input->get_id_safe(cx - 1, cy, cz), 2);
 
-				bool visible_right = hide_face(voxel_id, input->get_id_safe(cx + 1, cy, cz));
+				bool visible_right = show_face(voxel_id, input->get_id_safe(cx + 1, cy, cz), 3);
 
-				bool visible_front = hide_face(voxel_id, input->get_id_safe(cx, cy, cz - 1));
+				bool visible_front = show_face(voxel_id, input->get_id_safe(cx, cy, cz - 1), 4);
 
-				bool visible_back = hide_face(voxel_id, input->get_id_safe(cx, cy, cz + 1));
+				bool visible_back = show_face(voxel_id, input->get_id_safe(cx, cy, cz + 1), 5);
 
 				// Generate visible faces and write them to the target array,
 				// using ptr as a 'stream writer'.
@@ -290,30 +290,34 @@ void world_subset_to_water_mesh
 				// that are never going to be rendered (hidden faces) to be 
 				// culled.
 
-				bool visible_top = hide_face(voxel_id, input->get_id_safe(cx, cy - 1, cz));
+				bool visible_top = show_face(voxel_id, input->get_id_safe(cx, cy - 1, cz), 0);
 
-				bool visible_bottom = hide_face(voxel_id, input->get_id_safe(cx, cy + 1, cz));
+				bool visible_bottom = show_face(voxel_id, input->get_id_safe(cx, cy + 1, cz), 1);
 
-				bool visible_left = hide_face(voxel_id, input->get_id_safe(cx - 1, cy, cz));
+				bool visible_left = show_face(voxel_id, input->get_id_safe(cx - 1, cy, cz), 2);
 
-				bool visible_right = hide_face(voxel_id, input->get_id_safe(cx + 1, cy, cz));
+				bool visible_right = show_face(voxel_id, input->get_id_safe(cx + 1, cy, cz), 3);
 
-				bool visible_front = hide_face(voxel_id, input->get_id_safe(cx, cy, cz - 1));
+				bool visible_front = show_face(voxel_id, input->get_id_safe(cx, cy, cz - 1), 4);
 
-				bool visible_back = hide_face(voxel_id, input->get_id_safe(cx, cy, cz + 1));
+				bool visible_back = show_face(voxel_id, input->get_id_safe(cx, cy, cz + 1), 5);
+
+				// Top level water should be rendered as a short block (15/16 pixels tall).
+
+				float top_level_water = 0.0f;
 
 				// Generate visible faces and write them to the target array,
 				// using ptr as a 'stream writer'.
 
 				if (visible_top)
 				{
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 				}
 
 				if (visible_bottom)
@@ -329,46 +333,58 @@ void world_subset_to_water_mesh
 
 				if (visible_left)
 				{
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 				}
 
 				if (visible_right)
 				{
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 				}
 
 				if (visible_front)
 				{
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 				}
 
 				if (visible_back)
 				{
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
 					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
 					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
+					*(ptr++) = 0.0f + cx; *(ptr++) = -top_level_water - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 				}
 			}
 		}
