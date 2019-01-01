@@ -213,6 +213,10 @@ int main(int argc, char** argv)
 
     float view_distance = 256.0f;
 
+    // Define the reach distance.
+
+    float reach_distance = 8.0f;
+
     // Create variables to store the position of the mouse pointer, the state 
     // of the mouse buttons, and the relative mouse mode.
 
@@ -395,6 +399,58 @@ int main(int argc, char** argv)
 		player_x += player_vx;
 		player_y += player_vy;
 		player_z += player_vz;
+		// Stupid testing.
+
+		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
+		{
+			float px = player_x;
+			float py = player_y;
+			float pz = player_z;
+
+			float ix = -sin(glm::radians(-rot_y_deg));
+			float iy = -tan(glm::radians(-rot_x_deg));
+			float iz = -cos(glm::radians(-rot_y_deg));
+
+			float total_distance = 0.0f;
+
+			while (true)
+			{
+				// Check for collisions.
+
+				block_id collision = the_world->get_id_safe(px, py, pz);
+
+				if (collision != id_air && collision != id_null)
+				{
+					if (sdl_mouse_l)
+					{
+						px -= ix * 0.001f;
+						py -= iy * 0.001f;
+						pz -= iz * 0.001f;
+
+						the_accessor->set_id_safe(px, py, pz, id_cobblestone);
+					}
+					else
+					{
+						the_accessor->set_id_safe(px, py, pz, id_air);
+					}
+
+					block_timer = 10;
+
+					break;
+				}
+
+				px += ix * 0.001f;
+				py += iy * 0.001f;
+				pz += iz * 0.001f;
+
+				total_distance += 0.001f;
+
+				if (total_distance > reach_distance)
+				{
+					break;
+				}
+			}
+		}
 
 		// Update all modified chunks.
 
