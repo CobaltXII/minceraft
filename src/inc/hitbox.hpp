@@ -73,3 +73,18 @@ float hitbox_y_depth(hitbox a, hitbox b)
 	}
 }
 
+// Get the Z depth of two intersecting hitboxes.
+
+float hitbox_z_depth(hitbox a, hitbox b)
+{
+	if (a.z + a.zr > b.z + b.zr)
+	{
+		return (b.z + b.zr) - a.z + eps;
+	}
+	else
+	{
+		return b.z - (a.z + a.zr) - eps;
+	}
+}
+
+#undef eps
