@@ -45,9 +45,7 @@ inline bool hitbox_intersect(hitbox a, hitbox b)
 
 // Get the X depth of two intersecting hitboxes.
 
-#define eps 0.00128f
-
-inline float hitbox_x_depth(hitbox a, hitbox b)
+inline float hitbox_x_depth(hitbox a, hitbox b, float eps = 0.00128f)
 {
 	if (a.x + a.xr > b.x + b.xr)
 	{
@@ -61,7 +59,7 @@ inline float hitbox_x_depth(hitbox a, hitbox b)
 
 // Get the Y depth of two intersecting hitboxes.
 
-inline float hitbox_y_depth(hitbox a, hitbox b)
+inline float hitbox_y_depth(hitbox a, hitbox b, float eps = 0.00128f)
 {
 	if (a.y + a.yr > b.y + b.yr)
 	{
@@ -75,7 +73,7 @@ inline float hitbox_y_depth(hitbox a, hitbox b)
 
 // Get the Z depth of two intersecting hitboxes.
 
-inline float hitbox_z_depth(hitbox a, hitbox b)
+inline float hitbox_z_depth(hitbox a, hitbox b, float eps = 0.00128f)
 {
 	if (a.z + a.zr > b.z + b.zr)
 	{
@@ -86,5 +84,3 @@ inline float hitbox_z_depth(hitbox a, hitbox b)
 		return b.z - (a.z + a.zr) - eps;
 	}
 }
-
-#undef eps
