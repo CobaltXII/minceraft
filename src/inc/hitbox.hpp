@@ -30,3 +30,15 @@ struct hitbox
 		zr = _zr;
 	}	
 };
+
+// Check if two hitboxes intersect.
+
+inline bool hitbox_intersect(hitbox a, hitbox b)
+{
+	return
+	(
+		(a.x <= b.x + b.xr && a.x + a.xr >= b.x) &&
+		(a.y <= b.y + b.yr && a.y + a.yr >= b.y) &&
+		(a.z <= b.z + b.zr && a.z + a.zr >= b.z)
+	);
+}
