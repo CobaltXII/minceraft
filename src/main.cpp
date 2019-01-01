@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 
 	SDL_Window* sdl_window = SDL_CreateWindow
 	(
-		"Minceraft 0.2.45",
+		"Minceraft 0.2.72",
 
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
