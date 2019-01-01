@@ -192,7 +192,7 @@ int main(int argc, char** argv)
     	player_x = float(the_world->x_res) / 2.0f;
 
     	player_y = 0.0f;
-    	
+
     	player_z = float(the_world->z_res) / 2.0f;
 
     	save_world_to_file
@@ -206,6 +206,8 @@ int main(int argc, char** argv)
     		path_to_level
     	);
     }
+
+    player_y = 0.0f;
 
     // Allocate a new accessor* from the_world.
 
@@ -434,45 +436,50 @@ int main(int argc, char** argv)
 
 		// Do collision detection and response.
 
-		player_hitbox.x += player_vx;
+		int precision = 64;
 
-		for (int i = 0; i < near_hitboxes.size(); i++)
+		for (int p = 0; p < precision; p++)
 		{
-			hitbox near_hitbox = near_hitboxes[i];
+			player_hitbox.x += player_vx / precision;
 
-			if (hitbox_intersect(player_hitbox, near_hitbox))
+			for (int i = 0; i < near_hitboxes.size(); i++)
 			{
-				player_hitbox.x += hitbox_x_depth(player_hitbox, near_hitbox);
+				hitbox near_hitbox = near_hitboxes[i];
 
-				player_vx = 0.0f;
+				if (hitbox_intersect(player_hitbox, near_hitbox))
+				{
+					player_hitbox.x += hitbox_x_depth(player_hitbox, near_hitbox);
+
+					player_vx = 0.0f;
+				}
 			}
-		}
 
-		player_hitbox.y += player_vy;
+			player_hitbox.y += player_vy / precision;
 
-		for (int i = 0; i < near_hitboxes.size(); i++)
-		{
-			hitbox near_hitbox = near_hitboxes[i];
-
-			if (hitbox_intersect(player_hitbox, near_hitbox))
+			for (int i = 0; i < near_hitboxes.size(); i++)
 			{
-				player_hitbox.y += hitbox_y_depth(player_hitbox, near_hitbox);
+				hitbox near_hitbox = near_hitboxes[i];
 
-				player_vy = 0.0f;
+				if (hitbox_intersect(player_hitbox, near_hitbox))
+				{
+					player_hitbox.y += hitbox_y_depth(player_hitbox, near_hitbox);
+
+					player_vy = 0.0f;
+				}
 			}
-		}
 
-		player_hitbox.z += player_vz;
+			player_hitbox.z += player_vz / precision;
 
-		for (int i = 0; i < near_hitboxes.size(); i++)
-		{
-			hitbox near_hitbox = near_hitboxes[i];
-
-			if (hitbox_intersect(player_hitbox, near_hitbox))
+			for (int i = 0; i < near_hitboxes.size(); i++)
 			{
-				player_hitbox.z += hitbox_z_depth(player_hitbox, near_hitbox);
+				hitbox near_hitbox = near_hitboxes[i];
 
-				player_vz = 0.0f;
+				if (hitbox_intersect(player_hitbox, near_hitbox))
+				{
+					player_hitbox.z += hitbox_z_depth(player_hitbox, near_hitbox);
+
+					player_vz = 0.0f;
+				}
 			}
 		}
 
