@@ -12,6 +12,21 @@ By CobaltXII
 
 int main(int argc, char** argv)
 {
+	// Take command line arguments.
+
+	std::string path_to_level = "level.dat";
+
+	if (argc == 2)
+	{
+		path_to_level = std::string(argv[1]);
+	}
+	else if (argc != 1)
+	{
+		std::cout << "Usage: " << argv[0] << " [path-to-level]" << std::endl;
+
+		exit(16);
+	}
+
 	// Initialize SDL.
 
 	if (SDL_Init(SDL_INIT_EVERYTHING))
@@ -143,7 +158,7 @@ int main(int argc, char** argv)
     // If the save file exists, load the_world from the save file. Otherwise,
     // generate a new world and save it to the save file.
 
-    if (std::ifstream("level.dat").good())
+    if (std::ifstream(path_to_level).good())
     {
     	load_world_from_file
     	(
@@ -153,7 +168,7 @@ int main(int argc, char** argv)
     		player_y,
     		player_z,
 
-    		"level.dat"
+    		path_to_level
     	);
     }
     else
@@ -174,7 +189,7 @@ int main(int argc, char** argv)
     		player_y,
     		player_z,
 
-    		"level.dat"
+    		path_to_level
     	);
     }
 
@@ -550,7 +565,7 @@ int main(int argc, char** argv)
 		player_y,
 		player_z,
 
-		"level.dat"
+		path_to_level
 	);
 
     // Destroy all Minceraft related objects.
