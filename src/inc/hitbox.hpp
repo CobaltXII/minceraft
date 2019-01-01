@@ -58,3 +58,18 @@ float hitbox_x_depth(hitbox a, hitbox b)
 		return b.x - (a.x + a.xr) - eps;
 	}
 }
+
+// Get the Y depth of two intersecting hitboxes.
+
+float hitbox_y_depth(hitbox a, hitbox b)
+{
+	if (a.y + a.yr > b.y + b.yr)
+	{
+		return (b.y + b.yr) - a.y + eps;
+	}
+	else
+	{
+		return b.y - (a.y + a.yr) - eps;
+	}
+}
+
