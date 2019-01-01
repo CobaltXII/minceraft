@@ -390,15 +390,94 @@ int main(int argc, char** argv)
 			player_vy += acceleration;
 		}
 
-		// Update the player's velocity and position.
+		// Multiply the player's velocity by the player's friction constant.
 
 		player_vx *= friction;
 		player_vy *= friction;
 		player_vz *= friction;
 
-		player_x += player_vx;
-		player_y += player_vy;
-		player_z += player_vz;
+		// Create a list of hitboxes of nearby blocks.
+
+		std::vector<hitbox> near_hitboxes;
+
+		int b_res = 3;
+
+		for (int x = -b_res; x <= b_res; x++)
+		for (int y = -b_res; y <= b_res; y++)
+		for (int z = -b_res; z <= b_res; z++)
+		{
+			block_id near_id = the_world->get_id_safe(player_x + x, player_y + y, player_z + z);
+
+			if (near_id != id_air && near_id != id_null)
+			{
+				near_hitboxes.push_back
+				(
+					hitbox
+					(
+						floor(player_x + x),
+						floor(player_y + y),
+						floor(player_z + z),
+
+						1.0f,
+						1.0f,
+						1.0f
+					)
+				);
+			}
+		}
+
+		// Define the player's hitbox.
+
+		hitbox player_hitbox = hitbox(player_x, player_y, player_z, 0.6f, 1.8f, 0.6f);
+
+		// Do collision detection.
+
+		player_hitbox.x += player_vx;
+
+		for (int i = 0; i < near_hitboxes.size(); i++)
+		{
+			hitbox near_hitbox = near_hitboxes[i];
+
+			if (hitbox_intersect(player_hitbox, near_hitbox))
+			{
+				player_hitbox.x += hitbox_x_depth(player_hitbox, near_hitbox);
+
+				player_vx = 0.0f;
+			}
+		}
+
+		player_hitbox.y += player_vy;
+
+		for (int i = 0; i < near_hitboxes.size(); i++)
+		{
+			hitbox near_hitbox = near_hitboxes[i];
+
+			if (hitbox_intersect(player_hitbox, near_hitbox))
+			{
+				player_hitbox.y += hitbox_y_depth(player_hitbox, near_hitbox);
+
+				player_vy = 0.0f;
+			}
+		}
+
+		player_hitbox.z += player_vz;
+
+		for (int i = 0; i < near_hitboxes.size(); i++)
+		{
+			hitbox near_hitbox = near_hitboxes[i];
+
+			if (hitbox_intersect(player_hitbox, near_hitbox))
+			{
+				player_hitbox.z += hitbox_z_depth(player_hitbox, near_hitbox);
+
+				player_vz = 0.0f;
+			}
+		}
+
+		player_x = player_hitbox.x;
+		player_y = player_hitbox.y;
+		player_z = player_hitbox.z;
+
 		// Stupid testing.
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
@@ -521,7 +600,7 @@ int main(int argc, char** argv)
 
 				// Generate the model matrix.
 
-				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-player_x, player_y, -player_z));
+				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-player_x - player_hitbox.xr / 2.0f, player_y + 0.2f, -player_z - player_hitbox.zr / 2.0f));
 
 				// Pass the matrices to the block_shader_program.
 
@@ -632,6 +711,13 @@ int main(int argc, char** argv)
 			int frame_sleep_time = round(1000.0f / 60.0f - frame_elapsed_time);
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(frame_sleep_time));
+		}
+
+		// Decrement the block timer, if the block timer is not equal to 0.
+
+		if (block_timer != 0)
+		{
+			block_timer--;
 		}
 
 		// Increment the iteration counter. Print the framerate every 60 
