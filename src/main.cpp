@@ -161,7 +161,7 @@ int main(int argc, char** argv)
 
 	// Define the player's friction constant.
 
-	const float friction = 0.9f;
+	const float friction = 0.92f;
 
     // When the block_timer is 0, a block may be destroyed or placed.
 
@@ -206,8 +206,6 @@ int main(int argc, char** argv)
     		path_to_level
     	);
     }
-
-    player_y = 0.0f;
 
     // Allocate a new accessor* from the_world.
 
