@@ -190,7 +190,9 @@ int main(int argc, char** argv)
     	generate_world(the_world, time(NULL));
 
     	player_x = float(the_world->x_res) / 2.0f;
-    	player_y = float(the_world->y_res) / 2.0f;
+
+    	player_y = 0.0f;
+    	
     	player_z = float(the_world->z_res) / 2.0f;
 
     	save_world_to_file
