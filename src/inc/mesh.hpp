@@ -88,33 +88,21 @@ void world_subset_to_mesh
 
 				float layer_back = cube_face_info->l_back;
 
-				// Get the natural and artificial floating-point lighting 
-				// values of the current voxel.
-
-				float voxel_light_natural = input->get_natural(cx, cy, cz) / 15.0f;
-
-				float voxel_light_artificial = input->get_artificial(cx, cy, cz) / 15.0f;
-
-				// Get the final voxel floating-point lighting value by 
-				// choosing the largest lighting component of the voxel.
-
-				float voxel_light = std::max(voxel_light_natural, voxel_light_artificial);
-
 				// Calculate the lighting value of each face by multiplying 
-				// the final lighting value of the current voxel by a constant
-				// coefficient.
+				// the final lighting value of the neighboring voxels by a 
+				// constant coefficient.
 
-				float lighting_top = 1.0f * voxel_light;
+				float lighting_top = 1.0f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy - 1, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy - 1, cz) / 15.0f);
 
-				float lighting_bottom = 0.65f * voxel_light;
+				float lighting_bottom = 0.65f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy + 1, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy + 1, cz) / 15.0f);
 
-				float lighting_left = 0.75f * voxel_light;
+				float lighting_left = 0.75f * std::max(input->get_natural_edge(cx, cy, cz, cx - 1, cy, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx - 1, cy, cz) / 15.0f);
 
-				float lighting_right = 0.75f * voxel_light;
+				float lighting_right = 0.75f * std::max(input->get_natural_edge(cx, cy, cz, cx + 1, cy, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx + 1, cy, cz) / 15.0f);
 
-				float lighting_front = 0.9f * voxel_light;
+				float lighting_front = 0.9f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy, cz - 1) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy, cz - 1) / 15.0f);
 
-				float lighting_back = 0.9f * voxel_light;
+				float lighting_back = 0.9f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy, cz + 1) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy, cz + 1) / 15.0f);
 
 				// Do hidden face culling. This optimization will cause faces
 				// that are never going to be rendered (hidden faces) to be 
@@ -181,24 +169,24 @@ void world_subset_to_mesh
 
 				if (visible_front)
 				{
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 				}
 
 				if (visible_back)
 				{
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 
-					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+					*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+					*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 				}
 			}
 		}
@@ -282,33 +270,21 @@ void world_subset_to_water_mesh
 
 				float layer_back = -cube_face_info->l_back;
 
-				// Get the natural and artificial floating-point lighting 
-				// values of the current voxel.
-
-				float voxel_light_natural = input->get_natural(cx, cy, cz) / 15.0f;
-
-				float voxel_light_artificial = input->get_artificial(cx, cy, cz) / 15.0f;
-
-				// Get the final voxel floating-point lighting value by 
-				// choosing the largest lighting component of the voxel.
-
-				float voxel_light = std::max(voxel_light_natural, voxel_light_artificial);
-
 				// Calculate the lighting value of each face by multiplying 
-				// the final lighting value of the current voxel by a constant
-				// coefficient.
+				// the final lighting value of the neighboring voxels by a 
+				// constant coefficient.
 
-				float lighting_top = 1.0f * voxel_light;
+				float lighting_top = 1.0f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy - 1, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy - 1, cz) / 15.0f);
 
-				float lighting_bottom = 0.65f * voxel_light;
+				float lighting_bottom = 0.65f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy + 1, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy + 1, cz) / 15.0f);
 
-				float lighting_left = 0.75f * voxel_light;
+				float lighting_left = 0.75f * std::max(input->get_natural_edge(cx, cy, cz, cx - 1, cy, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx - 1, cy, cz) / 15.0f);
 
-				float lighting_right = 0.75f * voxel_light;
+				float lighting_right = 0.75f * std::max(input->get_natural_edge(cx, cy, cz, cx + 1, cy, cz) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx + 1, cy, cz) / 15.0f);
 
-				float lighting_front = 0.9f * voxel_light;
+				float lighting_front = 0.9f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy, cz - 1) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy, cz - 1) / 15.0f);
 
-				float lighting_back = 0.9f * voxel_light;
+				float lighting_back = 0.9f * std::max(input->get_natural_edge(cx, cy, cz, cx, cy, cz + 1) / 15.0f, input->get_artificial_edge(cx, cy, cz, cx, cy, cz + 1) / 15.0f);
 
 				// Do hidden face culling. This optimization will cause faces
 				// that are never going to be rendered (hidden faces) to be 
