@@ -110,6 +110,8 @@ void generate_world(world* out, unsigned int seed)
 		goto done_trees;
 	}
 
+	// Plant trees.
+
 	for (int i = 0; i < out->x_res * out->z_res / 32; i++)
 	{
 		tree:
@@ -295,8 +297,6 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
-	done_trees:
-
 	// Plant large mushrooms.
 
 	int mushroom_count = out->x_res * out->z_res / 1024;
@@ -399,6 +399,8 @@ void generate_world(world* out, unsigned int seed)
 						}
 					}
 				}
+				
+				break;
 			}
 		}
 	}
