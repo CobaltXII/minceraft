@@ -430,7 +430,7 @@ int main(int argc, char** argv)
 
 		hitbox player_hitbox = hitbox(player_x, player_y, player_z, 0.6f, 1.8f, 0.6f);
 
-		// Do collision detection.
+		// Do collision detection and response.
 
 		player_hitbox.x += player_vx;
 
@@ -478,7 +478,7 @@ int main(int argc, char** argv)
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
 
-		// Stupid testing.
+		// Block placement and deletion testing.
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
 		{
@@ -598,7 +598,10 @@ int main(int argc, char** argv)
 				matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
 				matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
 
-				// Generate the model matrix.
+				// Generate the model matrix. The translation component must 
+				// be centered around the X and Z axes of the player hitbox,
+				// and must be a small amount lower than the top of the player
+				// hitbox.
 
 				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-player_x - player_hitbox.xr / 2.0f, player_y + 0.2f, -player_z - player_hitbox.zr / 2.0f));
 
