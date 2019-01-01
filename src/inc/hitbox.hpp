@@ -42,3 +42,19 @@ inline bool hitbox_intersect(hitbox a, hitbox b)
 		(a.z <= b.z + b.zr && a.z + a.zr >= b.z)
 	);
 }
+
+// Get the X depth of two intersecting hitboxes.
+
+#define eps 0.00128f
+
+float hitbox_x_depth(hitbox a, hitbox b)
+{
+	if (a.x + a.xr > b.x + b.xr)
+	{
+		return (b.x + b.xr) - a.x + eps;
+	}
+	else
+	{
+		return b.x - (a.x + a.xr) - eps;
+	}
+}
