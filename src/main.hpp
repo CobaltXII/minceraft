@@ -59,3 +59,5 @@
 #include <generator.hpp>
 
 #include <file.hpp>
+
+#include <hitbox.hpp>
