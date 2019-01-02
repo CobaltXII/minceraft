@@ -511,3 +511,11 @@ inline bool is_not_permeable_light(block_id id)
 
 	return true;
 }
+
+// Converts a slab block_id into it's corresponding double slab block_id. Will
+// return garbage on non-slab block_id's.
+
+inline block_id slab_to_double_slab(block_id slab)
+{
+	return block_id(slab - 6);
+}
