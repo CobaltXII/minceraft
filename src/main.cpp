@@ -596,47 +596,84 @@ int main(int argc, char** argv)
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
 		{
+			// The ray begins at the player's 'eye'.
+
 			float px = player_x + player_hitbox.xr / 2.0f;
 
 			float py = player_y + 0.2f;
 
 			float pz = player_z + player_hitbox.zr / 2.0f;
 
+			// Find the direction of the ray.
+
 			float ix = -sin(glm::radians(-rot_y_deg));
 			float iy = -tan(glm::radians(-rot_x_deg));
 			float iz = -cos(glm::radians(-rot_y_deg));
 
+			// Find the length of the ray.
+
 			float i_len = sqrt(ix * ix + iy * iy + iz * iz);
+
+			// Store the total distance travelled by the ray.
 
 			float total_distance = 0.0f;
 
+			// Raymarch the ray.
+
 			while (true)
 			{
-				// Check for collisions.
+				// Find the current block's block_id.
 
-				if (is_not_permeable_ray(the_world->get_id_safe(px, py, pz)))
+				block_id current_block = the_world->get_id_safe(px, py, pz);
+
+				// Check if the block can be destroyed or built on.
+
+				if (is_not_permeable_ray(current_block))
 				{
+					// Check for slab non-collisions.
+
+					if (is_slab(current_block) && py < floor(py) + 0.5f)
+					{
+						goto increment_ray;
+					}
+
 					if (sdl_mouse_l)
 					{
-						// Placing blocks.
+						// Check if the current block is a slab.
 
-						px -= ix * 0.001f;
-						py -= iy * 0.001f;
-						pz -= iz * 0.001f;
-
-						// Can't place blocks inside yourself!
-
-						hitbox new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
-
-						if (!hitbox_intersect(player_hitbox, new_block))
+						if (is_slab(current_block))
 						{
-							// Place the block.
+							// Change the current block into it's double slab 
+							// form.
 
-							the_accessor->set_id_safe(px, py, pz, id_oak_planks);
+							the_accessor->set_id_safe(px, py, pz, slab_to_double_slab(current_block));
 
 							block_timer = 10;
 
 							break;
+						}
+						else
+						{
+							// Place a block.
+
+							px -= ix * 0.001f;
+							py -= iy * 0.001f;
+							pz -= iz * 0.001f;
+
+							// Can't place blocks inside yourself!
+
+							hitbox new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
+
+							if (!hitbox_intersect(player_hitbox, new_block))
+							{
+								// Place the block.
+
+								the_accessor->set_id_safe(px, py, pz, id_stone_slab);
+
+								block_timer = 10;
+
+								break;
+							}
 						}
 					}
 					else
@@ -666,6 +703,8 @@ int main(int argc, char** argv)
 						break;
 					}
 				}
+
+				increment_ray:
 
 				px += ix * 0.001f;
 				py += iy * 0.001f;
