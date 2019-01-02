@@ -338,3 +338,24 @@ inline bool is_transparent(block_id id)
 	return false;
 }
 
+// Returns false if a block is permeable to players. Otherwise, returns true.
+
+inline bool is_not_permeable_mob(block_id id)
+{
+	if 
+	(
+		id == id_air ||
+
+		id == id_water ||
+
+		id == id_null ||
+
+		is_cross(id)
+	)
+	{
+		return false;
+	}
+
+	return true;
+}
+
