@@ -158,6 +158,10 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("rose")),
 
-		make_face_info_all(block_name_to_layer.at("dandelion"))
+		make_face_info_all(block_name_to_layer.at("dandelion")),
+
+		make_face_info_all(block_name_to_layer.at("red_mushroom")),
+
+		make_face_info_all(block_name_to_layer.at("brown_mushroom"))
 	};
 }

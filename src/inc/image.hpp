@@ -19,6 +19,8 @@ std::vector<std::string> all_tex =
 
 	"brick",
 
+	"brown_mushroom",
+
 	"coal_ore",
 
 	"cobblestone",
@@ -62,6 +64,8 @@ std::vector<std::string> all_tex =
 	"oak_log_top",
 
 	"oak_planks",
+
+	"red_mushroom",
 
 	"rose",
 
