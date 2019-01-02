@@ -687,9 +687,23 @@ int main(int argc, char** argv)
 					}
 					else
 					{
-						if (the_world->get_id(px, py, pz) != id_water)
+						if (the_world->get_id_safe(px, py, pz) != id_water)
 						{
 							the_accessor->set_id_safe(px, py, pz, id_air);
+
+							if 
+							(
+								the_world->get_id_safe(px + 1, py, pz) == id_water ||
+								the_world->get_id_safe(px - 1, py, pz) == id_water ||
+
+								the_world->get_id_safe(px, py, pz + 1) == id_water ||
+								the_world->get_id_safe(px, py, pz - 1) == id_water ||
+
+								the_world->get_id_safe(px, py - 1, pz) == id_water
+							)
+							{
+								the_accessor->set_id_safe(px, py, pz, id_water);
+							}
 
 							block_timer = 10;
 
