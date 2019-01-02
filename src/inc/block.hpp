@@ -95,29 +95,8 @@ enum block_id
 
 	id_rose,
 
-inline bool is_transparent(block_id id)
-{
-	if 
-	(
-		id == id_air || 
-
-		id == id_oak_leaves || 
-
-		id == id_birch_leaves || 
 	id_dandelion,
 
-		id == id_water ||
-
-		id == id_glass ||
-
-		id == id_null
-	)
-	{
-		return true;
-	}
-
-	return false;
-}
 	id_null
 };
 
