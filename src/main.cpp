@@ -642,9 +642,11 @@ int main(int argc, char** argv)
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
 		{
-			float px = player_x;
-			float py = player_y;
-			float pz = player_z;
+			float px = player_x + player_hitbox.xr / 2.0f;
+
+			float py = player_y + 0.2f;
+
+			float pz = player_z + player_hitbox.zr / 2.0f;
 
 			float ix = -sin(glm::radians(-rot_y_deg));
 			float iy = -tan(glm::radians(-rot_x_deg));
