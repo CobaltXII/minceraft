@@ -8,23 +8,59 @@ By CobaltXII
 
 #include "main.hpp"
 
+// Print usage information.
+
+void print_usage(char** argv)
+{
+	std::cout << "Usage: " << argv[0] << " ..." << std::endl;
+
+	std::cout << std::endl;
+
+	std::cout << "    -s <path-to-level> [x_res y_res z_res]" << std::endl;
+
+	std::cout << std::endl;
+
+	std::cout << "        Play singleplayer. If a world save exists at <path-to-level>, the.      " << std::endl;
+	std::cout << "        world is loaded and the given dimensions (if any) are ignored. If not,  " << std::endl;
+	std::cout << "        a new world is generated with the given dimensions and saved to         " << std::endl;
+	std::cout << "        <path-to-level>.                                                        " << std::endl;
+
+	std::cout << std::endl;
+
+	std::cout << "    -q [x_res y_res z_res]" << std::endl;
+
+	std::cout << std::endl;
+
+	std::cout << "        Play quickplay. A new world is generated with the given dimensions (if. " << std::endl;
+	std::cout << "        any) and is stored in memory for the duration of the gameplay.          " << std::endl;
+
+	exit(16);
+}
+
 // The entry point.
 
 int main(int argc, char** argv)
 {
-	// Take command line arguments.
+	// Print usage information if the command line was not used correctly. 
+	// Otherwise, parse the gamemode.
 
-	std::string path_to_level = "level.dat";
+	int gamemode;
 
-	if (argc == 2)
+	if (argc == 1)
 	{
-		path_to_level = std::string(argv[1]);
+		print_usage(argv);
 	}
-	else if (argc != 1)
+	else if (std::string(argv[1]) != "-s" && std::string(argv[1]) != "-q")
 	{
-		std::cout << "Usage: " << argv[0] << " [path-to-level]" << std::endl;
-
-		exit(16);
+		print_usage(argv);
+	}
+	else if (std::string(argv[1]) == "-s")
+	{
+		gamemode = 1;
+	}
+	else if (std::string(argv[1]) == "-q")
+	{
+		gamemode = 2;
 	}
 
 	// Initialize SDL.
@@ -167,45 +203,144 @@ int main(int argc, char** argv)
 
     int block_timer = 0;
 
-    // If the save file exists, load the_world from the save file. Otherwise,
-    // generate a new world and save it to the save file.
+    // Parse the command line arguments based on the gamemode.
 
-    if (std::ifstream(path_to_level).good())
-    {
-    	load_world_from_file
-    	(
-    		the_world, 
+    std::string path_to_level;
 
-    		player_x,
-    		player_y,
-    		player_z,
+    if (gamemode == 1)
+	{
+		// $ -s <path-to-level> [x_res y_res z_res]
 
-    		path_to_level
-    	);
-    }
-    else
-    {
-    	the_world = allocate_world(512, 128, 512);
+		unsigned int x_res;
+		unsigned int y_res;
+		unsigned int z_res;
+
+		if (argc == 3)
+		{
+			// $ -s <path-to-level> [256 128 256]
+
+			x_res = 256;
+
+			y_res = 128;
+
+			z_res = 256;
+		}
+		else if (argc == 6)
+		{
+			// $ -s <path-to-level> <x_res y_res z_res>
+
+			x_res = std::stoi(std::string(argv[3]));
+			y_res = std::stoi(std::string(argv[4]));
+			z_res = std::stoi(std::string(argv[5]));
+		}
+		else
+		{
+			// $ -s ?
+
+			print_usage(argv);
+		}
+
+		// Parse the <path-to-level> argument.
+
+		path_to_level = std::string(argv[2]);
+
+		// Check if a world at path_to_level exists.
+
+		if (std::ifstream(path_to_level).good())
+    	{
+    		// The world exists, so load it.
+
+    		load_world_from_file
+	    	(
+	    		the_world, 
+
+	    		player_x,
+	    		player_y,
+	    		player_z,
+
+	    		path_to_level
+	    	);
+    	}
+    	else
+    	{
+    		// The world does not exist, so generate a new world using the 
+    		// dimensions stored in *_res.
+
+			the_world = allocate_world(x_res, y_res, z_res);
+
+			// Generate a new world using the current time as the seed.
+
+	    	generate_world(the_world, time(NULL));
+
+	    	// Spawn the player at the top center.
+
+	    	player_x = float(the_world->x_res) / 2.0f;
+
+	    	player_y = 0.0f;
+
+	    	player_z = float(the_world->z_res) / 2.0f;
+
+	    	// Save the world to path_to_level.
+
+	    	save_world_to_file
+			(
+				the_world, 
+
+				player_x,
+				player_y,
+				player_z,
+
+				path_to_level
+			);
+    	}
+	}
+	else if (gamemode == 2)
+	{
+		// $ -q [x_res y_res z_res]
+
+		unsigned int x_res;
+		unsigned int y_res;
+		unsigned int z_res;
+
+		if (argc == 2)
+		{
+			// $ -q [128 128 128]
+
+			x_res = 128;
+			y_res = 128;
+			z_res = 128;
+		}
+		else if (argc == 5)
+		{
+			// $ -q <x_res y_res z_res>
+
+			x_res = std::stoi(std::string(argv[2]));
+			y_res = std::stoi(std::string(argv[3]));
+			z_res = std::stoi(std::string(argv[4]));
+		}
+		else
+		{
+			// $ -q ?
+
+			print_usage(argv);
+		}
+
+		// Allocate an empty world of the given size.
+
+		the_world = allocate_world(x_res, y_res, z_res);
+
+		// Generate a new world using the current time as the seed.
 
     	generate_world(the_world, time(NULL));
+
+    	// Spawn the player at the top center.
 
     	player_x = float(the_world->x_res) / 2.0f;
 
     	player_y = 0.0f;
 
     	player_z = float(the_world->z_res) / 2.0f;
-
-    	save_world_to_file
-    	(
-    		the_world, 
-
-    		player_x,
-    		player_y,
-    		player_z,
-
-    		path_to_level
-    	);
-    }
+	}
 
     // Allocate a new accessor* from the_world.
 
@@ -741,18 +876,21 @@ int main(int argc, char** argv)
 		}
     }
 
-    // Save the world to the save file.
+    if (gamemode == 1)
+    {
+    	// Save the world to the save file.
 
-    save_world_to_file
-	(
-		the_world, 
+	    save_world_to_file
+		(
+			the_world, 
 
-		player_x,
-		player_y,
-		player_z,
+			player_x,
+			player_y,
+			player_z,
 
-		path_to_level
-	);
+			path_to_level
+		);
+    }
 
     // Destroy all Minceraft related objects.
 
