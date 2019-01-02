@@ -666,13 +666,15 @@ int main(int argc, char** argv)
 
 				block_id collision = the_world->get_id_safe(px, py, pz);
 
-				if (collision != id_air && collision != id_null)
+				if (collision != id_air && collision != id_water && collision != id_null)
 				{
 					if (sdl_mouse_l)
 					{
 						px -= ix * 0.001f;
 						py -= iy * 0.001f;
 						pz -= iz * 0.001f;
+
+						// Can't place blocks inside yourself!
 
 						hitbox new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
 
@@ -687,6 +689,8 @@ int main(int argc, char** argv)
 					}
 					else
 					{
+						// Can't destroy water.
+						
 						if (the_world->get_id_safe(px, py, pz) != id_water)
 						{
 							the_accessor->set_id_safe(px, py, pz, id_air);
@@ -702,6 +706,8 @@ int main(int argc, char** argv)
 								the_world->get_id_safe(px, py - 1, pz) == id_water
 							)
 							{
+								// Water flooding.
+
 								the_accessor->set_id_safe(px, py, pz, id_water);
 							}
 
