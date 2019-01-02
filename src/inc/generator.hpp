@@ -498,38 +498,102 @@ void generate_world(world* out, unsigned int seed)
 
 	for (int i = 0; i < out->x_res * out->z_res / 512; i++)
 	{
+		// Pick a place to plant a patch of flowers.
+
 		int x_ = rand() % out->x_res;
 		int z_ = rand() % out->z_res;
 
+		// Choose a type of flower to plant.
+
+		block_id flower;
+
+		if (rand() % 2 == 0)
+		{
+			flower = id_dandelion;
+		}
+		else
+		{
+			flower = id_rose;
+		}
+
+		// Plant 16 potential flowers in the patch.
+
 		for (int j = 0; j < 16; j++)
 		{
+			// Choose a place to plant an individual flower.
+
 			int x = x_ + (rand() % 6) - (rand() % 6);
 			int z = z_ + (rand() % 6) - (rand() % 6);
 
 			if (!out->in_bounds(x, 0, z))
 			{
+				// Try again, this spot is out of bounds.
+
 				continue;
 			}
 
-			block_id flower;
-
-			if (rand() % 2 == 0)
-			{
-				flower = id_dandelion;
-			}
-			else
-			{
-				flower = id_rose;
-			}
+			// Find the highest grass block and plant a flower there.
 
 			for (int y = 0; y < out->y_res; y++)
 			{
-				if (out->get_id(x, y, z) == id_grass)
+				block_id current_block = out->get_id(x, y, z);
+
+				if (current_block != id_air)
 				{
-					out->set_id_safe(x, y - 1, z, flower);
+					if (current_block == id_grass)
+					{
+						out->set_id_safe(x, y - 1, z, flower);
+					}
 
 					break;
 				}
+			}
+		}
+	}
+
+	// Plant mushrooms.
+
+	for (int i = 0; i < out->x_res * out->z_res / 128; i++)
+	{
+		// Pick a place to plant a patch of mushrooms.
+
+		int x_ = rand() % out->x_res;
+		int y_ = rand() % out->y_res;
+		int z_ = rand() % out->z_res;
+
+		// Choose a type of mushroom to plant.
+
+		block_id mushroom;
+
+		if (rand() % 2 == 0)
+		{
+			mushroom = id_red_mushroom;
+		}
+		else
+		{
+			mushroom = id_brown_mushroom;
+		}
+
+		// Plant 24 potential mushrooms in the patch.
+
+		for (int j = 0; j < 24; j++)
+		{
+			// Choose a place to plant an individual mushroom.
+
+			int x = x_ + (rand() % 6) - (rand() % 6);
+			int y = y_ + (rand() % 6) - (rand() % 6);	
+			int z = z_ + (rand() % 6) - (rand() % 6);
+
+			if (!out->in_bounds(x, y, z) || !out->in_bounds(x, y + 1, z))
+			{
+				// Try again, this spot is out of bounds.
+
+				continue;
+			}
+
+			if (out->get_id(x, y + 1, z) == id_stone || out->get_id(x, y + 1, z) == id_grass || out->get_id(x, y + 1, z) == id_dirt)
+			{
+				out->set_id_safe_if_air(x, y, z, mushroom);
 			}
 		}
 	}
