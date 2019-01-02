@@ -690,7 +690,7 @@ int main(int argc, char** argv)
 					else
 					{
 						// Can't destroy water.
-						
+
 						if (the_world->get_id_safe(px, py, pz) != id_water)
 						{
 							the_accessor->set_id_safe(px, py, pz, id_air);
@@ -825,7 +825,7 @@ int main(int argc, char** argv)
 
 			// Pass the fog distance to the block_shader_program.
 
-			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance);
+			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance / 1.5f);
 
 			// Pass the current time (in seconds) to the block_shader_program.
 
