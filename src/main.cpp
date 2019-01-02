@@ -372,6 +372,10 @@ int main(int argc, char** argv)
 
     float reach_distance = 8.0f;
 
+    // Define the maximum chunk updates per frame.
+
+    unsigned int max_chunk_updates = 4;
+
     // Create variables to store the position of the mouse pointer, the state 
     // of the mouse buttons, and the relative mouse mode.
 
@@ -695,6 +699,8 @@ int main(int argc, char** argv)
 
 		// Update all modified chunks.
 
+		unsigned int chunk_updates = 0;
+
 		for (int i = 0; i < the_accessor->chunk_count; i++)
 		{
 			chunk*& the_chunk = the_accessor->the_chunks[i];
@@ -717,6 +723,13 @@ int main(int argc, char** argv)
 				deallocate_chunk(the_chunk);
 
 				the_chunk = new_chunk;
+
+				chunk_updates++;
+			}
+
+			if (chunk_updates == max_chunk_updates)
+			{
+				break;
 			}
 		}
 
