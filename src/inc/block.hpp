@@ -442,7 +442,9 @@ inline bool is_transparent(block_id id)
 
 		id == id_null ||
 
-		is_cross(id)
+		is_cross(id) ||
+
+		is_slab(id)
 	)
 	{
 		return true;
