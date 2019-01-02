@@ -374,7 +374,7 @@ int main(int argc, char** argv)
 
     // Define the maximum chunk updates per frame.
 
-    unsigned int max_chunk_updates = 4;
+    unsigned int max_chunk_updates = 16;
 
     // Create variables to store the position of the mouse pointer, the state 
     // of the mouse buttons, and the relative mouse mode.
@@ -565,9 +565,7 @@ int main(int argc, char** argv)
 		for (int y = -b_res; y <= b_res; y++)
 		for (int z = -b_res; z <= b_res; z++)
 		{
-			block_id near_id = the_world->get_id_safe(player_x + x, player_y + y, player_z + z);
-
-			if (near_id != id_air && near_id != id_water && near_id != id_null)
+			if (is_not_permeable_mob(the_world->get_id_safe(player_x + x, player_y + y, player_z + z)))
 			{
 				near_hitboxes.push_back
 				(
@@ -664,12 +662,12 @@ int main(int argc, char** argv)
 			{
 				// Check for collisions.
 
-				block_id collision = the_world->get_id_safe(px, py, pz);
-
-				if (collision != id_air && collision != id_water && collision != id_null)
+				if (is_not_permeable_ray(the_world->get_id_safe(px, py, pz)))
 				{
 					if (sdl_mouse_l)
 					{
+						// Placing blocks.
+
 						px -= ix * 0.001f;
 						py -= iy * 0.001f;
 						pz -= iz * 0.001f;
@@ -680,7 +678,9 @@ int main(int argc, char** argv)
 
 						if (!hitbox_intersect(player_hitbox, new_block))
 						{
-							the_accessor->set_id_safe(px, py, pz, id_cobblestone);
+							// Place the block.
+
+							the_accessor->set_id_safe(px, py, pz, id_oak_planks);
 
 							block_timer = 10;
 
@@ -689,32 +689,29 @@ int main(int argc, char** argv)
 					}
 					else
 					{
-						// Can't destroy water.
+						// Removing blocks.
 
-						if (the_world->get_id_safe(px, py, pz) != id_water)
+						the_accessor->set_id_safe(px, py, pz, id_air);
+
+						if 
+						(
+							the_world->get_id_safe(px + 1, py, pz) == id_water ||
+							the_world->get_id_safe(px - 1, py, pz) == id_water ||
+
+							the_world->get_id_safe(px, py, pz + 1) == id_water ||
+							the_world->get_id_safe(px, py, pz - 1) == id_water ||
+
+							the_world->get_id_safe(px, py - 1, pz) == id_water
+						)
 						{
-							the_accessor->set_id_safe(px, py, pz, id_air);
+							// Water flooding.
 
-							if 
-							(
-								the_world->get_id_safe(px + 1, py, pz) == id_water ||
-								the_world->get_id_safe(px - 1, py, pz) == id_water ||
-
-								the_world->get_id_safe(px, py, pz + 1) == id_water ||
-								the_world->get_id_safe(px, py, pz - 1) == id_water ||
-
-								the_world->get_id_safe(px, py - 1, pz) == id_water
-							)
-							{
-								// Water flooding.
-
-								the_accessor->set_id_safe(px, py, pz, id_water);
-							}
-
-							block_timer = 10;
-
-							break;
+							the_accessor->set_id_safe(px, py, pz, id_water);
 						}
+
+						block_timer = 10;
+
+						break;
 					}
 				}
 
