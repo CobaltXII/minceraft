@@ -20,7 +20,7 @@ void print_usage(char** argv)
 
 	std::cout << std::endl;
 
-	std::cout << "        Play singleplayer. If a world save exists at <path-to-level>, the.      " << std::endl;
+	std::cout << "        Play singleplayer. If a world save exists at <path-to-level>, the       " << std::endl;
 	std::cout << "        world is loaded and the given dimensions (if any) are ignored. If not,  " << std::endl;
 	std::cout << "        a new world is generated with the given dimensions and saved to         " << std::endl;
 	std::cout << "        <path-to-level>.                                                        " << std::endl;
@@ -31,7 +31,7 @@ void print_usage(char** argv)
 
 	std::cout << std::endl;
 
-	std::cout << "        Play quickplay. A new world is generated with the given dimensions (if. " << std::endl;
+	std::cout << "        Play quickplay. A new world is generated with the given dimensions (if  " << std::endl;
 	std::cout << "        any) and is stored in memory for the duration of the gameplay.          " << std::endl;
 
 	exit(16);
@@ -592,7 +592,8 @@ int main(int argc, char** argv)
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
 
-		// Block placement and deletion testing.
+		// Block placement and deletion testing. Move this to a seperate
+		// header called raymarch.hpp!
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
 		{
@@ -668,7 +669,7 @@ int main(int argc, char** argv)
 							{
 								// Place the block.
 
-								the_accessor->set_id_safe(px, py, pz, id_stone_slab);
+								the_accessor->set_id_safe(px, py, pz, id_cobblestone_slab);
 
 								block_timer = 10;
 
