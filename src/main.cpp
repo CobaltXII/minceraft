@@ -193,11 +193,11 @@ int main(int argc, char** argv)
 
     // Define the player's acceleration constant.
 
-	const float acceleration = 0.025f;
+	const float acceleration = 0.0256f;
 
 	// Define the player's friction constant.
 
-	const float friction = 0.92f;
+	const float friction = 0.9f;
 
     // When the block_timer is 0, a block may be destroyed or placed.
 
