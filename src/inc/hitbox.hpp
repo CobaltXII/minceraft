@@ -1,3 +1,5 @@
+#include <vector>
+
 // An axis-aligned bounding box.
 
 struct hitbox
@@ -82,5 +84,56 @@ inline float hitbox_z_depth(hitbox a, hitbox b, float eps = 0.00128f)
 	else
 	{
 		return b.z - (a.z + a.zr) - eps;
+	}
+}
+
+// Do collision detection and response on one dynamic hitbox with an array of 
+// several static hitboxes while applying velocity to the dynamic hitbox.
+
+void do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
+{
+	for (int p = 0; p < precision; p++)
+	{
+		object.x += vx / precision;
+
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			hitbox obstacle = obstacles[i];
+
+			if (hitbox_intersect(object, obstacle))
+			{
+				object.x += hitbox_x_depth(object, obstacle);
+
+				vx = 0.0f;
+			}
+		}
+
+		object.y += vy / precision;
+
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			hitbox obstacle = obstacles[i];
+
+			if (hitbox_intersect(object, obstacle))
+			{
+				object.y += hitbox_y_depth(object, obstacle);
+
+				vy = 0.0f;
+			}
+		}
+
+		object.z += vz / precision;
+
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			hitbox obstacle = obstacles[i];
+
+			if (hitbox_intersect(object, obstacle))
+			{
+				object.z += hitbox_z_depth(object, obstacle);
+
+				vz = 0.0f;
+			}
+		}
 	}
 }
