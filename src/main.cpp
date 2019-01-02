@@ -567,7 +567,7 @@ int main(int argc, char** argv)
 		{
 			block_id near_id = the_world->get_id_safe(player_x + x, player_y + y, player_z + z);
 
-			if (near_id != id_air && near_id != id_null)
+			if (near_id != id_air && near_id != id_water && near_id != id_null)
 			{
 				near_hitboxes.push_back
 				(
