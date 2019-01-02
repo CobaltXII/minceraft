@@ -102,6 +102,8 @@ enum block_id
 	id_brown_mushroom,
 
 	id_double_stone_slab,
+
+	id_double_sandstone_slab,
 	id_null
 };
 
@@ -206,6 +208,8 @@ std::vector<std::string> block_id_to_string =
 	"brown_mushroom",
 
 	"double_stone_slab",
+
+	"double_sandstone_slab",
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -309,6 +313,8 @@ std::vector<std::string> block_id_to_block_name =
 	"Brown Mushroom"
 
 	"Double Stone Slab",
+
+	"Double Sandstone Slab",
 
 };
 
