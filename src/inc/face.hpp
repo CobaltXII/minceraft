@@ -172,5 +172,7 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("birch_planks")),
 
+		make_face_info_all(block_name_to_layer.at("cobblestone")),
+
 	};
 }

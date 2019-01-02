@@ -109,6 +109,8 @@ enum block_id
 
 	id_double_birch_wood_slab,
 
+	id_double_cobblestone_slab,
+
 	id_null
 };
 
@@ -220,6 +222,8 @@ std::vector<std::string> block_id_to_string =
 
 	"double_birch_wood_slab",
 
+	"double_cobblestone_slab",
+
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -329,6 +333,8 @@ std::vector<std::string> block_id_to_block_name =
 	"Double Oak Wood Slab",
 
 	"Double Birch Wood Slab",
+
+	"Double Cobblestone Slab",
 
 };
 
