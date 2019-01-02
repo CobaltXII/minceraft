@@ -656,6 +656,8 @@ int main(int argc, char** argv)
 			float iy = -tan(glm::radians(-rot_x_deg));
 			float iz = -cos(glm::radians(-rot_y_deg));
 
+			float i_len = sqrt(ix * ix + iy * iy + iz * iz);
+
 			float total_distance = 0.0f;
 
 			while (true)
@@ -677,23 +679,30 @@ int main(int argc, char** argv)
 						if (!hitbox_intersect(player_hitbox, new_block))
 						{
 							the_accessor->set_id_safe(px, py, pz, id_cobblestone);
+
+							block_timer = 10;
+
+							break;
 						}
 					}
 					else
 					{
-						the_accessor->set_id_safe(px, py, pz, id_air);
+						if (the_world->get_id(px, py, pz) != id_water)
+						{
+							the_accessor->set_id_safe(px, py, pz, id_air);
+
+							block_timer = 10;
+
+							break;
+						}
 					}
-
-					block_timer = 10;
-
-					break;
 				}
 
 				px += ix * 0.001f;
 				py += iy * 0.001f;
 				pz += iz * 0.001f;
 
-				total_distance += 0.001f;
+				total_distance += i_len * 0.001f;
 
 				if (total_distance > reach_distance)
 				{
