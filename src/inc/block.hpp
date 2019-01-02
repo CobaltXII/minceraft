@@ -399,6 +399,31 @@ inline bool is_cross(block_id id)
 	return false;
 }
 
+// Returns true if a block is a slab. Otherwise, returns false.
+
+inline bool is_slab(block_id id)
+{
+	if
+	(
+		id == id_stone_slab ||
+
+		id == id_sandstone_slab ||
+
+		id == id_oak_wood_slab ||
+
+		id == id_birch_wood_slab ||
+
+		id == id_cobblestone_slab ||
+
+		id == id_brick_slab
+	)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 // Returns true if the block is not opaque. Otherwise, returns false.
 
 inline bool is_transparent(block_id id)
