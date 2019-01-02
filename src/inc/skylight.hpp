@@ -6,8 +6,9 @@
 void propagate_skylight(world* out)
 {
 	// For each vertical strip of land, start with a lighting value of 15. Go
-	// downwards, if the block is air, stay at light level 15. If not, set 
-	// everything below it to 0.
+	// downwards, if the block is permeable to light, stay at light level 15. 
+	// If not, set everything below it to 0. Add all X and Z neighbors to the 
+	// queue.
 
 	for (int x = 0; x < out->x_res; x++)
 	{
@@ -19,9 +20,7 @@ void propagate_skylight(world* out)
 			{
 				out->set_natural(x, y, z, natural);
 
-				block_id current = out->get_id(x, y, z);
-
-				if (current != id_air && current != id_glass)
+				if (is_not_permeable_light(out->get_id(x, y, z)))
 				{
 					natural = 0;
 				}
@@ -152,8 +151,9 @@ void propagate_skylight_strip
 	int fz = cz + 1;
 
 	// For each vertical strip of land, start with a lighting value of 15. Go
-	// downwards, if the block is air, stay at light level 15. If not, set 
-	// everything below it to 0. Add all X and Z neighbors to the queue.
+	// downwards, if the block is permeable to light, stay at light level 15. 
+	// If not, set everything below it to 0. Add all X and Z neighbors to the 
+	// queue.
 
 	std::vector<std::tuple<unsigned int, unsigned int, unsigned int>> light_queue;
 
@@ -169,9 +169,7 @@ void propagate_skylight_strip
 
 				the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
 
-				block_id current = the_world->get_id(x, y, z);
-
-				if (current != id_air && current != id_glass)
+				if (is_not_permeable_light(the_world->get_id(x, y, z)))
 				{
 					natural = 0;
 				}
