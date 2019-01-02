@@ -672,7 +672,12 @@ int main(int argc, char** argv)
 						py -= iy * 0.001f;
 						pz -= iz * 0.001f;
 
-						the_accessor->set_id_safe(px, py, pz, id_cobblestone);
+						hitbox new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
+
+						if (!hitbox_intersect(player_hitbox, new_block))
+						{
+							the_accessor->set_id_safe(px, py, pz, id_cobblestone);
+						}
 					}
 					else
 					{
