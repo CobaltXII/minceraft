@@ -162,6 +162,8 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("red_mushroom")),
 
-		make_face_info_all(block_name_to_layer.at("brown_mushroom"))
+		make_face_info_all(block_name_to_layer.at("brown_mushroom")),
+
+		make_face_info_cap(block_name_to_layer.at("stone_slab_top"), block_name_to_layer.at("stone_slab_side")),
 	};
 }

@@ -77,6 +77,10 @@ std::vector<std::string> all_tex =
 
 	"sandstone_top",
 
+	"stone_slab_side",
+
+	"stone_slab_top",
+
 	"stone",
 
 	"water_0",
