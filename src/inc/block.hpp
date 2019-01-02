@@ -359,3 +359,21 @@ inline bool is_not_permeable_mob(block_id id)
 	return true;
 }
 
+// Returns false if a block is permeable to rays. Otherwise, returns true.
+
+inline bool is_not_permeable_ray(block_id id)
+{
+	if 
+	(
+		id == id_air ||
+
+		id == id_water ||
+
+		id == id_null
+	)
+	{
+		return false;
+	}
+
+	return true;
+}
