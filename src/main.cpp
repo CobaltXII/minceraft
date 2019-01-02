@@ -565,21 +565,18 @@ int main(int argc, char** argv)
 		for (int y = -b_res; y <= b_res; y++)
 		for (int z = -b_res; z <= b_res; z++)
 		{
-			if (is_not_permeable_mob(the_world->get_id_safe(player_x + x, player_y + y, player_z + z)))
-			{
-				near_hitboxes.push_back
-				(
-					hitbox
-					(
-						floor(player_x + x),
-						floor(player_y + y),
-						floor(player_z + z),
+			block_id current_block = the_world->get_id_safe(player_x + x, player_y + y, player_z + z);
 
-						1.0f,
-						1.0f,
-						1.0f
-					)
-				);
+			if (is_not_permeable_mob(current_block))
+			{
+				if (is_slab(current_block))
+				{
+					near_hitboxes.push_back(hitbox(floor(player_x + x), floor(player_y + y) + 0.5f, floor(player_z + z), 1.0f, 0.5f, 1.0f));
+				}
+				else
+				{
+					near_hitboxes.push_back(hitbox(floor(player_x + x), floor(player_y + y), floor(player_z + z), 1.0f, 1.0f, 1.0f));
+				}
 			}
 		}
 
@@ -589,52 +586,7 @@ int main(int argc, char** argv)
 
 		// Do collision detection and response.
 
-		int precision = 64;
-
-		for (int p = 0; p < precision; p++)
-		{
-			player_hitbox.x += player_vx / precision;
-
-			for (int i = 0; i < near_hitboxes.size(); i++)
-			{
-				hitbox near_hitbox = near_hitboxes[i];
-
-				if (hitbox_intersect(player_hitbox, near_hitbox))
-				{
-					player_hitbox.x += hitbox_x_depth(player_hitbox, near_hitbox);
-
-					player_vx = 0.0f;
-				}
-			}
-
-			player_hitbox.y += player_vy / precision;
-
-			for (int i = 0; i < near_hitboxes.size(); i++)
-			{
-				hitbox near_hitbox = near_hitboxes[i];
-
-				if (hitbox_intersect(player_hitbox, near_hitbox))
-				{
-					player_hitbox.y += hitbox_y_depth(player_hitbox, near_hitbox);
-
-					player_vy = 0.0f;
-				}
-			}
-
-			player_hitbox.z += player_vz / precision;
-
-			for (int i = 0; i < near_hitboxes.size(); i++)
-			{
-				hitbox near_hitbox = near_hitboxes[i];
-
-				if (hitbox_intersect(player_hitbox, near_hitbox))
-				{
-					player_hitbox.z += hitbox_z_depth(player_hitbox, near_hitbox);
-
-					player_vz = 0.0f;
-				}
-			}
-		}
+		do_collision_detection_and_response(player_hitbox, near_hitboxes, player_vx, player_vy, player_vz);
 
 		player_x = player_hitbox.x;
 		player_y = player_hitbox.y;
