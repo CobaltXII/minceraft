@@ -93,10 +93,7 @@ enum block_id
 
 	id_glass,
 
-	id_null
-};
-
-// Returns true if the block is not opaque. Otherwise, returns false.
+	id_rose,
 
 inline bool is_transparent(block_id id)
 {
@@ -107,6 +104,7 @@ inline bool is_transparent(block_id id)
 		id == id_oak_leaves || 
 
 		id == id_birch_leaves || 
+	id_dandelion,
 
 		id == id_water ||
 
@@ -120,6 +118,8 @@ inline bool is_transparent(block_id id)
 
 	return false;
 }
+	id_null
+};
 
 // Conversion from block_id to std::string.
 
@@ -212,6 +212,10 @@ std::vector<std::string> block_id_to_string =
 	"black_wool",
 
 	"glass",
+
+	"rose",
+
+	"dandelion"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -305,4 +309,9 @@ std::vector<std::string> block_id_to_block_name =
 	"Black Wool",
 
 	"Glass"
+};	"Glass",
+
+	"Rose",
+
+	"Dandelion"
 };

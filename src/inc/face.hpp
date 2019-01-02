@@ -154,6 +154,10 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("wool_colored_black")),
 
-		make_face_info_all(block_name_to_layer.at("glass"))
+		make_face_info_all(block_name_to_layer.at("glass")),
+
+		make_face_info_all(block_name_to_layer.at("rose")),
+
+		make_face_info_all(block_name_to_layer.at("dandelion"))
 	};
 }
