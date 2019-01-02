@@ -287,10 +287,26 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Black Wool",
 
-	"Glass"
-};	"Glass",
+	"Glass",
 
 	"Rose",
 
 	"Dandelion"
 };
+
+// Returns true if a block is a cross block. Otherwise, returns false.
+
+inline bool is_cross(block_id id)
+{
+	if 
+	(
+		id == id_rose ||
+
+		id == id_dandelion
+	)
+	{
+		return true;
+	}
+
+	return false;
+}
