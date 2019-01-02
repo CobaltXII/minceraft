@@ -494,6 +494,20 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
+	// Add bedrock. This will fill the bottom layer with 100% bedrock, and the
+	// second from bottom layer with ~50% bedrock.
+
+	for (int x = 0; x < out->x_res; x++)
+	for (int z = 0; z < out->z_res; z++)
+	{
+		out->set_id(x, out->y_res - 1, z, id_bedrock);
+
+		if (rand() % 2 == 0)
+		{
+			out->set_id(x, out->y_res - 2, z, id_bedrock);
+		}
+	}
+
 	// Propagate skylight.
 
 	propagate_skylight(out);
