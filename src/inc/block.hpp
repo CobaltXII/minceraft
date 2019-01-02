@@ -119,6 +119,8 @@ enum block_id
 
 	id_oak_wood_slab,
 
+	id_birch_wood_slab,
+
 	id_null
 };
 
@@ -240,6 +242,8 @@ std::vector<std::string> block_id_to_string =
 
 	"oak_wood_slab",
 
+	"birch_wood_slab",
+
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -360,6 +364,8 @@ std::vector<std::string> block_id_to_block_name =
 	"Sandstone Slab",
 
 	"Oak Wood Slab",
+
+	"Birch Wood Slab",
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.
