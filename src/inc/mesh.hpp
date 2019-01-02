@@ -189,18 +189,31 @@ void world_subset_to_mesh
 
 					bool visible_back = show_face(voxel_id, input->get_id_safe(cx, cy, cz + 1), 5);
 
+					// Find the height of the current block.
+
+					float vtx_high = 0.0f;
+
+					float tex_high = 0.0f;
+
+					if (is_slab(voxel_id))
+					{
+						vtx_high = 0.5f;
+
+						tex_high = 0.5f;
+					}
+
 					// Generate visible faces and write them to the target 
 					// array, using ptr as a 'stream writer'.
 
 					if (visible_top)
 					{
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_top; *(ptr++) = lighting_top;
 					}
 
 					if (visible_bottom)
@@ -208,7 +221,7 @@ void world_subset_to_mesh
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
-
+						
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_bottom; *(ptr++) = lighting_bottom;
@@ -216,46 +229,58 @@ void world_subset_to_mesh
 
 					if (visible_left)
 					{
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_left; *(ptr++) = lighting_left;
+
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = tex_high; *(ptr++) = layer_left; *(ptr++) = lighting_left;
 					}
 
 					if (visible_right)
 					{
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_right; *(ptr++) = lighting_right;
+
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = tex_high; *(ptr++) = layer_right; *(ptr++) = lighting_right;
 					}
 
 					if (visible_front)
 					{
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_front; *(ptr++) = lighting_front;
+
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 0.0f + cz; *(ptr++) = 0.0f; *(ptr++) = tex_high; *(ptr++) = layer_front; *(ptr++) = lighting_front;
 					}
 
 					if (visible_back)
 					{
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
 						*(ptr++) = 1.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 
-						*(ptr++) = 1.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+						*(ptr++) = 1.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 1.0f; *(ptr++) = tex_high; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
 						*(ptr++) = 0.0f + cx; *(ptr++) = -1.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 1.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
-						*(ptr++) = 0.0f + cx; *(ptr++) = -0.0f - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = 0.0f; *(ptr++) = layer_back; *(ptr++) = lighting_back;
+
+						*(ptr++) = 0.0f + cx; *(ptr++) = -vtx_high - cy; *(ptr++) = 1.0f + cz; *(ptr++) = 0.0f; *(ptr++) = tex_high; *(ptr++) = layer_back; *(ptr++) = lighting_back;
 					}
 				}
 			}
