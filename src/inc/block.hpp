@@ -310,3 +310,31 @@ inline bool is_cross(block_id id)
 
 	return false;
 }
+
+// Returns true if the block is not opaque. Otherwise, returns false.
+
+inline bool is_transparent(block_id id)
+{
+	if 
+	(
+		id == id_air || 
+
+		id == id_oak_leaves || 
+
+		id == id_birch_leaves || 
+
+		id == id_water ||
+
+		id == id_glass ||
+
+		id == id_null ||
+
+		is_cross(id)
+	)
+	{
+		return true;
+	}
+
+	return false;
+}
+
