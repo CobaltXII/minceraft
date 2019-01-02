@@ -232,6 +232,15 @@ int main(int argc, char** argv)
 			x_res = std::stoi(std::string(argv[3]));
 			y_res = std::stoi(std::string(argv[4]));
 			z_res = std::stoi(std::string(argv[5]));
+
+			// Make sure that x_res, y_res and z_res are multiples of 16.
+
+			if (x_res % 16 != 0 || y_res % 16 != 0 || z_res % 16 != 0)
+			{
+				std::cout << "x_res, y_res and z_res must be multiples of 16." << std::endl;
+
+				exit(17);
+			}
 		}
 		else
 		{
@@ -317,6 +326,15 @@ int main(int argc, char** argv)
 			x_res = std::stoi(std::string(argv[2]));
 			y_res = std::stoi(std::string(argv[3]));
 			z_res = std::stoi(std::string(argv[4]));
+
+			// Make sure that x_res, y_res and z_res are multiples of 16.
+
+			if (x_res % 16 != 0 || y_res % 16 != 0 || z_res % 16 != 0)
+			{
+				std::cout << "x_res, y_res and z_res must be multiples of 16." << std::endl;
+
+				exit(17);
+			}
 		}
 		else
 		{
