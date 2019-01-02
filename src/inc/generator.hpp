@@ -494,6 +494,46 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
+	// Plant flowers.
+
+	for (int i = 0; i < out->x_res * out->z_res / 512; i++)
+	{
+		int x_ = rand() % out->x_res;
+		int z_ = rand() % out->z_res;
+
+		for (int j = 0; j < 16; j++)
+		{
+			int x = x_ + (rand() % 6) - (rand() % 6);
+			int z = z_ + (rand() % 6) - (rand() % 6);
+
+			if (!out->in_bounds(x, 0, z))
+			{
+				continue;
+			}
+
+			block_id flower;
+
+			if (rand() % 2 == 0)
+			{
+				flower = id_dandelion;
+			}
+			else
+			{
+				flower = id_rose;
+			}
+
+			for (int y = 0; y < out->y_res; y++)
+			{
+				if (out->get_id(x, y, z) == id_grass)
+				{
+					out->set_id_safe(x, y - 1, z, flower);
+
+					break;
+				}
+			}
+		}
+	}
+
 	// Add bedrock. This will fill the bottom layer with 100% bedrock, and the
 	// second from bottom layer with ~50% bedrock.
 
