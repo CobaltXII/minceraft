@@ -174,6 +174,9 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("cobblestone")),
 
+		make_face_info_all(block_name_to_layer.at("brick")),
+
+		make_face_info_cap(block_name_to_layer.at("stone_slab_top"), block_name_to_layer.at("stone_slab_side")),
 		make_face_info_all(block_name_to_layer.at("brick"))
 	};
 }
