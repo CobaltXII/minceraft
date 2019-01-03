@@ -891,7 +891,19 @@ int main(int argc, char** argv)
 
 		glm::mat4 matrix_view = glm::mat4(1.0f);
 
-		matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
+		// Calculate the view bobbing factor.
+
+		float view_bobbing = sqrt(player_vx * player_vx + player_vz * player_vz) / 0.1440f;
+
+		if (view_bobbing < 0.0064f)
+		{
+			view_bobbing = 0.0f;
+		}
+
+		// Rotate the view matrix.
+
+		matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg + sin(SDL_GetTicks() / 80.0f) * view_bobbing), glm::vec3(1.0f, 0.0f, 0.0f));
+
 		matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Calculate the eye vector.
