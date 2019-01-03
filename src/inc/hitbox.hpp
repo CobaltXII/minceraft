@@ -99,10 +99,13 @@ inline float hitbox_z_depth(hitbox a, hitbox b, float eps = 0.00128f)
 }
 
 // Do collision detection and response on one dynamic hitbox with an array of 
-// several static hitboxes while applying velocity to the dynamic hitbox.
+// several static hitboxes while applying velocity to the dynamic hitbox. 
+// Returns true if the object hits anything.
 
-void do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
+bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
 {
+	bool collisions = false;
+
 	for (int p = 0; p < precision; p++)
 	{
 		object.x += vx / precision;
@@ -113,6 +116,8 @@ void do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
+				collisions = true;
+
 				object.x += hitbox_x_depth(object, obstacle);
 
 				vx = 0.0f;
@@ -127,6 +132,8 @@ void do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
+				collisions = true;
+
 				object.y += hitbox_y_depth(object, obstacle);
 
 				vy = 0.0f;
@@ -141,10 +148,14 @@ void do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
+				collisions = true;
+				
 				object.z += hitbox_z_depth(object, obstacle);
 
 				vz = 0.0f;
 			}
 		}
 	}
+
+	return collisions;
 }
