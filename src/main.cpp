@@ -659,18 +659,22 @@ int main(int argc, char** argv)
 							py -= iy * 0.001f;
 							pz -= iz * 0.001f;
 
+							// The block_id to be placed.
+
+							block_id place_id = id_stone_slab;
+
 							// Find the hitbox of the block that is going to
 							// be placed.
 
 							hitbox new_block;
 
-							if (is_slab(current_block))
+							if (is_slab(place_id))
 							{
-								hitbox(floor(px), floor(py) + 0.5, floor(pz), 1.0f, 0.5f, 1.0f);
+								new_block = hitbox(floor(px), floor(py) + 0.5, floor(pz), 1.0f, 0.5f, 1.0f);
 							}
 							else
 							{
-								hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
+								new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
 							}
 
 							// Check if the hitbox of the block that is going
@@ -681,8 +685,6 @@ int main(int argc, char** argv)
 							{
 								// The player is not inside the block that is 
 								// going to be placed, so place the block.
-
-								block_id place_id = id_reeds;
 
 								if (place_id == id_dandelion || place_id == id_rose)
 								{
