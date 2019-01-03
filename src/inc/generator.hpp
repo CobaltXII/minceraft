@@ -17,7 +17,7 @@ void generate_world(world* out, unsigned int seed)
 
 	noise.SetNoiseType(FastNoise::SimplexFractal);
 
-	noise.SetFractalOctaves(4);
+	noise.SetFractalOctaves(2);
 
 	// A small easter egg: sometimes mushroom worlds will spawn!
 
