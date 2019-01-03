@@ -181,6 +181,10 @@ int main(int argc, char** argv)
 
     load_block_face_info_array();
 
+    // Load sprite preliminaries.
+
+    load_sprite_preliminaries();
+
     // Load the block shader program.
 
     GLuint block_shader_program = load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
