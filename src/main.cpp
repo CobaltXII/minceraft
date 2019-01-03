@@ -494,6 +494,10 @@ int main(int argc, char** argv)
 						sdl_running = false;
 					}
 				}
+				else if (key == SDLK_SPACE)
+				{
+					player_vy -= 0.1536f;
+				}
 			}
 		}
 
