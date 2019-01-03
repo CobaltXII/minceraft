@@ -199,13 +199,13 @@ void propagate_skylight_strip
 
 		light_queue.pop_back();
 
-		unsigned char current_value = the_world->get_natural(x, y, z);
+		unsigned char current_value = the_world->get_natural_safe(x, y, z);
 
 		// Right neighbor.
 
-		if (the_world->in_bounds(x + 1, y, z) && the_world->get_natural(x + 1, y, z) < current_value - 1)
+		if (the_world->in_bounds(x + 1, y, z) && the_world->get_natural_safe(x + 1, y, z) < current_value - 1)
 		{
-			the_world->set_natural(x + 1, y, z, current_value - 1);
+			the_world->set_natural_safe(x + 1, y, z, current_value - 1);
 
 			the_chunks[((x + 1) / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
 
@@ -214,9 +214,9 @@ void propagate_skylight_strip
 
 		// Left neighbor.
 
-		if (the_world->in_bounds(x - 1, y, z) && the_world->get_natural(x - 1, y, z) < current_value - 1)
+		if (the_world->in_bounds(x - 1, y, z) && the_world->get_natural_safe(x - 1, y, z) < current_value - 1)
 		{
-			the_world->set_natural(x - 1, y, z, current_value - 1);
+			the_world->set_natural_safe(x - 1, y, z, current_value - 1);
 
 			the_chunks[((x - 1) / 16) + chunk_x_res * ((y / 16) + chunk_y_res * (z / 16))]->modified = true;
 
@@ -225,9 +225,9 @@ void propagate_skylight_strip
 
 		// Bottom neighbor.
 
-		if (the_world->in_bounds(x, y + 1, z) && the_world->get_natural(x, y + 1, z) < current_value - 1)
+		if (the_world->in_bounds(x, y + 1, z) && the_world->get_natural_safe(x, y + 1, z) < current_value - 1)
 		{
-			the_world->set_natural(x, y + 1, z, current_value - 1);
+			the_world->set_natural_safe(x, y + 1, z, current_value - 1);
 
 			the_chunks[(x / 16) + chunk_x_res * (((y + 1) / 16) + chunk_y_res * (z / 16))]->modified = true;
 
@@ -236,9 +236,9 @@ void propagate_skylight_strip
 
 		// Top neighbor.
 
-		if (the_world->in_bounds(x, y - 1, z) && the_world->get_natural(x, y - 1, z) < current_value - 1)
+		if (the_world->in_bounds(x, y - 1, z) && the_world->get_natural_safe(x, y - 1, z) < current_value - 1)
 		{
-			the_world->set_natural(x, y - 1, z, current_value - 1);
+			the_world->set_natural_safe(x, y - 1, z, current_value - 1);
 
 			the_chunks[(x / 16) + chunk_x_res * (((y - 1) / 16) + chunk_y_res * (z / 16))]->modified = true;
 
@@ -247,9 +247,9 @@ void propagate_skylight_strip
 
 		// Front neighbor.
 
-		if (the_world->in_bounds(x, y, z + 1) && the_world->get_natural(x, y, z + 1) < current_value - 1)
+		if (the_world->in_bounds(x, y, z + 1) && the_world->get_natural_safe(x, y, z + 1) < current_value - 1)
 		{
-			the_world->set_natural(x, y, z + 1, current_value - 1);
+			the_world->set_natural_safe(x, y, z + 1, current_value - 1);
 
 			the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * ((z + 1) / 16))]->modified = true;
 
@@ -258,9 +258,9 @@ void propagate_skylight_strip
 
 		// Back neighbor.
 
-		if (the_world->in_bounds(x, y, z - 1) && the_world->get_natural(x, y, z - 1) < current_value - 1)
+		if (the_world->in_bounds(x, y, z - 1) && the_world->get_natural_safe(x, y, z - 1) < current_value - 1)
 		{
-			the_world->set_natural(x, y, z - 1, current_value - 1);
+			the_world->set_natural_safe(x, y, z - 1, current_value - 1);
 
 			the_chunks[(x / 16) + chunk_x_res * ((y / 16) + chunk_y_res * ((z - 1) / 16))]->modified = true;
 
