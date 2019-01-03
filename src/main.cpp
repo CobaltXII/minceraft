@@ -782,6 +782,27 @@ int main(int argc, char** argv)
 						{
 							the_world->set_id_safe(px, py - 1, pz, id_air);
 						}
+
+						// Reeds cannot exist if there is nothing below them.
+
+						int reeds_offset = 1;
+
+						while (true)
+						{
+							block_id reeds_above = the_world->get_id_safe(px, py - reeds_offset, pz);
+
+							if (reeds_above != id_reeds)
+							{
+								break;
+							}
+							else
+							{
+								the_world->set_id_safe(px, py - reeds_offset, pz, id_air);
+							}
+
+							reeds_offset++;
+						}
+
 						block_timer = 10;
 
 						break;
