@@ -197,9 +197,16 @@ void world_subset_to_mesh
 
 					if (is_slab(voxel_id))
 					{
+						// Slabs are half as tall as a normal block, and 
+						// reside on the bottom half of their unit cube.
+
 						vtx_high = 0.5f;
 
 						tex_high = 0.5f;
+
+						// Slab tops cannot be hidden.
+
+						visible_top = true;
 					}
 
 					// Generate visible faces and write them to the target 
