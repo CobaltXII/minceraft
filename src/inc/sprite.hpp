@@ -176,3 +176,28 @@ gpu_sprite* generate_test_gpu_sprite()
 
 	return my_gpu_sprite;
 }
+
+// Generate a rectangle sprite.
+
+gpu_sprite* generate_rectangle_gpu_sprite(int x_tl, int y_tl, int x_br, int y_br, int x_res, int y_res, GLuint texture)
+{
+	cpu_sprite* my_cpu_sprite = allocate_sprite(6);
+
+	float x_tlf = x_tl / float(x_res) * 2.0f - 1.0f;
+	float y_tlf = y_tl / float(y_res) * 2.0f - 1.0f;
+
+	float x_brf = x_br / float(x_res) * 2.0f - 1.0f;
+	float y_brf = y_br / float(y_res) * 2.0f - 1.0f;
+
+	write_vertex(my_cpu_sprite, x_tlf, -y_tlf, 0.0f, 0.0f);
+	write_vertex(my_cpu_sprite, x_tlf, -y_brf, 0.0f, 1.0f);
+	write_vertex(my_cpu_sprite, x_brf, -y_brf, 1.0f, 1.0f);
+
+	write_vertex(my_cpu_sprite, x_tlf, -y_tlf, 0.0f, 0.0f);
+	write_vertex(my_cpu_sprite, x_brf, -y_brf, 1.0f, 1.0f);
+	write_vertex(my_cpu_sprite, x_brf, -y_tlf, 1.0f, 0.0f);
+
+	gpu_sprite* my_gpu_sprite = make_gpu_sprite(my_cpu_sprite, texture);
+
+	return my_gpu_sprite;
+}
