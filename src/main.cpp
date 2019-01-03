@@ -907,9 +907,9 @@ int main(int argc, char** argv)
 
 		// Calculate the view bobbing factor.
 
-		float view_bobbing = sqrt(player_vx * player_vx + player_vz * player_vz) / 0.1440f;
+		float view_bobbing = sqrt(player_vx * player_vx + player_vz * player_vz) / 0.0640f;
 
-		if (view_bobbing < 0.0064f)
+		if (view_bobbing < 0.0128f)
 		{
 			view_bobbing = 0.0f;
 		}
