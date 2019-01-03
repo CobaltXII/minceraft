@@ -12,6 +12,17 @@ struct hitbox
 	float yr;
 	float zr;
 
+	hitbox()
+	{
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+
+		xr = 0.0f;
+		yr = 0.0f;
+		zr = 0.0f;	
+	}
+
 	hitbox
 	(
 		float _x, 
