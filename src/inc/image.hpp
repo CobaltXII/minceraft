@@ -67,6 +67,8 @@ std::vector<std::string> all_tex =
 
 	"red_mushroom",
 
+	"reeds",
+
 	"rose",
 
 	"sand",
