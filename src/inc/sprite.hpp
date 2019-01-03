@@ -80,3 +80,51 @@ struct gpu_sprite
 	unsigned int size_in_vertices;
 };
 
+// Generate a gpu_sprite* from a cpu_sprite*.
+
+gpu_sprite* make_gpu_sprite(cpu_sprite* the_cpu_sprite, GLuint the_texture)
+{
+	gpu_sprite* the_gpu_sprite = new gpu_sprite();
+
+	the_gpu_sprite->sprite_texture = the_texture;
+
+	the_gpu_sprite->size_in_bytes = the_cpu_sprite->size_in_bytes;
+
+	the_gpu_sprite->size_in_floats = the_cpu_sprite->size_in_floats;
+
+	the_gpu_sprite->size_in_vertices = the_cpu_sprite->size_in_vertices;
+
+	GLuint the_vao;
+	GLuint the_vbo;
+
+	glGenVertexArrays(1, &the_vao);
+
+	glGenBuffers(1, &the_vbo);
+
+	glBindVertexArray(the_vao);
+
+	glBindBuffer(GL_ARRAY_BUFFER, the_vbo);
+
+	glBufferData(GL_ARRAY_BUFFER, the_cpu_sprite->size_in_bytes, the_cpu_sprite->vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(0 * sizeof(float)));
+
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+
+	the_gpu_sprite->sprite_vao = the_vao;
+	the_gpu_sprite->sprite_vbo = the_vbo;
+
+	free(the_cpu_sprite->vertices);
+
+	delete the_cpu_sprite;
+
+	return the_gpu_sprite;
+}
