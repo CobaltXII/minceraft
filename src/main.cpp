@@ -667,13 +667,19 @@ int main(int argc, char** argv)
 							py -= iy * 0.001f;
 							pz -= iz * 0.001f;
 
-							// Can't place blocks inside yourself!
+							// Find the hitbox of the block that is going to
+							// be placed.
 
-							hitbox new_block = hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
+							hitbox new_block;
 
-							if (!hitbox_intersect(player_hitbox, new_block))
+							if (is_slab(current_block))
 							{
-								// Place the block.
+								hitbox(floor(px), floor(py) + 0.5, floor(pz), 1.0f, 0.5f, 1.0f);
+							}
+							else
+							{
+								hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
+							}
 
 								the_accessor->set_id_safe(px, py, pz, id_cobblestone_slab);
 
