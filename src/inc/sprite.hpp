@@ -52,3 +52,14 @@ cpu_sprite* allocate_sprite(unsigned int vertex_count)
 
 	return the_cpu_sprite;
 }
+
+// Write a vertex to a cpu_sprite.
+
+inline void write_vertex(cpu_sprite* the_cpu_sprite, float x, float y, float xt, float yt)
+{
+	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = x;
+	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = y;
+
+	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = xt;
+	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = yt;
+}
