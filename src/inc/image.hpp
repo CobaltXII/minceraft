@@ -186,5 +186,7 @@ std::vector<std::string> all_tex =
 
 std::vector<std::string> all_gui =
 {
-	"ascii"
+	"ascii",
+
+	"buttons"
 };
