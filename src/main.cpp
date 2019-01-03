@@ -208,6 +208,33 @@ int main(int argc, char** argv)
     float player_vy = 0.0f;
     float player_vz = 0.0f; 
 
+    // Define the player's inventory.
+
+    block_id player_inventory[9] =
+    {
+    	id_cobblestone,
+
+    	id_stone_slab,
+
+    	id_sandstone,
+
+    	id_sandstone_slab,
+
+    	id_brick,
+
+    	id_grass,
+
+    	id_oak_planks,
+
+    	id_oak_log,
+
+    	id_glass
+    };
+
+    // Define the player's selected block.
+
+    int player_selection = 0;
+
     // Define the player's acceleration coefficient.
 
 	float acceleration = 0.0176f;
@@ -502,6 +529,42 @@ int main(int argc, char** argv)
 						sdl_running = false;
 					}
 				}
+				else if (key == SDLK_1)
+				{
+					player_selection = 0;
+				}
+				else if (key == SDLK_2)
+				{
+					player_selection = 1;
+				}
+				else if (key == SDLK_3)
+				{
+					player_selection = 2;
+				}
+				else if (key == SDLK_4)
+				{
+					player_selection = 3;
+				}
+				else if (key == SDLK_5)
+				{
+					player_selection = 4;
+				}
+				else if (key == SDLK_6)
+				{
+					player_selection = 5;
+				}
+				else if (key == SDLK_7)
+				{
+					player_selection = 6;
+				}
+				else if (key == SDLK_8)
+				{
+					player_selection = 7;
+				}
+				else if (key == SDLK_9)
+				{
+					player_selection = 8;
+				}
 			}
 		}
 
@@ -658,7 +721,7 @@ int main(int argc, char** argv)
 					{
 						// The block_id to be placed.
 
-						block_id place_id = id_stone_slab;
+						block_id place_id = player_inventory[player_selection];
 
 						// Check if the current block is a slab.
 
