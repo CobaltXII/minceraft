@@ -48,18 +48,27 @@ int main(int argc, char** argv)
 
 	if (argc == 1)
 	{
+		// An argc of 1 means that only the executable path was passed from 
+		// the command line.
+
 		print_usage(argv);
 	}
 	else if (std::string(argv[1]) != "-s" && std::string(argv[1]) != "-q")
 	{
+		// The only allowed arguments are -s and -q.
+
 		print_usage(argv);
 	}
 	else if (std::string(argv[1]) == "-s")
 	{
+		// Singleplayer mode.
+
 		gamemode = 1;
 	}
 	else if (std::string(argv[1]) == "-q")
 	{
+		// Quickplay mode.
+
 		gamemode = 2;
 	}
 
@@ -81,7 +90,7 @@ int main(int argc, char** argv)
 
 	SDL_Window* sdl_window = SDL_CreateWindow
 	(
-		"Minceraft 0.2.72",
+		"Minceraft 0.3.14",
 
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -191,13 +200,13 @@ int main(int argc, char** argv)
     float player_vy = 0.0f;
     float player_vz = 0.0f; 
 
-    // Define the player's acceleration constant.
+    // Define the player's acceleration coefficient.
 
-	const float acceleration = 0.0256f;
+	float acceleration = 0.0256f;
 
-	// Define the player's friction constant.
+	// Define the player's friction coefficient.
 
-	const float friction = 0.9f;
+	float friction = 0.9f;
 
     // When the block_timer is 0, a block may be destroyed or placed.
 
@@ -209,7 +218,7 @@ int main(int argc, char** argv)
 
     if (gamemode == 1)
 	{
-		// $ -s <path-to-level> [x_res y_res z_res]
+		// Singleplayer mode.
 
 		unsigned int x_res;
 		unsigned int y_res;
@@ -217,17 +226,15 @@ int main(int argc, char** argv)
 
 		if (argc == 3)
 		{
-			// $ -s <path-to-level> [256 128 256]
+			// Singleplayer mode with a default world.
 
 			x_res = 256;
-
-			y_res = 128;
-
+			y_res = 256;
 			z_res = 256;
 		}
 		else if (argc == 6)
 		{
-			// $ -s <path-to-level> <x_res y_res z_res>
+			// Singleplayer mode with a custom world.
 
 			x_res = std::stoi(std::string(argv[3]));
 			y_res = std::stoi(std::string(argv[4]));
@@ -244,7 +251,7 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			// $ -s ?
+			// Unknown usage of singleplayer mode.
 
 			print_usage(argv);
 		}
@@ -305,7 +312,7 @@ int main(int argc, char** argv)
 	}
 	else if (gamemode == 2)
 	{
-		// $ -q [x_res y_res z_res]
+		// Quickplay mode.
 
 		unsigned int x_res;
 		unsigned int y_res;
@@ -313,7 +320,7 @@ int main(int argc, char** argv)
 
 		if (argc == 2)
 		{
-			// $ -q [128 128 128]
+			// Quickplay mode with a default world.
 
 			x_res = 128;
 			y_res = 128;
@@ -321,7 +328,7 @@ int main(int argc, char** argv)
 		}
 		else if (argc == 5)
 		{
-			// $ -q <x_res y_res z_res>
+			// Quickplay mode with a custom world.
 
 			x_res = std::stoi(std::string(argv[2]));
 			y_res = std::stoi(std::string(argv[3]));
@@ -338,7 +345,7 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			// $ -q ?
+			// Unknown usage of quickplay mode.
 
 			print_usage(argv);
 		}
@@ -592,8 +599,7 @@ int main(int argc, char** argv)
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
 
-		// Block placement and deletion testing. Move this to a seperate
-		// header called raymarch.hpp!
+		// Interact with the world.
 
 		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
 		{
@@ -762,148 +768,167 @@ int main(int argc, char** argv)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Render the world.
+		// Enable depth testing.
 
+		glEnable(GL_DEPTH_TEST);
+
+		// Enable backface culling.
+
+		glEnable(GL_CULL_FACE);
+
+		// Bind the block shader program to the current state.
+
+		glUseProgram(block_shader_program);
+
+		// Calculate the aspect ratio.
+
+		float aspect_ratio = (float)sdl_x_res / (float)sdl_y_res;
+
+		// Calculate the projection matrix.
+
+		glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 1024.0f);
+
+		// Calculate the view matrix.
+
+		glm::mat4 matrix_view = glm::mat4(1.0f);
+
+		matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
+		matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		// Calculate the eye vector.
+
+		float player_x_res = player_hitbox.xr;
+		float player_y_res = player_hitbox.yr;
+		float player_z_res = player_hitbox.zr;
+
+		glm::vec3 eye_vector = glm::vec3
+		(
+			// Centered around the player's position plus the player's X 
+			// resolution.
+
+			-player_x - player_x_res / 2.0f,
+
+			// The small offset of 0.2f is used so that the player's 'eye' is
+			// not rubbing against the ceiling.
+
+			player_y + 0.2f,
+
+			// Centered around the player's position plus the player's Z 
+			// resolution.
+
+			-player_z - player_z_res / 2.0f
+		);
+
+		// Generate the model matrix using the eye vector.
+
+		glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), eye_vector);
+
+		// Pass the matrices to the block_shader_program.
+
+		glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
+
+		glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
+
+		glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
+
+		// Pass the fog distance to the block_shader_program.
+
+		glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance / 1.5f);
+
+		// Pass the current time (in seconds) to the block_shader_program.
+
+		glUniform1f(glGetUniformLocation(block_shader_program, "time_in_seconds"), SDL_GetTicks() / 1000.0f);
+
+		// Bind the block_texture_array to the current state.
+
+		glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
+
+		// Render all of the chunks' vertex arrays in the_accessor.
+
+		for (int i = 0; i < the_accessor->chunk_count; i++)
 		{
-			// Enable depth testing.
+			chunk* the_chunk = the_accessor->the_chunks[i];
 
-			glEnable(GL_DEPTH_TEST);
+			float ccx = the_chunk->x + (the_chunk->x_res / 2);
+			float ccy = the_chunk->y + (the_chunk->y_res / 2);
+			float ccz = the_chunk->z + (the_chunk->z_res / 2);
 
-			// Enable backface culling.
+			float dx = ccx - player_x;
+			float dy = ccy - player_y;
+			float dz = ccz - player_z;
 
-			glEnable(GL_CULL_FACE);
-
-			// Bind the block shader program to the current state.
-
-			glUseProgram(block_shader_program);
-
-			// Calculate the projection, view, and model matrices, and pass 
-			// them to the block_shader_program.
-
+			if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
 			{
-				// Calculate the aspect ratio.
-
-				float aspect_ratio = (float)sdl_x_res / (float)sdl_y_res;
-
-				// Generate the projection matrix.
-
-				glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 1024.0f);
-
-				// Generate the view matrix.
-
-				glm::mat4 matrix_view = glm::mat4(1.0f);
-
-				matrix_view = glm::rotate(matrix_view, glm::radians(rot_x_deg), glm::vec3(1.0f, 0.0f, 0.0f));
-				matrix_view = glm::rotate(matrix_view, glm::radians(rot_y_deg), glm::vec3(0.0f, 1.0f, 0.0f));
-
-				// Generate the model matrix. The translation component must 
-				// be centered around the X and Z axes of the player hitbox,
-				// and must be a small amount lower than the top of the player
-				// hitbox.
-
-				glm::mat4 matrix_model = glm::translate(glm::mat4(1.0f), glm::vec3(-player_x - player_hitbox.xr / 2.0f, player_y + 0.2f, -player_z - player_hitbox.zr / 2.0f));
-
-				// Pass the matrices to the block_shader_program.
-
-				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_projection"), 1, GL_FALSE, &matrix_projection[0][0]);
-
-				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_view"), 1, GL_FALSE, &matrix_view[0][0]);
-
-				glUniformMatrix4fv(glGetUniformLocation(block_shader_program, "matrix_model"), 1, GL_FALSE, &matrix_model[0][0]);
+				render_chunk(the_chunk);
 			}
-
-			// Pass the fog distance to the block_shader_program.
-
-			glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance / 1.5f);
-
-			// Pass the current time (in seconds) to the block_shader_program.
-
-			glUniform1f(glGetUniformLocation(block_shader_program, "time_in_seconds"), SDL_GetTicks() / 1000.0f);
-
-			// Bind the block_texture_array to the current state.
-
-			glBindTexture(GL_TEXTURE_2D_ARRAY, block_texture_array);
-
-			// Render all of the chunks' vertex arrays in the_accessor.
-
-			for (int i = 0; i < the_accessor->chunk_count; i++)
-			{
-				chunk* the_chunk = the_accessor->the_chunks[i];
-
-				float ccx = the_chunk->x + (the_chunk->x_res / 2);
-				float ccy = the_chunk->y + (the_chunk->y_res / 2);
-				float ccz = the_chunk->z + (the_chunk->z_res / 2);
-
-				float dx = ccx - player_x;
-				float dy = ccy - player_y;
-				float dz = ccz - player_z;
-
-				if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
-				{
-					render_chunk(the_chunk);
-				}
-			}
-
-			// Disable writing to the depth buffer.
-
-			glDepthMask(GL_FALSE);
-
-			// Enable alpha blending.
-
-			glEnable(GL_BLEND);
-
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			// Render all of the chunks' water vertex arrays in the_accessor.
-
-			for (int i = 0; i < the_accessor->chunk_count; i++)
-			{
-				chunk* the_chunk = the_accessor->the_chunks[i];
-
-				float ccx = the_chunk->x + (the_chunk->x_res / 2);
-				float ccy = the_chunk->y + (the_chunk->y_res / 2);
-				float ccz = the_chunk->z + (the_chunk->z_res / 2);
-
-				float dx = ccx - player_x;
-				float dy = ccy - player_y;
-				float dz = ccz - player_z;
-
-				if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
-				{
-					render_chunk_water(the_chunk);
-				}
-			}
-
-			// Enable writing to the depth buffer.
-
-			glDepthMask(GL_TRUE);
-
-			// Disable alpha blending.
-
-			glDisable(GL_BLEND);
-
-			// Unbind the block_texture_array from the current state.
-
-			glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-			// Unbind the block shader program from the current state.
-
-			glUseProgram(0);
-
-			// Disable backface culling.
-
-			glDisable(GL_CULL_FACE);
-
-			// Disable depth testing.
-
-			glDisable(GL_DEPTH_TEST);
 		}
+
+		// Disable writing to the depth buffer.
+
+		glDepthMask(GL_FALSE);
+
+		// Enable alpha blending.
+
+		glEnable(GL_BLEND);
+
+
+		// Render all of the chunks' water vertex arrays in the_accessor.
+
+		for (int i = 0; i < the_accessor->chunk_count; i++)
+		{
+			chunk* the_chunk = the_accessor->the_chunks[i];
+
+			float ccx = the_chunk->x + (the_chunk->x_res / 2);
+			float ccy = the_chunk->y + (the_chunk->y_res / 2);
+			float ccz = the_chunk->z + (the_chunk->z_res / 2);
+
+			float dx = ccx - player_x;
+			float dy = ccy - player_y;
+			float dz = ccz - player_z;
+
+			if (dx * dx + dy * dy + dz * dz < view_distance * view_distance)
+			{
+				render_chunk_water(the_chunk);
+			}
+		}
+
+		// Enable writing to the depth buffer.
+
+		glDepthMask(GL_TRUE);
+
+		// Disable alpha blending.
+
+		glDisable(GL_BLEND);
+
+		// Unbind the block_texture_array from the current state.
+
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+		// Unbind the block shader program from the current state.
+
+		glUseProgram(0);
+
+		// Disable backface culling.
+
+		glDisable(GL_CULL_FACE);
+
+		// Disable depth testing.
+
+		glDisable(GL_DEPTH_TEST);
 
 		// Swap the back buffer to the front.
 
 		SDL_GL_SwapWindow(sdl_window);
 
-		// Cap the framerate to 60 Hz.
+		// Decrement the block timer, if the block timer is not equal to 0.
+
+		if (block_timer != 0)
+		{
+			block_timer--;
+		}
+
+		// Cap the framerate to 60 Hz. It might be beneficial to regenerate
+		// chunks instead of sleeping.
 
 		float frame_elapsed_time = std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - frame_start_time).count();
 
@@ -912,13 +937,6 @@ int main(int argc, char** argv)
 			int frame_sleep_time = round(1000.0f / 60.0f - frame_elapsed_time);
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(frame_sleep_time));
-		}
-
-		// Decrement the block timer, if the block timer is not equal to 0.
-
-		if (block_timer != 0)
-		{
-			block_timer--;
 		}
 
 		// Increment the iteration counter. Print the framerate every 60 
@@ -932,10 +950,11 @@ int main(int argc, char** argv)
 		}
     }
 
+    // Save the world to the specified save file, if the gamemode is 1 
+    // (singleplayer).
+
     if (gamemode == 1)
     {
-    	// Save the world to the save file.
-
 	    save_world_to_file
 		(
 			the_world, 
