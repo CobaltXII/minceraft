@@ -11,8 +11,13 @@ enum button_state
 
 // Generate, draw and destroy a button.
 
-void draw_button(int x, int y, int x_res, int y_res, int width, int factor, button_state state)
+void draw_button(int x, int y, int x_res, int y_res, int width, int factor, button_state state, int mouse_x, int mouse_y)
 {
+	if (state == button_default && width > 8 && mouse_x > x && mouse_x < x + width * factor && mouse_y > y && mouse_y < y + 20 * factor)
+	{
+		state = button_hover;
+	}
+
 	gpu_sprite* btn_0;
 	gpu_sprite* btn_1;
 	gpu_sprite* btn_2;
