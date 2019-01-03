@@ -25,6 +25,12 @@ std::vector<std::string> all_tex =
 
 	"cobblestone",
 
+	"crafting_table_front",
+
+	"crafting_table_side",
+
+	"crafting_table_top",
+
 	"dandelion",
 
 	"diamond_ore",

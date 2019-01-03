@@ -58,6 +58,15 @@ face_info* make_face_info_caps(float top, float bottom, float side)
 	return new face_info(top, bottom, side, side, side, side);
 }
 
+// Generates a face_info* that uses side_1 for the front and back faces, 
+// side_2 for the left and right faces, uses bottom for the bottom face, and
+// top for the top face.
+
+face_info* make_face_info_bench(float top, float bottom, float side_1, float side_2)
+{
+	return new face_info(top, bottom, side_2, side_2, side_1, side_1);
+}
+
 // This function fills up block_face_info with a face_info* object for each
 // block_id. Call this function after calling load_block_texture_array, 
 // because this function uses block_name_to_layer as a lookup table.
@@ -188,6 +197,8 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("brick")),
 
-		make_face_info_all(block_name_to_layer.at("reeds"))
+		make_face_info_all(block_name_to_layer.at("reeds")),
+
+		make_face_info_bench(block_name_to_layer.at("crafting_table_top"), block_name_to_layer.at("oak_planks"), block_name_to_layer.at("crafting_table_front"), block_name_to_layer.at("crafting_table_side"))
 	};
 }

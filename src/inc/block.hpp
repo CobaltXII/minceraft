@@ -127,6 +127,8 @@ enum block_id
 
 	id_reeds,
 
+	id_crafting_table,
+
 	id_null
 };
 
