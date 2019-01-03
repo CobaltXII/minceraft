@@ -529,15 +529,11 @@ int main(int argc, char** argv)
 		{
 			player_vx -= sin(glm::radians(-rot_y_deg)) * acceleration;
 			player_vz -= cos(glm::radians(-rot_y_deg)) * acceleration;
-
-			player_vy -= sin(glm::radians(-rot_x_deg)) * acceleration;
 		}
 		else if (keys[SDL_SCANCODE_S])
 		{
 			player_vx += sin(glm::radians(-rot_y_deg)) * acceleration;
 			player_vz += cos(glm::radians(-rot_y_deg)) * acceleration;
-
-			player_vy += sin(glm::radians(-rot_x_deg)) * acceleration;
 		}
 
 		if (keys[SDL_SCANCODE_A])
@@ -550,21 +546,6 @@ int main(int argc, char** argv)
 			player_vx += sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
 			player_vz += cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
 		}
-
-		if (keys[SDL_SCANCODE_SPACE])
-		{
-			player_vy -= acceleration;
-		}
-		else if (keys[SDL_SCANCODE_LSHIFT])
-		{
-			player_vy += acceleration;
-		}
-
-		// Multiply the player's velocity by the player's friction constant.
-
-		player_vx *= friction;
-		player_vy *= friction;
-		player_vz *= friction;
 
 		// Create a list of hitboxes of nearby blocks.
 
