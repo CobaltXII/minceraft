@@ -173,6 +173,10 @@ int main(int argc, char** argv)
 
     GLuint block_texture_array = load_block_texture_array();
 
+    // Load the interface textures.
+
+    load_interface_textures();
+
     // Load the block face_info* array.
 
     load_block_face_info_array();
