@@ -704,6 +704,20 @@ int main(int argc, char** argv)
 										block_timer = 10;
 									}
 								}
+								else if (place_id == id_reeds)
+								{
+									// Can only place id_reeds on id_sand or
+									// id_reeds.
+
+									block_id reeds_below = the_world->get_id_safe(px, py + 1, pz);
+
+									if (reeds_below == id_sand || reeds_below == id_reeds)
+									{
+										the_accessor->set_id_safe(px, py, pz, place_id);
+
+										block_timer = 10;
+									}
+								}
 
 								break;
 							}
