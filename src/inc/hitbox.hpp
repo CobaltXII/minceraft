@@ -100,11 +100,32 @@ inline float hitbox_z_depth(hitbox a, hitbox b, float eps = 0.00128f)
 
 // Do collision detection and response on one dynamic hitbox with an array of 
 // several static hitboxes while applying velocity to the dynamic hitbox. 
-// Returns true if the object hits anything.
+// Returns a collision_data structure describing the collision.
 
-bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
+struct collision_data
 {
-	bool collisions = false;
+	bool collision_x;
+	bool collision_y;
+	bool collision_z;
+
+	collision_data
+	(
+		bool _collision_x,
+		bool _collision_y,
+		bool _collision_z
+	)
+	{
+		collision_x = _collision_x;
+		collision_y = _collision_y;
+		collision_z = _collision_z;
+	}
+};
+
+collision_data do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
+{
+	bool collision_x = false;
+	bool collision_y = false;
+	bool collision_z = false;
 
 	for (int p = 0; p < precision; p++)
 	{
@@ -116,7 +137,7 @@ bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collisions = true;
+				collision_x = true;
 
 				object.x += hitbox_x_depth(object, obstacle);
 
@@ -132,7 +153,7 @@ bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collisions = true;
+				collision_y = true;
 
 				object.y += hitbox_y_depth(object, obstacle);
 
@@ -148,7 +169,7 @@ bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collisions = true;
+				collision_z = true;
 				
 				object.z += hitbox_z_depth(object, obstacle);
 
@@ -157,5 +178,10 @@ bool do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obs
 		}
 	}
 
-	return collisions;
+	return collision_data
+	(
+		collision_x, 
+		collision_y, 
+		collision_z
+	);
 }
