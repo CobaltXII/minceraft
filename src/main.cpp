@@ -860,9 +860,16 @@ int main(int argc, char** argv)
 			}
 		}
 
-		// Clear the OpenGL context to the default Minceraft sky color.
+		// Clear the OpenGL context to the default sky color.
 
-		glClearColor(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f, 1.0f);
+		glClearColor
+		(
+			186.0f / 255.0f, 
+			214.0f / 255.0f, 
+			254.0f / 255.0f, 
+
+			1.0f
+		);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -969,6 +976,7 @@ int main(int argc, char** argv)
 
 		glEnable(GL_BLEND);
 
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Render all of the chunks' water vertex arrays in the_accessor.
 
