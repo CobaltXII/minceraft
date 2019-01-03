@@ -695,9 +695,11 @@ int main(int argc, char** argv)
 								if (place_id == id_dandelion || place_id == id_rose)
 								{
 									// Can only place id_dandelion and id_rose
-									// on id_grass.
+									// on id_grass or id_dirt.
 
-									if (the_world->get_id_safe(px, py + 1, pz) == id_grass)
+									block_id flower_below = the_world->get_id_safe(px, py + 1, pz);
+
+									if (flower_below == id_grass || flower_below == id_dirt)
 									{
 										the_accessor->set_id_safe(px, py, pz, place_id);
 
