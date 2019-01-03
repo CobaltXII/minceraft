@@ -681,9 +681,29 @@ int main(int argc, char** argv)
 								hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f);
 							}
 
-								the_accessor->set_id_safe(px, py, pz, id_cobblestone_slab);
+							// Check if the hitbox of the block that is going
+							// to be placed does not intersect with the 
+							// player.
 
-								block_timer = 10;
+							if (!hitbox_intersect(player_hitbox, new_block))
+							{
+								// The player is not inside the block that is 
+								// going to be placed, so place the block.
+
+								block_id place_id = id_reeds;
+
+								if (place_id == id_dandelion || place_id == id_rose)
+								{
+									// Can only place id_dandelion and id_rose
+									// on id_grass.
+
+									if (the_world->get_id_safe(px, py + 1, pz) == id_grass)
+									{
+										the_accessor->set_id_safe(px, py, pz, place_id);
+
+										block_timer = 10;
+									}
+								}
 
 								break;
 							}
