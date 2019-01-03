@@ -4,7 +4,7 @@
 
 const vec3 sky_color = vec3(186.0f / 255.0f, 214.0f / 255.0f, 254.0f / 255.0f);
 
-// The block texture arry.
+// The block texture array.
 
 uniform sampler2DArray block_texture_array;
 
