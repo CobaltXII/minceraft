@@ -99,6 +99,18 @@ void generate_world(world* out, unsigned int seed)
 			if ((current_block == id_grass || current_block == id_mycelium) && y / float(out->y_res) > 0.5f)
 			{
 				out->set_id(int(x), int(y), int(z), id_sand);
+
+				// Plant reeds, perhaps?
+
+				if (out->get_id_safe(int(x), int(y) - 1, int(z)) == id_air && rand() % 2 == 0)
+				{
+					int reed_height = rand() % 4 + 1;
+
+					for (int i = 1; i < reed_height + 1; i++)
+					{
+						out->set_id_safe_if_air(int(x), int(y) - i, int(z), id_reeds);
+					}
+				}
 			}
 
 			break;
