@@ -63,3 +63,20 @@ inline void write_vertex(cpu_sprite* the_cpu_sprite, float x, float y, float xt,
 	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = xt;
 	the_cpu_sprite->vertices[the_cpu_sprite->offset++] = yt;
 }
+
+// A structure that represents a sprite loaded to the GPU.
+
+struct gpu_sprite
+{
+	GLuint sprite_vao;
+	GLuint sprite_vbo;
+
+	GLuint sprite_texture;
+
+	unsigned int size_in_bytes;
+
+	unsigned int size_in_floats;
+
+	unsigned int size_in_vertices;
+};
+
