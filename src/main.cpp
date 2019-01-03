@@ -494,10 +494,6 @@ int main(int argc, char** argv)
 						sdl_running = false;
 					}
 				}
-				else if (key == SDLK_SPACE)
-				{
-					player_vy -= 0.1536f;
-				}
 			}
 		}
 
@@ -523,7 +519,7 @@ int main(int argc, char** argv)
 
 		const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-		// Handle player movement.
+		// Handle player forward movement (walking).
 
 		if (keys[SDL_SCANCODE_W])
 		{
@@ -535,6 +531,8 @@ int main(int argc, char** argv)
 			player_vx += sin(glm::radians(-rot_y_deg)) * acceleration;
 			player_vz += cos(glm::radians(-rot_y_deg)) * acceleration;
 		}
+
+		// Handle player perpendicular movement (strafing).
 
 		if (keys[SDL_SCANCODE_A])
 		{
@@ -578,11 +576,23 @@ int main(int argc, char** argv)
 
 		// Do collision detection and response.
 
-		bool player_hit_anything = do_collision_detection_and_response(player_hitbox, near_hitboxes, player_vx, player_vy, player_vz);
+		collision_data player_collision = do_collision_detection_and_response(player_hitbox, near_hitboxes, player_vx, player_vy, player_vz);
+
+		// Update the player's position.
 
 		player_x = player_hitbox.x;
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
+
+		// Handle player upwards movement (jumping).
+
+		if (keys[SDL_SCANCODE_SPACE])
+		{
+			if (player_collision.collision_y)
+			{
+				player_vy -= 0.1536f;
+			}
+		}
 
 		// Multiply the player's velocity by the player's friction constant. 
 
