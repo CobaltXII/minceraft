@@ -578,11 +578,18 @@ int main(int argc, char** argv)
 
 		// Do collision detection and response.
 
-		do_collision_detection_and_response(player_hitbox, near_hitboxes, player_vx, player_vy, player_vz);
+		bool player_hit_anything = do_collision_detection_and_response(player_hitbox, near_hitboxes, player_vx, player_vy, player_vz);
 
 		player_x = player_hitbox.x;
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
+
+		// Multiply the player's velocity by the player's friction constant. 
+
+		player_vx *= friction;
+		player_vz *= friction;
+
+		player_vy += 0.008f;
 
 		// Interact with the world.
 
