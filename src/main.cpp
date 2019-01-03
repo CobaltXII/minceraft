@@ -648,18 +648,26 @@ int main(int argc, char** argv)
 
 					if (sdl_mouse_l)
 					{
+						// The block_id to be placed.
+
+						block_id place_id = id_stone_slab;
+
 						// Check if the current block is a slab.
 
 						if (is_slab(current_block))
 						{
 							// Change the current block into it's double slab 
-							// form.
+							// form, if the player does not intersect with the
+							// new double slab.
 
-							the_accessor->set_id_safe(px, py, pz, slab_to_double_slab(current_block));
+							if (!hitbox_intersect(player_hitbox, hitbox(floor(px), floor(py), floor(pz), 1.0f, 1.0f, 1.0f)))
+							{
+								the_accessor->set_id_safe(px, py, pz, slab_to_double_slab(current_block));
 
-							block_timer = 10;
+								block_timer = 10;
 
-							break;
+								break;
+							}
 						}
 						else
 						{
@@ -667,11 +675,7 @@ int main(int argc, char** argv)
 
 							px -= ix * 0.001f;
 							py -= iy * 0.001f;
-							pz -= iz * 0.001f;
-
-							// The block_id to be placed.
-
-							block_id place_id = id_stone_slab;
+							pz -= iz * 0.001f;	
 
 							// Find the hitbox of the block that is going to
 							// be placed.
