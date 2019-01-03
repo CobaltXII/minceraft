@@ -202,7 +202,7 @@ int main(int argc, char** argv)
 
     // Define the player's acceleration coefficient.
 
-	float acceleration = 0.0256f;
+	float acceleration = 0.0176f;
 
 	// Define the player's friction coefficient.
 
