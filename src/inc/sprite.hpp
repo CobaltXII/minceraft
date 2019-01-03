@@ -128,3 +128,32 @@ gpu_sprite* make_gpu_sprite(cpu_sprite* the_cpu_sprite, GLuint the_texture)
 
 	return the_gpu_sprite;
 }
+
+// Draw and destroy a gpu_sprite*.
+
+void draw_destroy_gpu_sprite(gpu_sprite* the_gpu_sprite)
+{
+	glEnable(GL_BLEND);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glUseProgram(sprite_shader_program);
+
+	glBindVertexArray(the_gpu_sprite->sprite_vao);
+
+	glBindTexture(GL_TEXTURE_2D, the_gpu_sprite->sprite_texture);
+
+	glDrawArrays(GL_TRIANGLES, 0, the_gpu_sprite->size_in_vertices);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindVertexArray(0);
+
+	glUseProgram(0);
+
+	glDeleteVertexArrays(1, &the_gpu_sprite->sprite_vao);
+
+	glDeleteBuffers(1, &the_gpu_sprite->sprite_vbo);
+
+	glDisable(GL_BLEND);
+}
