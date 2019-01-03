@@ -720,6 +720,32 @@ int main(int argc, char** argv)
 										block_timer = 10;
 									}
 								}
+								else
+								{
+									the_accessor->set_id_safe(px, py, pz, place_id);
+
+									block_timer = 10;
+								}
+
+								// All cross blocks are destroyed and replaced
+								// by water.
+
+								if (is_cross(place_id))
+								{
+									if
+									(
+										the_world->get_id_safe(px + 1, py, pz) == id_water ||
+										the_world->get_id_safe(px - 1, py, pz) == id_water ||
+
+										the_world->get_id_safe(px, py, pz + 1) == id_water ||
+										the_world->get_id_safe(px, py, pz - 1) == id_water ||
+
+										the_world->get_id_safe(px, py - 1, pz) == id_water
+									)
+									{
+										the_accessor->set_id_safe(px, py, pz, id_water);
+									}
+								}
 
 								break;
 							}
