@@ -206,7 +206,7 @@ int main(int argc, char** argv)
 
 	// Define the player's friction coefficient.
 
-	float friction = 0.9f;
+	float friction = 0.8f;
 
     // When the block_timer is 0, a block may be destroyed or placed.
 
