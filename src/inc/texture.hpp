@@ -120,3 +120,26 @@ GLuint load_block_texture_array()
 
 	return texture_array;
 }
+
+// A texture that has been loaded on to the CPU and the GPU.
+
+struct complete_texture
+{
+	// The reference to the OpenGL texture.
+
+	GLuint storage;
+
+	// The dimensions of the texture.
+
+	int x_res;
+	int y_res;
+
+	// The channel count of the texture.
+
+	int channels;
+
+	// The pixels of the texture. 
+
+	unsigned char* pixels;
+};
+}
