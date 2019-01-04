@@ -245,6 +245,22 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("wheat_stage_6")),
 
-		make_face_info_all(block_name_to_layer.at("wheat_stage_7"))
+		make_face_info_all(block_name_to_layer.at("wheat_stage_7")),
+
+		make_face_info_all(block_name_to_layer.at("carrots_stage_0")),
+
+		make_face_info_all(block_name_to_layer.at("carrots_stage_1")),
+
+		make_face_info_all(block_name_to_layer.at("carrots_stage_2")),
+
+		make_face_info_all(block_name_to_layer.at("carrots_stage_3")),
+
+		make_face_info_all(block_name_to_layer.at("potatoes_stage_0")),
+
+		make_face_info_all(block_name_to_layer.at("potatoes_stage_1")),
+
+		make_face_info_all(block_name_to_layer.at("potatoes_stage_2")),
+
+		make_face_info_all(block_name_to_layer.at("potatoes_stage_3"))
 	};
 }

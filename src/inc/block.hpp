@@ -159,6 +159,22 @@ enum block_id
 
 	id_wheat_7,
 
+	id_carrots_0,
+
+	id_carrots_1,
+
+	id_carrots_2,
+
+	id_carrots_3,
+
+	id_potatoes_0,
+
+	id_potatoes_1,
+
+	id_potatoes_2,
+
+	id_potatoes_3,
+
 	id_null
 };
 
@@ -318,7 +334,23 @@ std::vector<std::string> block_id_to_string =
 
 	"wheat_6",
 
-	"wheat_7"
+	"wheat_7",
+
+	"carrots_0",
+
+	"carrots_1",
+
+	"carrots_2",
+
+	"carrots_3",
+
+	"potatoes_0",
+
+	"potatoes_1",
+
+	"potatoes_2",
+
+	"potatoes_3"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -477,7 +509,23 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Wheat",
 
-	"Wheat"
+	"Wheat",
+
+	"Carrots",
+
+	"Carrots",
+
+	"Carrots",
+
+	"Carrots",
+
+	"Potatoes",
+
+	"Potatoes",
+
+	"Potatoes",
+
+	"Potatoes"
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.
@@ -523,7 +571,23 @@ inline bool is_crop(block_id id)
 
 		id == id_wheat_6 ||
 
-		id == id_wheat_7
+		id == id_wheat_7 ||
+
+		id == id_carrots_0 ||
+
+		id == id_carrots_1 ||
+
+		id == id_carrots_2 ||
+
+		id == id_carrots_3 ||
+
+		id == id_potatoes_0 ||
+
+		id == id_potatoes_1 ||
+
+		id == id_potatoes_2 ||
+
+		id == id_potatoes_3
 	)
 	{
 		return true;

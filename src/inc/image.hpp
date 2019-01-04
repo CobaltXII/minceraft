@@ -21,6 +21,14 @@ std::vector<std::string> all_tex =
 
 	"brown_mushroom",
 
+	"carrots_stage_0",
+
+	"carrots_stage_1",
+
+	"carrots_stage_2",
+
+	"carrots_stage_3",
+
 	"coal_ore",
 
 	"cobblestone",
@@ -86,6 +94,14 @@ std::vector<std::string> all_tex =
 	"oak_log_top",
 
 	"oak_planks",
+
+	"potatoes_stage_0",
+	
+	"potatoes_stage_1",
+
+	"potatoes_stage_2",
+
+	"potatoes_stage_3",
 
 	"pumpkin_face_off",
 
