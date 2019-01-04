@@ -204,21 +204,21 @@ int main(int argc, char** argv)
 
     block_id player_inventory[9] =
     {
+    	id_wheat_0,
+
+    	id_carrots_0,
+
     	id_potatoes_0,
 
-    	id_potatoes_1,
+    	id_beetroots_0,
 
-    	id_potatoes_2,
+    	id_oak_sapling,
 
-    	id_potatoes_3,
+    	id_birch_sapling,
 
-    	id_wheat_4,
+    	id_stone_slab,
 
-    	id_wheat_5,
-
-    	id_wheat_6,
-
-    	id_wheat_7,
+    	id_cobblestone,
 
     	id_wet_farmland
     };
@@ -400,7 +400,7 @@ int main(int argc, char** argv)
 
     // Define the view distance.
 
-    float view_distance = 64.0f;
+    float view_distance = 128.0f;
 
     // Define the reach distance.
 
@@ -1085,6 +1085,36 @@ int main(int argc, char** argv)
 					{
 						the_growing_plant.done = true;
 					}
+				}
+				else if (the_growing_plant.type == growing_oak_sapling)
+				{
+					the_accessor->set_id_safe
+					(
+						the_growing_plant.x,
+						the_growing_plant.y,
+						the_growing_plant.z,
+
+						id_air
+					);
+
+					the_growing_plant.y++;
+
+					plant_tree_accessor
+					(
+						the_accessor, 
+
+						player_hitbox,
+
+						the_growing_plant.x, 
+						the_growing_plant.y, 
+						the_growing_plant.z, 
+
+						id_oak_leaves, 
+
+						id_oak_log
+					);
+
+					the_growing_plant.done = true;
 				}
 			}
 			else
