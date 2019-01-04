@@ -90,7 +90,7 @@ int main(int argc, char** argv)
 
 	SDL_Window* sdl_window = SDL_CreateWindow
 	(
-		"Minceraft 0.3.14",
+		"Minceraft 0.3.74",
 
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -173,17 +173,9 @@ int main(int argc, char** argv)
 
     GLuint block_texture_array = load_block_texture_array();
 
-    // Load the interface textures.
-
-    load_interface_textures();
-
     // Load the block face_info* array.
 
     load_block_face_info_array();
-
-    // Load sprite preliminaries.
-
-    load_sprite_preliminaries();
 
     // Load the block shader program.
 
@@ -212,17 +204,17 @@ int main(int argc, char** argv)
 
     block_id player_inventory[9] =
     {
-    	id_cobblestone,
-
-    	id_stone_slab,
-
-    	id_sandstone,
-
-    	id_sandstone_slab,
-
-    	id_brick,
+    	id_dirt,
 
     	id_grass,
+
+    	id_dry_farmland,
+
+    	id_wet_farmland,
+
+    	id_furnace,
+
+    	id_crafting_table,
 
     	id_oak_planks,
 
@@ -408,7 +400,7 @@ int main(int argc, char** argv)
 
     // Define the view distance.
 
-    float view_distance = 256.0f;
+    float view_distance = 64.0f;
 
     // Define the reach distance.
 
@@ -806,24 +798,15 @@ int main(int argc, char** argv)
 									block_timer = 10;
 								}
 
-								// All cross blocks are destroyed and replaced
-								// by water.
+								// id_dry_farmland and id_wet_farmland are 
+								// reverted to id_dirt when anything other 
+								// than crops are placed on top of them.
 
-								if (is_cross(place_id))
+								block_id farmland_below = the_world->get_id_safe(px, py + 1, pz);
+
+								if (farmland_below == id_dry_farmland || farmland_below == id_wet_farmland)
 								{
-									if
-									(
-										the_world->get_id_safe(px + 1, py, pz) == id_water ||
-										the_world->get_id_safe(px - 1, py, pz) == id_water ||
-
-										the_world->get_id_safe(px, py, pz + 1) == id_water ||
-										the_world->get_id_safe(px, py, pz - 1) == id_water ||
-
-										the_world->get_id_safe(px, py - 1, pz) == id_water
-									)
-									{
-										the_accessor->set_id_safe(px, py, pz, id_water);
-									}
+									the_accessor->set_id_safe(px, py + 1, pz, id_dirt);
 								}
 
 								break;
