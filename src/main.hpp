@@ -61,7 +61,3 @@
 #include <file.hpp>
 
 #include <hitbox.hpp>
-
-#include <sprite.hpp>
-
-#include <button.hpp>
