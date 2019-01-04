@@ -971,7 +971,11 @@ int main(int argc, char** argv)
 					the_growing_plant.z
 				);
 
-				if (the_growing_plant.type == growing_wheat)
+				if (plant_id != the_growing_plant.should_id)
+				{
+					the_growing_plant.done = true;
+				}
+				else if (the_growing_plant.type == growing_wheat)
 				{
 					if (plant_id < id_wheat_7)
 					{
@@ -984,9 +988,11 @@ int main(int argc, char** argv)
 							block_id(plant_id + 1)
 						);
 
+						the_growing_plant.should_id = block_id(plant_id + 1);
+
 						if (plant_id < id_wheat_6)
 						{
-							the_growing_plant.timer = 30;
+							the_growing_plant.timer = growth_8();
 						}
 					}
 					else
@@ -1007,9 +1013,11 @@ int main(int argc, char** argv)
 							block_id(plant_id + 1)
 						);
 
+						the_growing_plant.should_id = block_id(plant_id + 1);
+
 						if (plant_id < id_carrots_2)
 						{
-							the_growing_plant.timer = 60;
+							the_growing_plant.timer = growth_4();
 						}
 					}
 					else
@@ -1030,9 +1038,11 @@ int main(int argc, char** argv)
 							block_id(plant_id + 1)
 						);
 
+						the_growing_plant.should_id = block_id(plant_id + 1);
+
 						if (plant_id < id_potatoes_2)
 						{
-							the_growing_plant.timer = 60;
+							the_growing_plant.timer = growth_4();
 						}
 					}
 					else
@@ -1053,9 +1063,11 @@ int main(int argc, char** argv)
 							block_id(plant_id + 1)
 						);
 
+						the_growing_plant.should_id = block_id(plant_id + 1);
+
 						if (plant_id < id_beetroots_2)
 						{
-							the_growing_plant.timer = 60;
+							the_growing_plant.timer = growth_4();
 						}
 					}
 					else
