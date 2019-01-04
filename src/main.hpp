@@ -58,8 +58,8 @@
 
 #include <accessor.hpp>
 
+#include <hitbox.hpp>
+
 #include <generator.hpp>
 
 #include <file.hpp>
-
-#include <hitbox.hpp>
