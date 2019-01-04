@@ -199,7 +199,6 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("reeds")),
 
-		make_face_info_bench(block_name_to_layer.at("crafting_table_top"), block_name_to_layer.at("oak_planks"), block_name_to_layer.at("crafting_table_front"), block_name_to_layer.at("crafting_table_side"))
 		make_face_info_bench(block_name_to_layer.at("crafting_table_top"), block_name_to_layer.at("oak_planks"), block_name_to_layer.at("crafting_table_front"), block_name_to_layer.at("crafting_table_side")),
 
 		make_face_info_table(block_name_to_layer.at("furnace_top"), block_name_to_layer.at("furnace_front_off"), block_name_to_layer.at("furnace_side")),
@@ -209,5 +208,7 @@ void load_block_face_info_array()
 		make_face_info_block_food(block_name_to_layer.at("pumpkin_top"), block_name_to_layer.at("pumpkin_face_off"), block_name_to_layer.at("pumpkin_side")),
 
 		make_face_info_block_food(block_name_to_layer.at("pumpkin_top"), block_name_to_layer.at("pumpkin_face_on"), block_name_to_layer.at("pumpkin_side")),
+
+		make_face_info_cap(block_name_to_layer.at("melon_top"), block_name_to_layer.at("melon_side"))
 	};
 }
