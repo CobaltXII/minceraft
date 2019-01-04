@@ -1,3 +1,10 @@
+// Choose a growth timer for a plant that has 8 stages of growth.
+
+inline unsigned int growth_8()
+{
+	return 120 + (rand() % 120) - (rand() % 120); 
+}
+
 // Types of growing plants.
 
 enum growing_plant_type
