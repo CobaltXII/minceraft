@@ -39,6 +39,14 @@ std::vector<std::string> all_tex =
 
 	"emerald_ore",
 
+	"furnace_front_off",
+
+	"furnace_front_on",
+
+	"furnace_side",
+
+	"furnace_top",
+
 	"glass",
 
 	"gold_ore",
@@ -50,6 +58,10 @@ std::vector<std::string> all_tex =
 	"gravel",
 
 	"iron_ore",
+
+	"melon_side",
+
+	"melon_top",
 
 	"mushroom_block_brown",
 
@@ -70,6 +82,14 @@ std::vector<std::string> all_tex =
 	"oak_log_top",
 
 	"oak_planks",
+
+	"pumpkin_face_off",
+
+	"pumpkin_face_on",
+
+	"pumpkin_side",
+
+	"pumpkin_top",
 
 	"red_mushroom",
 
