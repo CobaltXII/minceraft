@@ -829,19 +829,19 @@ int main(int argc, char** argv)
 
 										if (place_id == id_wheat_0)
 										{
-											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_wheat, 30));
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_wheat_0, growing_wheat, growth_8()));
 										}
 										else if (place_id == id_carrots_0)
 										{
-											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_carrots, 60));
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_carrots_0, growing_carrots, growth_4()));
 										}
 										else if (place_id == id_potatoes_0)
 										{
-											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_potatoes, 60));
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_potatoes_0, growing_potatoes, growth_4()));
 										}
 										else if (place_id == id_beetroots_0)
 										{
-											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_beetroots, 60));
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_beetroots_0, growing_beetroots, growth_4()));
 										}
 									}
 								}
