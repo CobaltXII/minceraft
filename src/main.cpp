@@ -777,6 +777,21 @@ int main(int argc, char** argv)
 										block_timer = 10;
 									}
 								}
+								else if (place_id == id_oak_sapling || place_id == id_birch_sapling)
+								{
+									// Can only place id_oak_sapling and 
+									// id_birch_sapling on id_grass or 
+									// id_dirt.
+
+									block_id sapling_below = the_world->get_id_safe(px, py + 1, pz);
+
+									if (sapling_below == id_grass || sapling_below == id_dirt)
+									{
+										the_accessor->set_id_safe(px, py, pz, place_id);
+
+										block_timer = 10;
+									}
+								}
 								else if (place_id == id_reeds)
 								{
 									// Can only place id_reeds on id_sand or
