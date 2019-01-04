@@ -46,6 +46,8 @@
 
 #include <face.hpp>
 
+#include <plant.hpp>
+
 #include <world.hpp>
 
 #include <mesh.hpp>
