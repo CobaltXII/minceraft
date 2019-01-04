@@ -208,7 +208,7 @@ int main(int argc, char** argv)
 
     	id_grass,
 
-    	id_dry_farmland,
+    	id_stone_slab,
 
     	id_wet_farmland,
 
@@ -647,22 +647,50 @@ int main(int argc, char** argv)
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
 
+		// Check if the player is in water.
+
+		bool player_in_water_1 = the_world->get_id_safe(player_x + player_hitbox.xr / 2.0f, player_y + 0.8f, player_z + player_hitbox.zr / 2.0f) == id_water;
+
 		// Handle player upwards movement (jumping).
 
 		if (keys[SDL_SCANCODE_SPACE])
 		{
-			if (player_collision.collision_y)
+			if (player_in_water_1)
+			{
+				if (player_collision.collision_y)
+				{
+					// Jumps are higher.
+
+					player_vy -= 0.1024f;
+				}
+
+				// Float to the surface.
+
+				player_vy -= 0.0128f;
+			}
+			else if (player_collision.collision_y)
 			{
 				player_vy -= 0.1536f;
 			}
 		}
 
-		// Multiply the player's velocity by the player's friction constant. 
+		// Multiply the player's velocity by the player's friction constant.
 
 		player_vx *= friction;
 		player_vz *= friction;
 
-		player_vy += 0.008f;
+		if (player_in_water_1)
+		{
+			// Slowed, constant gravity.
+
+			player_vy += (0.048f - player_vy) / 16.0f;
+		}
+		else
+		{
+			// Normal, accelerating gravity.
+
+			player_vy += 0.008f;
+		}
 
 		// Interact with the world.
 
