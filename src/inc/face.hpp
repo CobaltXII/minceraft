@@ -225,6 +225,10 @@ void load_block_face_info_array()
 
 		make_face_info_block_food(block_name_to_layer.at("pumpkin_top"), block_name_to_layer.at("pumpkin_face_on"), block_name_to_layer.at("pumpkin_side")),
 
-		make_face_info_cap(block_name_to_layer.at("melon_top"), block_name_to_layer.at("melon_side"))
+		make_face_info_cap(block_name_to_layer.at("melon_top"), block_name_to_layer.at("melon_side")),
+
+		make_face_info_cap(block_name_to_layer.at("farmland_dry"), block_name_to_layer.at("dirt")),
+
+		make_face_info_cap(block_name_to_layer.at("farmland_wet"), block_name_to_layer.at("dirt"))
 	};
 }

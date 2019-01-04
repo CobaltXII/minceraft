@@ -139,6 +139,10 @@ enum block_id
 
 	id_melon,
 
+	id_dry_farmland,
+
+	id_wet_farmland,
+
 	id_null
 };
 
@@ -278,7 +282,11 @@ std::vector<std::string> block_id_to_string =
 
 	"jack_o_lantern",
 
-	"melon"
+	"melon",
+
+	"dry_farmland",
+
+	"wet_farmland"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -417,7 +425,11 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Jack o' Lantern",
 
-	"Melon"
+	"Melon",
+
+	"Dry Farmland",
+
+	"Wet Farmland"
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.

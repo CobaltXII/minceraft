@@ -39,6 +39,10 @@ std::vector<std::string> all_tex =
 
 	"emerald_ore",
 
+	"farmland_dry",
+
+	"farmland_wet",
+
 	"furnace_front_off",
 
 	"furnace_front_on",
