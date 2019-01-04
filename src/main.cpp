@@ -817,6 +817,25 @@ int main(int argc, char** argv)
 										the_accessor->set_id_safe(px, py, pz, place_id);
 
 										block_timer = 10;
+
+										// Plants must grow!
+
+										if (place_id == id_wheat_0)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_wheat, 30));
+										}
+										else if (place_id == id_carrots_0)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_carrots, 60));
+										}
+										else if (place_id == id_potatoes_0)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_potatoes, 60));
+										}
+										else if (place_id == id_beetroots_0)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, growing_beetroots, 60));
+										}
 									}
 								}
 								else
