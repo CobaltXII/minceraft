@@ -610,6 +610,64 @@ void generate_world(world* out, unsigned int seed)
 		}
 	}
 
+	// Plant pumpkins and melons.
+
+	for (int i = 0; i < out->x_res * out->z_res / 256; i++)
+	{
+		// Pick a place to plant a patch of pumpkins or melons.
+
+		int x_ = rand() % out->x_res;
+		int z_ = rand() % out->z_res;
+
+		// Choose a type of block to plant.
+
+		block_id block;
+
+		if (rand() % 2 == 0)
+		{
+			block = id_pumpkin;
+		}
+		else
+		{
+			block = id_melon;
+		}
+
+		// Plant 8 potential pumpkins or melons in the patch.
+
+		for (int j = 0; j < 8; j++)
+		{
+			// Choose a place to plant an individual pumpkin or melon.
+
+			int x = x_ + (rand() % 4) - (rand() % 4);
+			int z = z_ + (rand() % 4) - (rand() % 4);
+
+			if (!out->in_bounds(x, 0, z))
+			{
+				// Try again, this spot is out of bounds.
+
+				continue;
+			}
+
+			// Find the highest grass block and plant a pumpkin or melon 
+			// there.
+
+			for (int y = 0; y < out->y_res; y++)
+			{
+				block_id current_block = out->get_id(x, y, z);
+
+				if (current_block != id_air)
+				{
+					if (current_block == id_grass)
+					{
+						out->set_id_safe(x, y - 1, z, block);
+					}
+
+					break;
+				}
+			}
+		}
+	}
+
 	// Add bedrock. This will fill the bottom layer with 100% bedrock, and the
 	// second from bottom layer with ~50% bedrock.
 
