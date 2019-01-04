@@ -817,7 +817,7 @@ int main(int argc, char** argv)
 
 								block_id farmland_below = the_world->get_id_safe(px, py + 1, pz);
 
-								if (farmland_below == id_dry_farmland || farmland_below == id_wet_farmland)
+								if ((farmland_below == id_dry_farmland || farmland_below == id_wet_farmland) && !is_crop(place_id))
 								{
 									the_accessor->set_id_safe(px, py + 1, pz, id_dirt);
 								}
