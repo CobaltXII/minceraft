@@ -7,6 +7,14 @@ std::vector<std::string> all_tex =
 {
 	"bedrock",
 
+	"beetroots_stage_0",
+
+	"beetroots_stage_1",
+
+	"beetroots_stage_2",
+
+	"beetroots_stage_3",
+
 	"birch_leaves",
 
 	"birch_log_side",

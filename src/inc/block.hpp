@@ -175,6 +175,14 @@ enum block_id
 
 	id_potatoes_3,
 
+	id_beetroots_0,
+
+	id_beetroots_1,
+
+	id_beetroots_2,
+
+	id_beetroots_3,
+
 	id_null
 };
 
@@ -350,7 +358,15 @@ std::vector<std::string> block_id_to_string =
 
 	"potatoes_2",
 
-	"potatoes_3"
+	"potatoes_3",
+
+	"beetroots_0",
+
+	"beetroots_1",
+
+	"beetroots_2",
+
+	"beetroots_3"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -525,7 +541,15 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Potatoes",
 
-	"Potatoes"
+	"Potatoes",
+
+	"Beetroots",
+
+	"Beetroots",
+
+	"Beetroots",
+
+	"Beetroots"
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.
@@ -587,7 +611,15 @@ inline bool is_crop(block_id id)
 
 		id == id_potatoes_2 ||
 
-		id == id_potatoes_3
+		id == id_potatoes_3 ||
+
+		id == id_beetroots_0 ||
+
+		id == id_beetroots_1 ||
+
+		id == id_beetroots_2 ||
+
+		id == id_beetroots_3
 	)
 	{
 		return true;
