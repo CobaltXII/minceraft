@@ -74,6 +74,15 @@ face_info* make_face_info_table(float cap, float side_1, float side_2)
 {
 	return new face_info(cap, cap, side_2, side_2, side_1, side_2);
 }
+
+// Generates a face_info* that uses side_1 for the front face, side_2 for the 
+// left, right, bottom and back faces, and cap for the top face.
+
+face_info* make_face_info_block_food(float cap, float side_1, float side_2)
+{
+	return new face_info(cap, side_2, side_2, side_2, side_1, side_2);
+}
+
 // This function fills up block_face_info with a face_info* object for each
 // block_id. Call this function after calling load_block_texture_array, 
 // because this function uses block_name_to_layer as a lookup table.
