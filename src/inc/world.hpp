@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 // A world struct holds information about a world's dimensions and block data.
 // It makes it easy and efficient to modify and read the properties of every
@@ -11,6 +12,10 @@ struct world
 	unsigned int x_res;
 	unsigned int y_res;
 	unsigned int z_res;
+
+	// A list of plants that are growing.
+
+	std::vector<growing_plant> growing_plants;
 
 	// Get the voxel at the specified coordinates.
 
