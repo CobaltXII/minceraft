@@ -137,6 +137,10 @@ std::vector<std::string> all_tex =
 
 	"stone_slab_top",
 
+	"sapling_birch",
+
+	"sapling_oak",
+
 	"stone",
 
 	"water_0",

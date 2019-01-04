@@ -269,6 +269,10 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("beetroots_stage_2")),
 
-		make_face_info_all(block_name_to_layer.at("beetroots_stage_3"))
+		make_face_info_all(block_name_to_layer.at("beetroots_stage_3")),
+
+		make_face_info_all(block_name_to_layer.at("sapling_oak")),
+
+		make_face_info_all(block_name_to_layer.at("sapling_birch"))
 	};
 }

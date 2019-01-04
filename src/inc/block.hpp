@@ -183,6 +183,10 @@ enum block_id
 
 	id_beetroots_3,
 
+	id_oak_sapling,
+
+	id_birch_sapling,
+
 	id_null
 };
 
@@ -366,7 +370,11 @@ std::vector<std::string> block_id_to_string =
 
 	"beetroots_2",
 
-	"beetroots_3"
+	"beetroots_3",
+
+	"oak_sapling",
+
+	"birch_sapling"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -549,7 +557,11 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Beetroots",
 
-	"Beetroots"
+	"Beetroots",
+
+	"Oak Sapling",
+
+	"Birch Sapling"
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.
@@ -566,7 +578,11 @@ inline bool is_cross(block_id id)
 
 		id == id_brown_mushroom ||
 
-		id == id_reeds
+		id == id_reeds ||
+
+		id == id_oak_sapling || 
+
+		id == id_birch_sapling
 	)
 	{
 		return true;
