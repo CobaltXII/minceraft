@@ -211,12 +211,3 @@ std::vector<std::string> all_tex =
 
 	"wool_colored_yellow"
 };
-
-// A list of all the files in gui/ (excluding file extensions).
-
-std::vector<std::string> all_gui =
-{
-	"ascii",
-
-	"buttons"
-};
