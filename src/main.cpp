@@ -791,6 +791,19 @@ int main(int argc, char** argv)
 										block_timer = 10;
 									}
 								}
+								else if (is_crop(place_id))
+								{
+									// Crops can only be placed on farmland.
+
+									block_id crops_below = the_world->get_id_safe(px, py + 1, pz);
+
+									if (crops_below == id_dry_farmland || crops_below == id_wet_farmland)
+									{
+										the_accessor->set_id_safe(px, py, pz, place_id);
+
+										block_timer = 10;
+									}
+								}
 								else
 								{
 									the_accessor->set_id_safe(px, py, pz, place_id);
