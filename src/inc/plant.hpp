@@ -29,11 +29,16 @@ enum growing_plant_type
 
 struct growing_plant
 {
-	// The position of the growing plant.
+	// The position of this growing_plant.
 
 	unsigned int x;
 	unsigned int y;
 	unsigned int z;
+
+	// The block that this growing_plant should be. If it is not, that means
+	// that something else modified it and it should not grow anymore.
+
+	block_id should_id;
 
 	// The growing_plant_type of this growing_plant.
 
@@ -57,6 +62,8 @@ struct growing_plant
 		unsigned int _y,
 		unsigned int _z,
 
+		block_id _should_id,
+
 		growing_plant_type _type,
 
 		unsigned int _timer
@@ -65,6 +72,8 @@ struct growing_plant
 		x = _x;
 		y = _y;
 		z = _z;
+
+		should_id = _should_id;
 
 		type = _type;
 
