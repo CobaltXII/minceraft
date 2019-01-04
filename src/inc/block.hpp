@@ -129,6 +129,8 @@ enum block_id
 
 	id_crafting_table,
 
+	id_furnace,
+
 	id_null
 };
 
@@ -257,6 +259,11 @@ std::vector<std::string> block_id_to_string =
 	"brick_slab",
 
 	"reeds"
+	"reeds",
+
+	"crafting_table",
+
+	"furnace",
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -384,6 +391,11 @@ std::vector<std::string> block_id_to_block_name =
 	"Brick Slab",
 
 	"Reeds"
+	"Reeds",
+
+	"Crafting Table",
+
+	"Furnace",
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.

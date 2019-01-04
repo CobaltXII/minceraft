@@ -200,5 +200,8 @@ void load_block_face_info_array()
 		make_face_info_all(block_name_to_layer.at("reeds")),
 
 		make_face_info_bench(block_name_to_layer.at("crafting_table_top"), block_name_to_layer.at("oak_planks"), block_name_to_layer.at("crafting_table_front"), block_name_to_layer.at("crafting_table_side"))
+		make_face_info_bench(block_name_to_layer.at("crafting_table_top"), block_name_to_layer.at("oak_planks"), block_name_to_layer.at("crafting_table_front"), block_name_to_layer.at("crafting_table_side")),
+
+		make_face_info_table(block_name_to_layer.at("furnace_top"), block_name_to_layer.at("furnace_front_off"), block_name_to_layer.at("furnace_side")),
 	};
 }
