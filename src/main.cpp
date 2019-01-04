@@ -742,7 +742,7 @@ int main(int argc, char** argv)
 
 							// Can't place blocks inside other blocks.
 
-							if (the_world->get_id_safe(px, py, pz) != id_air)
+							if (is_not_permeable_ray(the_world->get_id_safe(px, py, pz)))
 							{
 								break;
 							}
