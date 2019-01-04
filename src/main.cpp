@@ -882,12 +882,26 @@ int main(int argc, char** argv)
 							the_accessor->set_id_safe(px, py, pz, id_water);
 						}
 
-						// Flowers and mushrooms cannot exist if there is 
-						// nothing below them.
+						// Flowers, saplings, crops and mushrooms cannot exist
+						// if there is nothing below them.
 
 						block_id plant_above = the_world->get_id_safe(px, py - 1, pz);
 
-						if (plant_above == id_dandelion || plant_above == id_rose || plant_above == id_red_mushroom || plant_above == id_brown_mushroom)
+						if 
+						(
+							plant_above == id_dandelion || 
+
+							plant_above == id_rose || 
+
+							plant_above == id_red_mushroom || 
+
+							plant_above == id_brown_mushroom || 
+
+							plant_above == id_oak_sapling || 
+
+							plant_above == id_birch_sapling ||
+
+							is_crop(plant_above))
 						{
 							the_world->set_id_safe(px, py - 1, pz, id_air);
 						}
