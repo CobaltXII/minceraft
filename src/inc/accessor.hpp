@@ -110,6 +110,18 @@ struct accessor
  			);
  		}
 	}
+
+	// Set the block_id information of the voxel at the specified coordinates,
+	// if the coordinates are within the bounds of the world, and if the 
+	// current block_id of the voxel at the specified coordinates is id_air.
+
+	inline void set_id_safe_if_air(unsigned int x, unsigned int y, unsigned int z, block_id id)
+	{
+		if (the_world->get_id_safe(x, y, z) == id_air)
+		{
+			set_id_safe(x, y, z, id);
+		}
+	}
 };
 
 // Create an accessor* from a world*.
