@@ -1116,6 +1116,36 @@ int main(int argc, char** argv)
 
 					the_growing_plant.done = true;
 				}
+				else if (the_growing_plant.type == growing_birch_sapling)
+				{
+					the_accessor->set_id_safe
+					(
+						the_growing_plant.x,
+						the_growing_plant.y,
+						the_growing_plant.z,
+
+						id_air
+					);
+
+					the_growing_plant.y++;
+
+					plant_tree_accessor
+					(
+						the_accessor, 
+
+						player_hitbox,
+
+						the_growing_plant.x, 
+						the_growing_plant.y, 
+						the_growing_plant.z, 
+
+						id_birch_leaves, 
+
+						id_birch_log
+					);
+
+					the_growing_plant.done = true;
+				}
 			}
 			else
 			{
