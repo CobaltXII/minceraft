@@ -740,6 +740,13 @@ int main(int argc, char** argv)
 							py -= iy * 0.001f;
 							pz -= iz * 0.001f;	
 
+							// Can't place blocks inside other blocks.
+
+							if (the_world->get_id_safe(px, py, pz) != id_air)
+							{
+								break;
+							}
+
 							// Find the hitbox of the block that is going to
 							// be placed.
 
