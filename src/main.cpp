@@ -204,23 +204,23 @@ int main(int argc, char** argv)
 
     block_id player_inventory[9] =
     {
-    	id_dirt,
+    	id_potatoes_0,
 
-    	id_grass,
+    	id_potatoes_1,
 
-    	id_stone_slab,
+    	id_potatoes_2,
 
-    	id_wet_farmland,
+    	id_potatoes_3,
 
-    	id_furnace,
+    	id_wheat_4,
 
-    	id_crafting_table,
+    	id_wheat_5,
 
-    	id_oak_planks,
+    	id_wheat_6,
 
-    	id_oak_log,
+    	id_wheat_7,
 
-    	id_glass
+    	id_wet_farmland
     };
 
     // Define the player's selected block.
@@ -647,28 +647,11 @@ int main(int argc, char** argv)
 		player_y = player_hitbox.y;
 		player_z = player_hitbox.z;
 
-		// Check if the player is in water.
-
-		bool player_in_water_1 = the_world->get_id_safe(player_x + player_hitbox.xr / 2.0f, player_y + 0.8f, player_z + player_hitbox.zr / 2.0f) == id_water;
-
 		// Handle player upwards movement (jumping).
 
 		if (keys[SDL_SCANCODE_SPACE])
 		{
-			if (player_in_water_1)
-			{
-				if (player_collision.collision_y)
-				{
-					// Jumps are higher.
-
-					player_vy -= 0.1024f;
-				}
-
-				// Float to the surface.
-
-				player_vy -= 0.0128f;
-			}
-			else if (player_collision.collision_y)
+			if (player_collision.collision_y)
 			{
 				player_vy -= 0.1536f;
 			}
@@ -679,18 +662,7 @@ int main(int argc, char** argv)
 		player_vx *= friction;
 		player_vz *= friction;
 
-		if (player_in_water_1)
-		{
-			// Slowed, constant gravity.
-
-			player_vy += (0.048f - player_vy) / 16.0f;
-		}
-		else
-		{
-			// Normal, accelerating gravity.
-
-			player_vy += 0.008f;
-		}
+		player_vy += 0.008f;
 
 		// Interact with the world.
 
