@@ -947,6 +947,64 @@ int main(int argc, char** argv)
 			}
 		}
 
+		// Update all growing plants.
+
+		for (std::vector<growing_plant>::iterator growing_plant_iterator = the_world->growing_plants.begin(); growing_plant_iterator != the_world->growing_plants.end();) 
+		{
+			growing_plant& the_growing_plant = *growing_plant_iterator;
+
+			if (the_growing_plant.timer == 0)
+			{
+				// Ready to grow into the next phase (if any).
+
+				block_id plant_id = the_world->get_id_safe
+				(
+					the_growing_plant.x, 
+					the_growing_plant.y, 
+					the_growing_plant.z
+				);
+
+				if (the_growing_plant.type == growing_wheat)
+				{
+					if (plant_id < id_wheat_7)
+					{
+						the_accessor->set_id_safe
+						(
+							the_growing_plant.x,
+							the_growing_plant.y,
+							the_growing_plant.z,
+
+							block_id(plant_id + 1)
+						);
+
+						if (plant_id < id_wheat_6)
+						{
+							the_growing_plant.timer = 30;
+						}
+					}
+					else
+					{
+						the_growing_plant.done = true;
+					}
+				}
+			}
+			else
+			{
+				the_growing_plant.timer--;
+			}
+
+			// Remove growing plants that are done growing.
+
+			if (the_growing_plant.done)
+			{
+				growing_plant_iterator = the_world->growing_plants.erase(growing_plant_iterator);
+			}
+			else
+			{
+				++growing_plant_iterator;
+			}
+		}
+
 		// Update all modified chunks.
 
 		unsigned int chunk_updates = 0;
