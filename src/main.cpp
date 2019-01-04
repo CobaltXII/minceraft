@@ -717,7 +717,7 @@ int main(int argc, char** argv)
 
 						// Check if the current block is a slab.
 
-						if (is_slab(current_block))
+						if (is_slab(current_block) && place_id == current_block)
 						{
 							// Change the current block into it's double slab 
 							// form, if the player does not intersect with the
