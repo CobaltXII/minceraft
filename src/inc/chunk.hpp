@@ -46,9 +46,9 @@ chunk* allocate_chunk
 {
 	// Allocate memory to hold the enclosed region's vertex arrays.
 
-	float* target = (float*)malloc(x_res * y_res * z_res * 6 * 2 * 3 * 7 * sizeof(float));
+	float* target = (float*)malloc(x_res * y_res * z_res * 4 * 2 * 2 * 3 * 7 * sizeof(float));
 
-	float* water_target = (float*)malloc(x_res * y_res * z_res * 6 * 2 * 3 * 7 * sizeof(float));
+	float* water_target = (float*)malloc(x_res * y_res * z_res * 4 * 2 * 2 * 3 * 7 * sizeof(float));
 
 	if (!target || !water_target)
 	{
