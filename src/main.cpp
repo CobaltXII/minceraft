@@ -797,6 +797,17 @@ int main(int argc, char** argv)
 										the_accessor->set_id_safe(px, py, pz, place_id);
 
 										block_timer = 10;
+
+										// Trees must grow!
+
+										if (place_id == id_oak_sapling)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_oak_sapling, growing_oak_sapling, growth_tree()));
+										}
+										else if (place_id == id_birch_sapling)
+										{
+											the_world->growing_plants.push_back(growing_plant(px, py, pz, id_birch_sapling, growing_birch_sapling, growth_tree()));
+										}
 									}
 								}
 								else if (place_id == id_reeds)
