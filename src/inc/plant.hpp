@@ -12,6 +12,13 @@ inline unsigned int growth_4()
 	return growth_8() * 2; 
 }
 
+// Choose a growth timer for a growing tree/sapling.
+
+inline unsigned int growth_tree()
+{
+	return rand() % 60;
+}
+
 // Types of growing plants.
 
 enum growing_plant_type
@@ -22,7 +29,11 @@ enum growing_plant_type
 
 	growing_potatoes,
 
-	growing_beetroots
+	growing_beetroots,
+
+	growing_oak_sapling,
+
+	growing_birch_sapling
 };
 
 // A growing plant.
