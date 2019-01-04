@@ -133,6 +133,8 @@ enum block_id
 
 	id_burning_furnace,
 
+	id_pumpkin,
+
 	id_null
 };
 
@@ -268,6 +270,8 @@ std::vector<std::string> block_id_to_string =
 
 	"burning_furnace",
 
+	"pumpkin",
+
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -401,6 +405,8 @@ std::vector<std::string> block_id_to_block_name =
 	"Furnace",
 
 	"Burning Furnace",
+
+	"Pumpkin",
 
 };
 
