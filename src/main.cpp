@@ -987,6 +987,29 @@ int main(int argc, char** argv)
 						the_growing_plant.done = true;
 					}
 				}
+				else if (the_growing_plant.type == growing_carrots)
+				{
+					if (plant_id < id_carrots_3)
+					{
+						the_accessor->set_id_safe
+						(
+							the_growing_plant.x,
+							the_growing_plant.y,
+							the_growing_plant.z,
+
+							block_id(plant_id + 1)
+						);
+
+						if (plant_id < id_carrots_2)
+						{
+							the_growing_plant.timer = 60;
+						}
+					}
+					else
+					{
+						the_growing_plant.done = true;
+					}
+				}
 			}
 			else
 			{
