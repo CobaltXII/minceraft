@@ -229,6 +229,22 @@ void load_block_face_info_array()
 
 		make_face_info_cap(block_name_to_layer.at("farmland_dry"), block_name_to_layer.at("dirt")),
 
-		make_face_info_cap(block_name_to_layer.at("farmland_wet"), block_name_to_layer.at("dirt"))
+		make_face_info_cap(block_name_to_layer.at("farmland_wet"), block_name_to_layer.at("dirt")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_0")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_1")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_2")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_3")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_4")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_5")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_6")),
+
+		make_face_info_all(block_name_to_layer.at("wheat_stage_7"))
 	};
 }

@@ -143,6 +143,22 @@ enum block_id
 
 	id_wet_farmland,
 
+	id_wheat_0,
+
+	id_wheat_1,
+
+	id_wheat_2,
+
+	id_wheat_3,
+
+	id_wheat_4,
+
+	id_wheat_5,
+
+	id_wheat_6,
+
+	id_wheat_7,
+
 	id_null
 };
 
@@ -286,7 +302,23 @@ std::vector<std::string> block_id_to_string =
 
 	"dry_farmland",
 
-	"wet_farmland"
+	"wet_farmland",
+
+	"wheat_0",
+
+	"wheat_1",
+
+	"wheat_2",
+
+	"wheat_3",
+
+	"wheat_4",
+
+	"wheat_5",
+
+	"wheat_6",
+
+	"wheat_7"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -429,7 +461,23 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Dry Farmland",
 
-	"Wet Farmland"
+	"Wet Farmland",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat",
+
+	"Wheat"
 };
 
 // Returns true if a block is a cross block. Otherwise, returns false.
@@ -447,6 +495,35 @@ inline bool is_cross(block_id id)
 		id == id_brown_mushroom ||
 
 		id == id_reeds
+	)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Returns true if a block is a crop block. Otherwise, returns false.
+
+inline bool is_crop(block_id id)
+{
+	if
+	(
+		id == id_wheat_0 ||
+
+		id == id_wheat_1 ||
+
+		id == id_wheat_2 ||
+
+		id == id_wheat_3 ||
+
+		id == id_wheat_4 ||
+
+		id == id_wheat_5 ||
+
+		id == id_wheat_6 ||
+
+		id == id_wheat_7
 	)
 	{
 		return true;
@@ -500,6 +577,8 @@ inline bool is_transparent(block_id id)
 
 		is_cross(id) ||
 
+		is_crop(id) ||
+
 		is_slab(id)
 	)
 	{
@@ -521,7 +600,9 @@ inline bool is_not_permeable_mob(block_id id)
 
 		id == id_null ||
 
-		is_cross(id)
+		is_cross(id) ||
+
+		is_crop(id)
 	)
 	{
 		return false;
@@ -559,7 +640,9 @@ inline bool is_not_permeable_light(block_id id)
 
 		id == id_glass ||
 
-		is_cross(id)
+		is_cross(id) ||
+
+		is_crop(id)
 	)
 	{
 		return false;

@@ -179,6 +179,22 @@ std::vector<std::string> all_tex =
 
 	"water_31",
 
+	"wheat_stage_0",
+
+	"wheat_stage_1",
+
+	"wheat_stage_2",
+
+	"wheat_stage_3",
+
+	"wheat_stage_4",
+
+	"wheat_stage_5",
+
+	"wheat_stage_6",
+	
+	"wheat_stage_7",
+
 	"wool_colored_black",
 
 	"wool_colored_blue",
