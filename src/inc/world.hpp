@@ -17,6 +17,10 @@ struct world
 
 	std::vector<growing_plant> growing_plants;
 
+	// A list of fires that are burning.
+
+	std::vector<burning_fire> burning_fires;
+
 	// Get the voxel at the specified coordinates.
 
 	inline voxel get(unsigned int x, unsigned int y, unsigned int z)
