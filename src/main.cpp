@@ -90,7 +90,7 @@ int main(int argc, char** argv)
 
 	SDL_Window* sdl_window = SDL_CreateWindow
 	(
-		"Minceraft 0.3.74",
+		"Minceraft 0.5.08",
 
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -902,6 +902,10 @@ int main(int argc, char** argv)
 										the_accessor->set_id_safe(px, py, pz, place_id);
 
 										block_timer = 10;
+
+										// Fire must burn!
+
+										the_world->burning_fires.push_back(burning_fire(px, py, pz, fire_timer()));
 									}
 								}
 								else
@@ -1209,6 +1213,58 @@ int main(int argc, char** argv)
 			else
 			{
 				++growing_plant_iterator;
+			}
+		}
+
+		// Update all burning fires.
+
+		for (std::vector<burning_fire>::iterator burning_fire_iterator = the_world->burning_fires.begin(); burning_fire_iterator != the_world->burning_fires.end();) 
+		{
+			burning_fire& the_burning_fire = *burning_fire_iterator;
+
+			if (the_burning_fire.timer == 0)
+			{
+				// Check if the burning fire has already been extinguished.
+
+				block_id fire_id = the_world->get_id_safe
+				(
+					the_burning_fire.x, 
+					the_burning_fire.y, 
+					the_burning_fire.z
+				);
+
+				if (fire_id != id_fire)
+				{
+					the_burning_fire.done = true;
+				}
+				else
+				{
+					// Extinguish the fire.
+
+					the_accessor->set_id_safe
+					(
+						the_burning_fire.x, 
+						the_burning_fire.y, 
+						the_burning_fire.z,
+
+						id_air
+					);
+				}
+			}
+			else
+			{
+				the_burning_fire.timer--;
+			}
+
+			// Remove burning fires that are done burning.
+
+			if (the_burning_fire.done)
+			{
+				burning_fire_iterator = the_world->burning_fires.erase(burning_fire_iterator);
+			}
+			else
+			{
+				++burning_fire_iterator;
 			}
 		}
 
