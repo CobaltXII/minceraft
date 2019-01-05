@@ -275,14 +275,6 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("sapling_birch")),
 
-		make_face_info_all(block_name_to_layer.at("fire_0")),
-
-		make_face_info_all(block_name_to_layer.at("fire_0")),
-
-		make_face_info_all(block_name_to_layer.at("fire_0")),
-
-		make_face_info_all(block_name_to_layer.at("fire_0")),
-
 		make_face_info_all(block_name_to_layer.at("fire_0"))
 	};
 }
