@@ -227,9 +227,9 @@ void load_block_face_info_array()
 
 		make_face_info_cap(block_name_to_layer.at("melon_top"), block_name_to_layer.at("melon_side")),
 
-		make_face_info_cap(block_name_to_layer.at("farmland_dry"), block_name_to_layer.at("dirt")),
+		make_face_info_caps(block_name_to_layer.at("farmland_dry"), block_name_to_layer.at("dirt"), block_name_to_layer.at("dirt")),
 
-		make_face_info_cap(block_name_to_layer.at("farmland_wet"), block_name_to_layer.at("dirt")),
+		make_face_info_caps(block_name_to_layer.at("farmland_wet"), block_name_to_layer.at("dirt"), block_name_to_layer.at("dirt")),
 
 		make_face_info_all(block_name_to_layer.at("wheat_stage_0")),
 
@@ -273,6 +273,16 @@ void load_block_face_info_array()
 
 		make_face_info_all(block_name_to_layer.at("sapling_oak")),
 
-		make_face_info_all(block_name_to_layer.at("sapling_birch"))
+		make_face_info_all(block_name_to_layer.at("sapling_birch")),
+
+		make_face_info_all(block_name_to_layer.at("fire_0")),
+
+		make_face_info_all(block_name_to_layer.at("fire_0")),
+
+		make_face_info_all(block_name_to_layer.at("fire_0")),
+
+		make_face_info_all(block_name_to_layer.at("fire_0")),
+
+		make_face_info_all(block_name_to_layer.at("fire_0"))
 	};
 }

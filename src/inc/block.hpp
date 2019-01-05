@@ -187,6 +187,16 @@ enum block_id
 
 	id_birch_sapling,
 
+	id_fire,
+
+	id_fire_left,
+
+	id_fire_right,
+
+	id_fire_front,
+
+	id_fire_back,
+
 	id_null
 };
 
@@ -374,7 +384,17 @@ std::vector<std::string> block_id_to_string =
 
 	"oak_sapling",
 
-	"birch_sapling"
+	"birch_sapling",
+
+	"fire",
+
+	"fire_left",
+
+	"fire_right",
+
+	"fire_front",
+
+	"fire_back"
 };
 
 // Conversion from block_id to std::string (used for in-game text).
@@ -561,8 +581,41 @@ std::vector<std::string> block_id_to_block_name =
 
 	"Oak Sapling",
 
-	"Birch Sapling"
+	"Birch Sapling",
+
+	"Fire",
+
+	"Fire",
+
+	"Fire",
+
+	"Fire",
+
+	"Fire"
 };
+
+// Returns true if a block is a fire block. Otherwise, returns false.
+
+inline bool is_fire(block_id id)
+{
+	if 
+	(
+		id == id_fire ||
+
+		id == id_fire_left ||
+
+		id == id_fire_right ||
+
+		id == id_fire_front ||
+
+		id == id_fire_back
+	)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 // Returns true if a block is a cross block. Otherwise, returns false.
 
@@ -691,7 +744,9 @@ inline bool is_transparent(block_id id)
 
 		is_crop(id) ||
 
-		is_slab(id)
+		is_slab(id) ||
+
+		is_fire(id)
 	)
 	{
 		return true;
@@ -714,7 +769,9 @@ inline bool is_not_permeable_mob(block_id id)
 
 		is_cross(id) ||
 
-		is_crop(id)
+		is_crop(id) ||
+
+		is_fire(id)
 	)
 	{
 		return false;
@@ -754,7 +811,9 @@ inline bool is_not_permeable_light(block_id id)
 
 		is_cross(id) ||
 
-		is_crop(id)
+		is_crop(id) ||
+
+		is_fire(id)
 	)
 	{
 		return false;
