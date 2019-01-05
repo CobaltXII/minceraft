@@ -754,7 +754,7 @@ int main(int argc, char** argv)
 
 								is_cross(place_id) ||
 
-								is_fire(place_id) ||
+								is_fire(place_id)
 							)
 							{
 								if (the_world->get_id_safe(px, py, pz) == id_water)
