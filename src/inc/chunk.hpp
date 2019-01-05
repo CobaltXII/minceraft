@@ -46,9 +46,11 @@ chunk* allocate_chunk
 {
 	// Allocate memory to hold the enclosed region's vertex arrays.
 
-	float* target = (float*)malloc(x_res * y_res * z_res * 4 * 2 * 2 * 3 * 7 * sizeof(float));
+	float* target = (float*)malloc(x_res * y_res * z_res * 6 * 2 * 2 * 3 * 7 * sizeof(float));
 
 	float* water_target = (float*)malloc(x_res * y_res * z_res * 4 * 2 * 2 * 3 * 7 * sizeof(float));
+
+	int Time_On_End = SDL_GetTicks();
 
 	if (!target || !water_target)
 	{
@@ -189,7 +191,7 @@ chunk* allocate_chunk
 		the_chunk->water_target_vao = water_target_vao;
 		the_chunk->water_target_vbo = water_target_vbo;
 	}
-
+	
 	// Return the_chunk.
 
 	return the_chunk;
