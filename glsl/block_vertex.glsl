@@ -44,16 +44,9 @@ void main()
 
 	if (frag_texture.z < 0.0f)
 	{
-		// Animate the water.
+		// Animate the texture.
 
-		float frame = mod(floor(time_in_seconds * 10.0f), 61.0f);
-
-		if (frame > 30.0f)
-		{
-			frame = 61.0f - frame;
-		}
-
-		frag_texture.z = abs(frag_texture.z) + frame;
+		frag_texture.z = abs(frag_texture.z) + mod(floor(time_in_seconds * 16.0f), 31.0f);
 	}
 
 	frag_lighting = vertex_lighting;
