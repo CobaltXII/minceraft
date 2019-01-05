@@ -166,9 +166,6 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 	}
 }
 
-#include <tuple>
-#include <vector>
-
 // Generate a world using a seed.
 
 void generate_world(world* out, unsigned int seed)
@@ -193,13 +190,13 @@ void generate_world(world* out, unsigned int seed)
 
 	// Generate the base terrain.
 
-	float frequency = 4.0f;
+	float frequency = 2.0f;
 
 	for (float x = 0.0f; x < float(out->x_res); x += 1.0f)
 	for (float y = 0.0f; y < float(out->y_res); y += 1.0f)
 	for (float z = 0.0f; z < float(out->z_res); z += 1.0f)
 	{
-		if (y / float(out->y_res) + noise.GetValueFractal(x * frequency, y * frequency, z * frequency) * 0.40f > 0.5f)
+		if (pow(y / float(out->y_res), 1.1024f) + noise.GetValueFractal(x * frequency, y * frequency, z * frequency) * 0.60f > 0.5f)
 		{
 			out->set_id(int(x), int(y), int(z), id_stone);
 		}
