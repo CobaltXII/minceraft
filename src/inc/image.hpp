@@ -59,6 +59,70 @@ std::vector<std::string> all_tex =
 
 	"farmland_wet",
 
+	"fire_0",
+	
+	"fire_1",
+
+	"fire_2",
+
+	"fire_3",
+
+	"fire_4",
+
+	"fire_5",
+
+	"fire_6",
+
+	"fire_7",
+
+	"fire_8",
+
+	"fire_9",
+
+	"fire_10",
+
+	"fire_11",
+
+	"fire_12",
+
+	"fire_13",
+
+	"fire_14",
+
+	"fire_15",
+
+	"fire_16",
+
+	"fire_17",
+
+	"fire_18",
+
+	"fire_19",
+
+	"fire_20",
+
+	"fire_21",
+
+	"fire_22",
+
+	"fire_23",
+
+	"fire_24",
+
+	"fire_25",
+
+	"fire_26",
+
+	"fire_27",
+
+	"fire_28",
+
+	"fire_29",
+
+	"fire_30",
+
+	"fire_31",
+
 	"furnace_front_off",
 
 	"furnace_front_on",
