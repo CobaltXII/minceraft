@@ -879,11 +879,25 @@ int main(int argc, char** argv)
 								{
 									// Fire can only be placed on top of solid
 									// blocks; that is, blocks that are not
-									// slabs, crops, crosses or fire.
+									// slabs, crops, crosses, fire, id_air or
+									// id_null.
 
 									block_id fire_below = the_world->get_id_safe(px, py + 1, pz);
 
-									if (!is_slab(fire_below) && !is_crop(fire_below) && !is_cross(fire_below) && !is_fire(fire_below))
+									if 
+									(
+										!is_slab(fire_below) && 
+
+										!is_crop(fire_below) && 
+
+										!is_cross(fire_below) && 
+
+										!is_fire(fire_below) &&
+
+										fire_below != id_air &&
+
+										fire_below != id_null
+									)
 									{
 										the_accessor->set_id_safe(px, py, pz, place_id);
 
