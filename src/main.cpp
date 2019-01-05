@@ -856,6 +856,21 @@ int main(int argc, char** argv)
 										}
 									}
 								}
+								else if (place_id == id_fire)
+								{
+									// Fire can only be placed on top of solid
+									// blocks; that is, blocks that are not
+									// slabs, crops, crosses or fire.
+
+									block_id fire_below = the_world->get_id_safe(px, py + 1, pz);
+
+									if (!is_slab(fire_below) && !is_crop(fire_below) && !is_cross(fire_below) && !is_fire(fire_below))
+									{
+										the_accessor->set_id_safe(px, py, pz, place_id);
+
+										block_timer = 10;
+									}
+								}
 								else
 								{
 									the_accessor->set_id_safe(px, py, pz, place_id);
