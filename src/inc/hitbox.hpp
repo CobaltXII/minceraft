@@ -98,21 +98,28 @@ inline float hitbox_z_depth(hitbox a, hitbox b, float eps = 0.00128f)
 	}
 }
 
+// Returns the sign of a float.
+
+int sgn(float n)
+{
+	return (0.0f < n) - (n < 0.0f);
+}
+
 // Do collision detection and response on one dynamic hitbox with an array of 
 // several static hitboxes while applying velocity to the dynamic hitbox. 
 // Returns a collision_data structure describing the collision.
 
 struct collision_data
 {
-	bool collision_x;
-	bool collision_y;
-	bool collision_z;
+	int collision_x;
+	int collision_y;
+	int collision_z;
 
 	collision_data
 	(
-		bool _collision_x,
-		bool _collision_y,
-		bool _collision_z
+		int _collision_x,
+		int _collision_y,
+		int _collision_z
 	)
 	{
 		collision_x = _collision_x;
@@ -123,9 +130,9 @@ struct collision_data
 
 collision_data do_collision_detection_and_response(hitbox& object, std::vector<hitbox> obstacles, float& vx, float& vy, float& vz, int precision = 64)
 {
-	bool collision_x = false;
-	bool collision_y = false;
-	bool collision_z = false;
+	int collision_x = 0;
+	int collision_y = 0;
+	int collision_z = 0;
 
 	for (int p = 0; p < precision; p++)
 	{
@@ -137,9 +144,11 @@ collision_data do_collision_detection_and_response(hitbox& object, std::vector<h
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collision_x = true;
+				float x_depth = hitbox_x_depth(object, obstacle);
 
-				object.x += hitbox_x_depth(object, obstacle);
+				collision_x = sgn(x_depth);
+
+				object.x += x_depth;
 
 				vx = 0.0f;
 			}
@@ -153,9 +162,11 @@ collision_data do_collision_detection_and_response(hitbox& object, std::vector<h
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collision_y = true;
+				float y_depth = hitbox_y_depth(object, obstacle);
 
-				object.y += hitbox_y_depth(object, obstacle);
+				collision_y = sgn(y_depth);
+
+				object.y += y_depth;
 
 				vy = 0.0f;
 			}
@@ -169,9 +180,11 @@ collision_data do_collision_detection_and_response(hitbox& object, std::vector<h
 
 			if (hitbox_intersect(object, obstacle))
 			{
-				collision_z = true;
-				
-				object.z += hitbox_z_depth(object, obstacle);
+				float z_depth = hitbox_z_depth(object, obstacle);
+
+				collision_z = sgn(z_depth);
+
+				object.z += z_depth;
 
 				vz = 0.0f;
 			}

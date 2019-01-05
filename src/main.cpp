@@ -651,7 +651,7 @@ int main(int argc, char** argv)
 
 		if (keys[SDL_SCANCODE_SPACE])
 		{
-			if (player_collision.collision_y)
+			if (player_collision.collision_y == -1)
 			{
 				player_vy -= 0.1536f;
 			}
