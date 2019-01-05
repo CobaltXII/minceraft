@@ -210,7 +210,7 @@ int main(int argc, char** argv)
 
     	id_potatoes_0,
 
-    	id_beetroots_0,
+    	id_fire,
 
     	id_oak_sapling,
 
@@ -745,6 +745,25 @@ int main(int argc, char** argv)
 							if (is_not_permeable_ray(the_world->get_id_safe(px, py, pz)))
 							{
 								break;
+							}
+							else if 
+							(
+								is_slab(place_id) ||
+
+								is_crop(place_id) ||
+
+								is_cross(place_id) ||
+
+								is_fire(place_id) ||
+							)
+							{
+								if (the_world->get_id_safe(px, py, pz) == id_water)
+								{
+									// Can't place slabs, crops, crosses or
+									// fire in id_water.
+
+									break;
+								}
 							}
 
 							// Find the hitbox of the block that is going to
