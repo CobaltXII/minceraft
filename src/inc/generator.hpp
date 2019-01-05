@@ -1,6 +1,21 @@
 #include <tuple>
 #include <vector>
 
+// Set the id of the block_id of an accessor* at the given position if the 
+// current id at the given position is id_air, and the given hitbox does not
+// intersect with the block to be placed.
+
+void set_id_safe_if_air_no_collision(accessor* out, hitbox player, unsigned int x, unsigned int y, unsigned int z, block_id id)
+{
+	if (out->the_world->get_id_safe(x, y, z) == id_air)
+	{
+		if (!hitbox_intersect(player, hitbox(x, y, z, 1.0f, 1.0f, 1.0f)))
+		{
+			out->set_id_safe(x, y, z, id);
+		}
+	}
+}
+
 // Plant a tree.
 
 void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned int y, unsigned int z, block_id tree_leaf, block_id tree_log)
@@ -19,21 +34,21 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 
 		// This is the trunk.
 
-		out->set_id_safe_if_air(x, y - 1, z, tree_log);
-		out->set_id_safe_if_air(x, y - 2, z, tree_log);
-		out->set_id_safe_if_air(x, y - 3, z, tree_log);
-		out->set_id_safe_if_air(x, y - 4, z, tree_log);
-		out->set_id_safe_if_air(x, y - 5, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 1, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 2, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 3, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 4, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 5, z, tree_log);
 
 		// This is the cross at the top.
 
-		out->set_id_safe_if_air(x, y - 6, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 6, z, tree_leaf);
 
-		out->set_id_safe_if_air(x - 1, y - 6, z, tree_leaf);
-		out->set_id_safe_if_air(x + 1, y - 6, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x - 1, y - 6, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x + 1, y - 6, z, tree_leaf);
 
-		out->set_id_safe_if_air(x, y - 6, z - 1, tree_leaf);
-		out->set_id_safe_if_air(x, y - 6, z + 1, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 6, z - 1, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 6, z + 1, tree_leaf);
 
 		// This is the square at the layer second from the 
 		// top.
@@ -47,7 +62,7 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 					continue;
 				}
 				
-				out->set_id_safe_if_air(x + j, y - 5, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 5, z + k, tree_leaf);
 			}
 		}
 
@@ -63,8 +78,8 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 					continue;
 				}
 
-				out->set_id_safe_if_air(x + j, y - 4, z + k, tree_leaf);
-				out->set_id_safe_if_air(x + j, y - 3, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 4, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 3, z + k, tree_leaf);
 			}
 		}
 	}
@@ -79,22 +94,22 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 
 		// This is the trunk.
 
-		out->set_id_safe_if_air(x, y - 1, z, tree_log);
-		out->set_id_safe_if_air(x, y - 2, z, tree_log);
-		out->set_id_safe_if_air(x, y - 3, z, tree_log);
-		out->set_id_safe_if_air(x, y - 4, z, tree_log);
-		out->set_id_safe_if_air(x, y - 5, z, tree_log);
-		out->set_id_safe_if_air(x, y - 6, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 1, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 2, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 3, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 4, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 5, z, tree_log);
+		set_id_safe_if_air_no_collision(out, player, x, y - 6, z, tree_log);
 
 		// This is the cross at the top.
 
-		out->set_id_safe_if_air(x, y - 7, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 7, z, tree_leaf);
 
-		out->set_id_safe_if_air(x - 1, y - 7, z, tree_leaf);
-		out->set_id_safe_if_air(x + 1, y - 7, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x - 1, y - 7, z, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x + 1, y - 7, z, tree_leaf);
 
-		out->set_id_safe_if_air(x, y - 7, z - 1, tree_leaf);
-		out->set_id_safe_if_air(x, y - 7, z + 1, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 7, z - 1, tree_leaf);
+		set_id_safe_if_air_no_collision(out, player, x, y - 7, z + 1, tree_leaf);
 
 		// This is the square at the layer second from the 
 		// top.
@@ -108,7 +123,7 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 					continue;
 				}
 				
-				out->set_id_safe_if_air(x + j, y - 6, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 6, z + k, tree_leaf);
 			}
 		}
 
@@ -124,8 +139,8 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 					continue;
 				}
 
-				out->set_id_safe_if_air(x + j, y - 5, z + k, tree_leaf);
-				out->set_id_safe_if_air(x + j, y - 4, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 5, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 4, z + k, tree_leaf);
 			}
 		}
 
@@ -145,7 +160,7 @@ void plant_tree_accessor(accessor* out, hitbox player, unsigned int x, unsigned 
 					continue;
 				}
 				
-				out->set_id_safe_if_air(x + j, y - 3, z + k, tree_leaf);
+				set_id_safe_if_air_no_collision(out, player, x + j, y - 3, z + k, tree_leaf);
 			}
 		}
 	}
