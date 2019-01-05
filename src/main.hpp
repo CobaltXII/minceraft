@@ -48,6 +48,8 @@
 
 #include <plant.hpp>
 
+#include <fire.hpp>
+
 #include <world.hpp>
 
 #include <mesh.hpp>
