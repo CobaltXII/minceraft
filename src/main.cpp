@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 
 	// The dimensions of the SDL_Window*.
 
-	int sdl_x_res = 950;
+	int sdl_x_res = 960;
 	int sdl_y_res = 540;
 
 	// Create the SDL_Window*.
@@ -1216,7 +1216,9 @@ int main(int argc, char** argv)
 			}
 		}
 
-		// Update all burning fires.
+		// Update all burning fires. Keep an extra vector for fire spreading.
+
+		std::vector<burning_fire> new_fires;
 
 		for (std::vector<burning_fire>::iterator burning_fire_iterator = the_world->burning_fires.begin(); burning_fire_iterator != the_world->burning_fires.end();) 
 		{
@@ -1253,6 +1255,62 @@ int main(int argc, char** argv)
 			}
 			else
 			{
+				if (rand() % 2048 == 0)
+				{
+					block_id neighbor_id = the_world->get_id_safe(the_burning_fire.x + 1, the_burning_fire.y, the_burning_fire.z);
+
+					block_id below_id = the_world->get_id_safe(the_burning_fire.x + 1, the_burning_fire.y + 1, the_burning_fire.z);
+
+					if (neighbor_id == id_air && !is_slab(below_id) && !is_crop(below_id) && !is_cross(below_id) && !is_fire(below_id) &&below_id != id_air && below_id != id_null)
+					{
+						the_accessor->set_id_safe(the_burning_fire.x + 1, the_burning_fire.y, the_burning_fire.z, id_fire);
+
+						new_fires.push_back(burning_fire(the_burning_fire.x + 1, the_burning_fire.y, the_burning_fire.z, fire_timer()));
+					}
+				}
+
+				if (rand() % 2048 == 0)
+				{
+					block_id neighbor_id = the_world->get_id_safe(the_burning_fire.x - 1, the_burning_fire.y, the_burning_fire.z);
+
+					block_id below_id = the_world->get_id_safe(the_burning_fire.x - 1, the_burning_fire.y + 1, the_burning_fire.z);
+
+					if (neighbor_id == id_air && !is_slab(below_id) && !is_crop(below_id) && !is_cross(below_id) && !is_fire(below_id) &&below_id != id_air && below_id != id_null)
+					{
+						the_accessor->set_id_safe(the_burning_fire.x - 1, the_burning_fire.y, the_burning_fire.z, id_fire);
+
+						new_fires.push_back(burning_fire(the_burning_fire.x - 1, the_burning_fire.y, the_burning_fire.z, fire_timer()));
+					}
+				}
+
+				if (rand() % 2048 == 0)
+				{
+					block_id neighbor_id = the_world->get_id_safe(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z + 1);
+
+					block_id below_id = the_world->get_id_safe(the_burning_fire.x, the_burning_fire.y + 1, the_burning_fire.z + 1);
+
+					if (neighbor_id == id_air && !is_slab(below_id) && !is_crop(below_id) && !is_cross(below_id) && !is_fire(below_id) &&below_id != id_air && below_id != id_null)
+					{
+						the_accessor->set_id_safe(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z + 1, id_fire);
+
+						new_fires.push_back(burning_fire(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z + 1, fire_timer()));
+					}
+				}
+
+				if (rand() % 2048 == 0)
+				{
+					block_id neighbor_id = the_world->get_id_safe(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z - 1);
+
+					block_id below_id = the_world->get_id_safe(the_burning_fire.x, the_burning_fire.y + 1, the_burning_fire.z - 1);
+
+					if (neighbor_id == id_air && !is_slab(below_id) && !is_crop(below_id) && !is_cross(below_id) && !is_fire(below_id) &&below_id != id_air && below_id != id_null)
+					{
+						the_accessor->set_id_safe(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z - 1, id_fire);
+
+						new_fires.push_back(burning_fire(the_burning_fire.x, the_burning_fire.y, the_burning_fire.z - 1, fire_timer()));
+					}
+				}
+
 				the_burning_fire.timer--;
 			}
 
@@ -1266,6 +1324,13 @@ int main(int argc, char** argv)
 			{
 				++burning_fire_iterator;
 			}
+		}
+
+		// Add the new_fires to the_world->burning_fires.
+
+		for (auto& the_burning_fire: new_fires)
+		{
+			the_world->burning_fires.push_back(the_burning_fire);
 		}
 
 		// Update all modified chunks.
