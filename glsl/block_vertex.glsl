@@ -58,7 +58,6 @@ void main()
 	(
 		gl_Position.x * gl_Position.x + 
 		gl_Position.y * gl_Position.y + 
-		gl_Position.z * gl_Position.z + 
-		gl_Position.w * gl_Position.w
+		gl_Position.z * gl_Position.z
 	);
 }
