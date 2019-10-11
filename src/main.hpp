@@ -18,7 +18,11 @@
 
 // SDL2 is used as the multimedia interface.
 
+#ifdef linux
+#include <SDL2/SDL.h>
+#else
 #include <SDL.h>
+#endif
 
 // stb_image is used as the image loading library.
 
