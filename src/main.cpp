@@ -575,8 +575,10 @@ int main(int argc, char** argv)
 		float rot_x_deg_want = (float(sdl_mouse_y) - (float(sdl_y_res) / 2.0f)) / float(sdl_y_res) * 180.0f;
 		float rot_y_deg_want = (float(sdl_mouse_x) - (float(sdl_x_res) / 2.0f)) / float(sdl_x_res) * 360.0f;
 
-		rot_x_deg += (rot_x_deg_want - rot_x_deg) / 16.0f;
-		rot_y_deg += (rot_y_deg_want - rot_y_deg) / 16.0f;
+		float camera_smoothing = 1.0f;
+
+		rot_x_deg += (rot_x_deg_want - rot_x_deg) / camera_smoothing;
+		rot_y_deg += (rot_y_deg_want - rot_y_deg) / camera_smoothing;
 
 		// Get the keyboard state.
 
