@@ -1402,7 +1402,7 @@ int main(int argc, char** argv)
 
 		// Calculate the projection matrix.
 
-		glm::mat4 matrix_projection = glm::perspective(glm::radians(70.0f), aspect_ratio, 0.128f, 1024.0f);
+		glm::mat4 matrix_projection = glm::perspective(glm::radians(110.0f), aspect_ratio, 0.128f, 1024.0f);
 
 		// Calculate the view matrix.
 
