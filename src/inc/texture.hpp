@@ -120,3 +120,35 @@ GLuint load_block_texture_array()
 
 	return texture_array;
 }
+
+// A GUI texture.
+struct gui_texture {
+	GLuint id;
+	float w;
+	float h;
+};
+
+// Load a texture from an image.
+gui_texture load_gui(std::string path0) {
+	std::string path = "../gui/" + path0 + ".png";
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	int width;
+	int height;
+	int channels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+	if (!data) {
+		std::cout << "Could not load \"" << path << "\" using stbi_load." << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	stbi_image_free(data);
+	return {textureID, float(width), float(height)};
+}
