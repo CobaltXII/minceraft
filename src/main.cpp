@@ -1684,6 +1684,150 @@ int main(int argc, char** argv)
 				);
 				gui_draw_all(gui_hotbar_selection);
 			}
+
+			// Inventory.
+			if (is_inventory_open) {
+				glUseProgram(quad_shader_program);
+
+				// Darken.
+				gui_init_frame(gui_w, gui_h);
+				gui(0.0f, 0.0f, gui_w / gui_scale, gui_h / gui_scale, gui_scale);
+				gui_draw_all(gui_dark);
+
+				{
+					// Container.
+					float x = gui_w / 2.0f - (gui_inventory.w * gui_scale) / 2.0f;
+					float y = gui_h / 2.0f - (gui_inventory.h * gui_scale) / 2.0f;
+					float w = gui_inventory.w * gui_scale;
+					float h = gui_inventory.h * gui_scale;
+					gui_init_frame(gui_w, gui_h);
+					gui(x, y, gui_scale, gui_inventory);
+					gui_draw_all(gui_inventory);
+
+					if (sdl_mouse_l_pressed && has_selected_item && !(sdl_mouse_x >= x && sdl_mouse_x <= x + w && sdl_mouse_y >= y && sdl_mouse_y <= y + h)) {
+						has_selected_item = false;
+					}
+				}
+
+				// Slider.
+				gui_init_frame(gui_w, gui_h);
+				gui(
+					gui_w / 2.0f - (gui_inventory.w * gui_scale) / 2.0f + (156.0f * gui_scale),
+					gui_h / 2.0f - (gui_inventory.h * gui_scale) / 2.0f + (18.0f * gui_scale) + (std::round(145.0f * float(inventory_scroll) / float(inventory_scroll_max)) * gui_scale),
+					gui_scale, gui_inventory_slider
+				);
+				gui_draw_all(gui_inventory_slider);
+
+				// Items.
+				{
+					std::string tooltip = "";
+					float tooltip_x = 0.0f;
+					float tooltip_y = 0.0f;
+					float tooltip_item_x = 0.0f;
+					float tooltip_item_y = 0.0f;
+					float tooltip_spacing = 2.0f;
+
+					glUseProgram(item_shader_program);
+					gui2_init_frame(gui_w, gui_h);
+
+					// Creative items.
+					for (int i = 0; i < 72; i++) {
+						float p = float(i % 8);
+						float q = float(i / 8);
+						if (i + inventory_scroll * 8 + 1 < int(id_null)) {
+							float x = gui_w / 2.0f - (gui_inventory.w * gui_scale) / 2.0f + (8.0f * gui_scale) + (p * 18.0f * gui_scale);
+							float y = gui_h / 2.0f - (gui_inventory.h * gui_scale) / 2.0f + (18.0f * gui_scale) + (q * 18.0f * gui_scale);
+							float w = 16.0f * gui_scale;
+							float h = 16.0f * gui_scale;
+							gui2(x, y, gui_scale, block_id(i + inventory_scroll * 8 + 1));
+							if (sdl_mouse_x >= x && sdl_mouse_x <= x + w &&
+								sdl_mouse_y >= y && sdl_mouse_y <= y + h) {
+								tooltip = block_id_to_block_name[i + inventory_scroll * 8 + 1];
+								tooltip_x = float(sdl_mouse_x) + tooltip_spacing;
+								tooltip_y = float(sdl_mouse_y) + tooltip_spacing;
+								tooltip_item_x = x;
+								tooltip_item_y = y;
+								if (sdl_mouse_l_pressed) {
+									has_selected_item = true;
+									selected_item = block_id(i + inventory_scroll * 8 + 1);
+								}
+							}
+						}
+					}
+
+					// Hotbar items.
+					for (int i = 0; i < 9; i++) {
+						float x = gui_w / 2.0f - (gui_inventory.w * gui_scale) / 2.0f + (8.0f * gui_scale) + (float(i) * 18.0f * gui_scale);
+						float y = gui_h / 2.0f - (gui_inventory.h * gui_scale) / 2.0f + (184.0f * gui_scale);
+						float w = 16.0f * gui_scale;
+						float h = 16.0f * gui_scale;
+						if (player_inventory[i] != id_air) {
+							gui2(x, y, gui_scale, player_inventory[i]);
+						}
+						if (sdl_mouse_x >= x && sdl_mouse_x <= x + w &&
+							sdl_mouse_y >= y && sdl_mouse_y <= y + h) {
+							if (player_inventory[i] != id_air) {
+								tooltip = block_id_to_block_name[player_inventory[i]];
+								tooltip_x = float(sdl_mouse_x) + tooltip_spacing;
+								tooltip_y = float(sdl_mouse_y) + tooltip_spacing;
+								tooltip_item_x = x;
+								tooltip_item_y = y;
+							}
+							if (sdl_mouse_l_pressed) {
+								if (has_selected_item) {
+									if (player_inventory[i] == id_air) {
+										player_inventory[i] = selected_item;
+										has_selected_item = false;
+									} else {
+										std::swap(player_inventory[i], selected_item);
+									}
+								} else if (player_inventory[i] != id_air) {
+									has_selected_item = true;
+									selected_item = player_inventory[i];
+									player_inventory[i] = id_air;
+								}
+							}
+						}
+					}
+					gui2_draw_all(block_texture_array);
+
+					// Tooltip.
+					if (!tooltip.empty()) {
+						glUseProgram(quad_shader_program);
+
+						// Item highlight.
+						gui_init_frame(gui_w, gui_h);
+						gui(tooltip_item_x, tooltip_item_y, 16.0f, 16.0f, gui_scale);
+						gui_draw_all(gui_hightlight);
+
+						if (!has_selected_item) {
+							// Tooltip box.
+							gui_init_frame(gui_w, gui_h);
+							gui(tooltip_x - tooltip_spacing * gui_scale, tooltip_y - tooltip_spacing * gui_scale, gui3_measure(tooltip) + tooltip_spacing * 2.0f, 8.0f + tooltip_spacing * 2.0f, gui_scale);
+							gui_draw_all(gui_tooltip);
+
+							// Tooltip.
+							glUseProgram(text_shader_program);
+							gui3_init_frame(gui_w, gui_h);
+							gui3_shadowed_string(tooltip_x, tooltip_y, gui_scale, tooltip);
+							gui3_draw_all(gui_font);
+						}
+					}
+
+					// Selected item.
+					if (has_selected_item) {
+						float block_offset = 0.0f;
+
+						glUseProgram(item_shader_program);
+						gui2_init_frame(gui_w, gui_h);
+						gui2(
+							float(sdl_mouse_x) + block_offset,
+							float(sdl_mouse_y) + block_offset,
+							gui_scale, selected_item
+						);
+						gui2_draw_all(block_texture_array);
+					}
+				}
 			}
 		// Swap the back buffer to the front.
 
