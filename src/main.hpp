@@ -65,3 +65,8 @@
 #include <generator.hpp>
 
 #include <file.hpp>
+
+#include <gui.hpp>
+#include <gui2.hpp>
+#include <gui3.hpp>
+#include <gui4.hpp>
