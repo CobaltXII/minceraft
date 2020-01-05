@@ -1,3 +1,5 @@
 bin/*
-
+CMakeFiles/*
 *.DS_Store
+CmakeCache.txt
+cmake_install.cmake
