@@ -173,6 +173,18 @@ int main(int argc, char** argv)
 
     GLuint block_texture_array = load_block_texture_array();
 
+    // Load all the GUI textures.
+    gui_texture gui_buttons = 			load_gui("buttons");
+    gui_texture gui_crosshair =			load_gui("crosshair");
+    gui_texture gui_dark =				load_gui("dark");
+    gui_texture gui_font = 				load_gui("font");
+    gui_texture gui_hightlight = 		load_gui("highlight");
+    gui_texture gui_hotbar = 			load_gui("hotbar");
+    gui_texture gui_hotbar_selection = 	load_gui("hotbar_selection");
+    gui_texture gui_inventory = 		load_gui("inventory");
+    gui_texture gui_inventory_slider = 	load_gui("inventory_slider");
+    gui_texture gui_logo = 				load_gui("logo");
+    gui_texture gui_tooltip = 			load_gui("tooltip");
     // Load the block face_info* array.
 
     load_block_face_info_array();
