@@ -452,6 +452,18 @@ int main(int argc, char** argv)
 
     bool sdl_running = true;
 
+    // State machine.
+    bool is_inventory_open = false;
+    int inventory_scroll = 0;
+    int inventory_scroll_max = 9;
+    float lock_deg_x = 0.0f;
+    float lock_deg_y = 0.0f;
+    int lock_mouse_x = 0;
+    int lock_mouse_y = 0;
+    bool has_selected_item = false;
+    block_id selected_item = id_null;
+    bool is_options_open = false;
+
     while (sdl_running)
     {
     	// Remember the time at the start of the frame. At the end of the 
