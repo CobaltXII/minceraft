@@ -185,6 +185,12 @@ int main(int argc, char** argv)
     gui_texture gui_inventory_slider = 	load_gui("inventory_slider");
     gui_texture gui_logo = 				load_gui("logo");
     gui_texture gui_tooltip = 			load_gui("tooltip");
+
+    // Initialize the GUI drivers.
+    gui_init();
+    gui2_init();
+    gui3_init();
+
     // Load the block face_info* array.
 
     load_block_face_info_array();
