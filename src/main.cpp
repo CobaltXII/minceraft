@@ -1621,6 +1621,30 @@ int main(int argc, char** argv)
 
 		glDisable(GL_DEPTH_TEST);
 
+		// Render GUI. Don't try to understand it!
+		{
+			glEnable(GL_BLEND);
+
+			float gui_w = sdl_x_res;
+			float gui_h = sdl_y_res;
+			float gui_scale = std::max(1.0f, std::round(gui_w / (gui_hotbar.w * 3.0f)));
+
+			glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ZERO);
+
+			// Crosshair.
+			if (!is_inventory_open) {
+				glUseProgram(quad_shader_program);
+				gui_init_frame(gui_w, gui_h);
+				gui(
+					gui_w / 2.0f - (gui_crosshair.w * gui_scale) / 2.0f,
+					gui_h / 2.0f - (gui_crosshair.h * gui_scale) / 2.0f,
+					gui_scale, gui_crosshair
+				);
+				gui_draw_all(gui_crosshair);
+			}
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			}
 		// Swap the back buffer to the front.
 
 		SDL_GL_SwapWindow(sdl_window);
