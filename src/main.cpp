@@ -227,9 +227,9 @@ int main(int argc, char** argv)
 
     block_id player_inventory[9] =
     {
-    	id_wheat_0,
+    	id_crafting_table,
 
-    	id_carrots_0,
+    	id_furnace,
 
     	id_potatoes_0,
 
@@ -494,7 +494,7 @@ int main(int argc, char** argv)
 			{
 				// The mouse moved.
 
-				if (sdl_mouse_relative)
+				if (sdl_mouse_relative && !is_inventory_open && !is_options_open)
 				{
 					sdl_mouse_x += e.motion.xrel;
 					sdl_mouse_y += e.motion.yrel;
