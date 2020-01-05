@@ -559,37 +559,6 @@ int main(int argc, char** argv)
 						sdl_running = false;
 					}
 				}
-				else if (key == SDLK_1)
-				{
-					player_selection = 0;
-				}
-				else if (key == SDLK_2)
-				{
-					player_selection = 1;
-				}
-				else if (key == SDLK_3)
-				{
-					player_selection = 2;
-				}
-				else if (key == SDLK_4)
-				{
-					player_selection = 3;
-				}
-				else if (key == SDLK_5)
-				{
-					player_selection = 4;
-				}
-				else if (key == SDLK_6)
-				{
-					player_selection = 5;
-				}
-				else if (key == SDLK_7)
-				{
-					player_selection = 6;
-				}
-				else if (key == SDLK_8)
-				{
-					player_selection = 7;
 				else if (key >= SDLK_1 && key <= SDLK_9) {
 					player_selection = key - SDLK_1;
 				} else if (key == SDLK_e) {
