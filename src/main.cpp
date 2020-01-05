@@ -590,18 +590,82 @@ int main(int argc, char** argv)
 				else if (key == SDLK_8)
 				{
 					player_selection = 7;
+				else if (key >= SDLK_1 && key <= SDLK_9) {
+					player_selection = key - SDLK_1;
+				} else if (key == SDLK_e) {
+					if (!is_options_open) {
+						is_inventory_open = !is_inventory_open;
+						if (is_inventory_open) {
+							lock_deg_x = rot_x_deg;
+							lock_deg_y = rot_y_deg;
+							lock_mouse_x = sdl_mouse_x;
+							lock_mouse_y = sdl_mouse_y;
+							if (sdl_mouse_relative) {
+								SDL_SetRelativeMouseMode(SDL_FALSE);
+							}
+							SDL_WarpMouseInWindow(sdl_window, sdl_x_res / 2, sdl_y_res / 2);
+							sdl_mouse_x = sdl_x_res / 2;
+							sdl_mouse_y = sdl_y_res / 2;
+						} else {
+							sdl_mouse_x = lock_mouse_x;
+							sdl_mouse_y = lock_mouse_y;
+							if (sdl_mouse_relative) {
+								SDL_SetRelativeMouseMode(SDL_TRUE);
+							}
+							has_selected_item = false;
+						}
+					}
+				} else if (key == SDLK_o) {
+					if (!is_inventory_open) {
+						is_options_open = !is_options_open;
+						if (is_options_open) {
+							lock_deg_x = rot_x_deg;
+							lock_deg_y = rot_y_deg;
+							lock_mouse_x = sdl_mouse_x;
+							lock_mouse_y = sdl_mouse_y;
+							if (sdl_mouse_relative) {
+								SDL_SetRelativeMouseMode(SDL_FALSE);
+							}
+							SDL_WarpMouseInWindow(sdl_window, sdl_x_res / 2, sdl_y_res / 2);
+							sdl_mouse_x = sdl_x_res / 2;
+							sdl_mouse_y = sdl_y_res / 2;
+						} else {
+							sdl_mouse_x = lock_mouse_x;
+							sdl_mouse_y = lock_mouse_y;
+							if (sdl_mouse_relative) {
+								SDL_SetRelativeMouseMode(SDL_TRUE);
+							}
+						}
+					}
 				}
-				else if (key == SDLK_9)
-				{
-					player_selection = 8;
+			} else if (e.type == SDL_MOUSEWHEEL) {
+				if (is_inventory_open) {
+					if (e.wheel.y > 0) {
+						inventory_scroll++;
+					} else if (e.wheel.y < 0) {
+						inventory_scroll--;
+					}
+					if (inventory_scroll < 0)
+						inventory_scroll = 0;
+					else if (inventory_scroll > inventory_scroll_max)
+						inventory_scroll = inventory_scroll_max;
+				} else {
+					if (e.wheel.y > 0) {
+						player_selection = (player_selection + 1) % 9;
+					} else if (e.wheel.y < 0) {
+						player_selection = (player_selection + 8) % 9;
+					}
 				}
 			}
 		}
 
+		bool sdl_mouse_l_pressed = sdl_mouse_l && !sdl_mouse_l_old;
+		bool sdl_mouse_r_pressed = sdl_mouse_r && !sdl_mouse_r_old;
+
 		// Enable relative mouse mode when the left mouse button is down and
 		// relative mouse mode is currently off.
 
-		if (sdl_mouse_relative == false && sdl_mouse_l == true)
+		if (sdl_mouse_relative == false && sdl_mouse_l == true && !is_inventory_open && !is_options_open)
 		{
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 
@@ -617,6 +681,11 @@ int main(int argc, char** argv)
 
 		rot_x_deg += (rot_x_deg_want - rot_x_deg) / camera_smoothing;
 		rot_y_deg += (rot_y_deg_want - rot_y_deg) / camera_smoothing;
+
+		if (is_inventory_open || is_options_open) {
+			rot_x_deg = lock_deg_x;
+			rot_y_deg = lock_deg_y;
+		}
 
 		// Get the keyboard state.
 
@@ -706,7 +775,7 @@ int main(int argc, char** argv)
 
 		// Interact with the world.
 
-		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0)
+		if ((sdl_mouse_l || sdl_mouse_r) && block_timer == 0 && !is_inventory_open && !is_options_open && sdl_mouse_relative)
 		{
 			// The ray begins at the player's 'eye'.
 
