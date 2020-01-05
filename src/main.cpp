@@ -466,6 +466,9 @@ int main(int argc, char** argv)
 
     while (sdl_running)
     {
+    	bool sdl_mouse_l_old = sdl_mouse_l;
+    	bool sdl_mouse_r_old = sdl_mouse_r;
+
     	// Remember the time at the start of the frame. At the end of the 
     	// frame, this timestamp will be used to cap the framerate.
 
