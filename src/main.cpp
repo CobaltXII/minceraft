@@ -1644,6 +1644,46 @@ int main(int argc, char** argv)
 			}
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			// Hotbar.
+			{
+				glUseProgram(quad_shader_program);
+				gui_init_frame(gui_w, gui_h);
+				gui(
+					gui_w / 2.0f - (gui_hotbar.w * gui_scale) / 2.0f,
+					gui_h - (gui_hotbar.h * gui_scale),
+					gui_scale, gui_hotbar
+				);
+				gui_draw_all(gui_hotbar);
+			}
+
+			// Items.
+			{
+				glUseProgram(item_shader_program);
+				gui2_init_frame(gui_w, gui_h);
+				for (int i = 0; i < 9; i++) {
+					if (player_inventory[i] != id_air) {
+						gui2(
+							gui_w / 2.0f - (gui_hotbar.w * gui_scale) / 2.0f + (20.0f * gui_scale) * float(i) + (3.0f * gui_scale),
+							gui_h - (gui_hotbar.h * gui_scale) + (3.0f * gui_scale),
+							gui_scale, player_inventory[i]
+						);
+					}
+				}
+				gui2_draw_all(block_texture_array);
+			}
+
+			// Hotbar selection.
+			{
+				glUseProgram(quad_shader_program);
+				gui_init_frame(gui_w, gui_h);
+				gui(
+					gui_w / 2.0f - (gui_hotbar.w * gui_scale) / 2.0f - gui_scale + (20.0f * gui_scale) * float(player_selection),
+					gui_h - (gui_hotbar.h * gui_scale) - gui_scale,
+					gui_scale, gui_hotbar_selection
+				);
+				gui_draw_all(gui_hotbar_selection);
+			}
 			}
 		// Swap the back buffer to the front.
 
