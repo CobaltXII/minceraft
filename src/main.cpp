@@ -199,6 +199,11 @@ int main(int argc, char** argv)
 
     GLuint block_shader_program = load_program("../glsl/block_vertex.glsl", "../glsl/block_fragment.glsl");
 
+    // Load the quad shader programs.
+    GLuint quad_shader_program = load_program("../glsl/quad_vertex.glsl", "../glsl/quad_fragment.glsl");
+    GLuint item_shader_program = load_program("../glsl/item_vertex.glsl", "../glsl/item_fragment.glsl");
+    GLuint text_shader_program = load_program("../glsl/text_vertex.glsl", "../glsl/text_fragment.glsl");
+
     // Create an empty pointer to a world*.
 
     world* the_world = nullptr;
