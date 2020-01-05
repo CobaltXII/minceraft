@@ -153,11 +153,11 @@ accessor* allocate_accessor(world* the_world)
 
 	// Generate all of the chunks.
 
-	for (int x = 0; x < the_accessor->chunk_x_res; x++)
+	for (int z = 0; z < the_accessor->chunk_z_res; z++)
 	{
 		for (int y = 0; y < the_accessor->chunk_y_res; y++)
 		{
-			for (int z = 0; z < the_accessor->chunk_z_res; z++)
+			for (int x = 0; x < the_accessor->chunk_x_res; x++)
 			{
 				the_accessor->the_chunks[x + the_accessor->chunk_x_res * (y + the_accessor->chunk_y_res * z)] = allocate_chunk(the_world, x * 16, y * 16, z * 16, 16, 16, 16);
 			}
