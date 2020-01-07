@@ -8,6 +8,22 @@ By CobaltXII
 
 #include "main.hpp"
 
+// Format string.
+char* formatString(const char* fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	size_t bufsz = vsnprintf(NULL, 0, fmt, args) + 1;
+	va_end(args);
+	char* buf = (char*)malloc(bufsz);
+	if (!buf) {
+		return NULL;
+	}
+	va_start(args, fmt);
+	vsnprintf(buf, bufsz, fmt, args);
+	va_end(args);
+	return buf;
+}
+
 // Print usage information.
 
 void print_usage(char** argv)
