@@ -437,10 +437,6 @@ int main(int argc, char** argv)
 
     accessor* the_accessor = allocate_accessor(the_world);
 
-    // Define the view distance.
-
-    float view_distance = 128.0f;
-
     // Define the reach distance.
 
     float reach_distance = 8.0f;
@@ -468,6 +464,15 @@ int main(int argc, char** argv)
 
     bool sdl_running = true;
 
+    // Raw settings.
+    float option_music_raw = 0.5f;
+    float option_sound_raw = 0.5f;
+    bool option_invert_mouse = false;
+    float option_sensitivity_raw = 0.5f;
+    float option_render_distance_raw = 1.0f;
+   	bool option_view_bobbing = true;
+   	float option_fov_raw = 1.0f;
+
     // State machine.
     bool is_inventory_open = false;
     int inventory_scroll = 0;
@@ -479,9 +484,20 @@ int main(int argc, char** argv)
     bool has_selected_item = false;
     block_id selected_item = id_null;
     bool is_options_open = false;
+    enum {
+    	OPT_PAUSE,
+    	OPT_OPTIONS
+    } option_screen;
 
     while (sdl_running)
     {
+    	float option_music = option_music_raw;
+    	float option_sound = option_sound_raw;
+    	float option_sensitivity = option_sensitivity_raw * 1.9f + 0.1f;
+    	int option_render_distance = int(option_render_distance_raw * 31.0f + 1.0f);
+    	float option_fov = option_fov_raw * 80.0f + 30.0f;
+    	float view_distance = option_render_distance * 16.0f;
+
     	bool sdl_mouse_l_old = sdl_mouse_l;
     	bool sdl_mouse_r_old = sdl_mouse_r;
 
@@ -1500,7 +1516,7 @@ int main(int argc, char** argv)
 
 		// Calculate the projection matrix.
 
-		glm::mat4 matrix_projection = glm::perspective(glm::radians(110.0f), aspect_ratio, 0.128f, 1024.0f);
+		glm::mat4 matrix_projection = glm::perspective(glm::radians(option_fov), aspect_ratio, 0.128f, 1024.0f);
 
 		// Calculate the view matrix.
 
@@ -1512,6 +1528,10 @@ int main(int argc, char** argv)
 
 		if (view_bobbing < 0.0128f)
 		{
+			view_bobbing = 0.0f;
+		}
+
+		if (!option_view_bobbing) {
 			view_bobbing = 0.0f;
 		}
 
@@ -1559,7 +1579,7 @@ int main(int argc, char** argv)
 
 		// Pass the fog distance to the block_shader_program.
 
-		glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance / 1.5f);
+		glUniform1f(glGetUniformLocation(block_shader_program, "fog_distance"), view_distance * view_distance / 8.0f);
 
 		// Pass the current time (in seconds) to the block_shader_program.
 
