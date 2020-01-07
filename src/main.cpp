@@ -676,30 +676,36 @@ int main(int argc, char** argv)
 
 		const Uint8* keys = SDL_GetKeyboardState(NULL);
 
+		// Boost when shift is pressed.
+		float speed_multiplier = 1.0f;
+		if (keys[SDL_SCANCODE_LSHIFT]) {
+			speed_multiplier = 5.0f;
+		}
+
 		// Handle player forward movement (walking).
 
 		if (keys[SDL_SCANCODE_W])
 		{
-			player_vx -= sin(glm::radians(-rot_y_deg)) * acceleration;
-			player_vz -= cos(glm::radians(-rot_y_deg)) * acceleration;
+			player_vx -= sin(glm::radians(-rot_y_deg)) * acceleration * speed_multiplier;
+			player_vz -= cos(glm::radians(-rot_y_deg)) * acceleration * speed_multiplier;
 		}
 		else if (keys[SDL_SCANCODE_S])
 		{
-			player_vx += sin(glm::radians(-rot_y_deg)) * acceleration;
-			player_vz += cos(glm::radians(-rot_y_deg)) * acceleration;
+			player_vx += sin(glm::radians(-rot_y_deg)) * acceleration * speed_multiplier;
+			player_vz += cos(glm::radians(-rot_y_deg)) * acceleration * speed_multiplier;
 		}
 
 		// Handle player perpendicular movement (strafing).
 
 		if (keys[SDL_SCANCODE_A])
 		{
-			player_vx -= sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
-			player_vz -= cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+			player_vx -= sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration * speed_multiplier;
+			player_vz -= cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration * speed_multiplier;
 		}
 		else if (keys[SDL_SCANCODE_D])
 		{
-			player_vx += sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
-			player_vz += cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration;
+			player_vx += sin(glm::radians(-rot_y_deg + 90.0f)) * acceleration * speed_multiplier;
+			player_vz += cos(glm::radians(-rot_y_deg + 90.0f)) * acceleration * speed_multiplier;
 		}
 
 		// Create a list of hitboxes of nearby blocks.
@@ -747,7 +753,7 @@ int main(int argc, char** argv)
 		{
 			if (player_collision.collision_y == -1)
 			{
-				player_vy -= 0.1536f;
+				player_vy -= 0.1536f * speed_multiplier;
 			}
 		}
 
