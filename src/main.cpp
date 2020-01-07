@@ -1845,6 +1845,144 @@ int main(int argc, char** argv)
 					}
 				}
 			}
+
+			// Options.
+			if (is_options_open) {
+				glUseProgram(quad_shader_program);
+
+				// Darken.
+				gui_init_frame(gui_w, gui_h);
+				gui(0.0f, 0.0f, gui_w / gui_scale, gui_h / gui_scale, gui_scale);
+				gui_draw_all(gui_dark);
+
+				// Render buttons.
+				gui4_init_frame(
+					gui_w, gui_h,
+					sdl_mouse_x, sdl_mouse_y,
+					sdl_mouse_l_pressed, sdl_mouse_r_pressed,
+					sdl_mouse_l, sdl_mouse_r
+				);
+
+				if (option_screen == OPT_PAUSE) {
+					// Buttons.
+					float button_small_spacing_px = 5.0f;
+					float button_large_spacing_px = 30.0f;
+
+					float button_total_height_px = 0.0f;
+					button_total_height_px += GUI_BUTTON_H + button_small_spacing_px;
+					button_total_height_px += GUI_BUTTON_H + button_large_spacing_px;
+					button_total_height_px += GUI_BUTTON_H;
+					float button_offset = -button_total_height_px / 2.0f;
+
+					button_result bresult0 = gui4_button(
+						"Back to game",
+						gui_w / 2.0f - (gui_buttons.w * gui_scale) / 2.0f,
+						gui_h / 2.0f + button_offset * gui_scale,
+						GUI_BUTTON_W,
+						gui_scale
+					);
+					button_offset += GUI_BUTTON_H + button_small_spacing_px;
+					button_result bresult1 = gui4_button_disabled(
+						"Save and quit to title...",
+						gui_w / 2.0f - (gui_buttons.w * gui_scale) / 2.0f,
+						gui_h / 2.0f + button_offset * gui_scale,
+						GUI_BUTTON_W,
+						gui_scale
+					);
+					button_offset += GUI_BUTTON_H + button_large_spacing_px;
+					button_result bresult2 = gui4_button(
+						"Options...",
+						gui_w / 2.0f - (gui_buttons.w * gui_scale) / 2.0f,
+						gui_h / 2.0f + button_offset * gui_scale,
+						GUI_BUTTON_W,
+						gui_scale
+					);
+					gui4_draw_all(gui_buttons, gui_font, quad_shader_program, text_shader_program);
+
+					// Handle buttons.
+					if (button_pressed(bresult0)) {
+						is_options_open = false;
+						sdl_mouse_x = lock_mouse_x;
+						sdl_mouse_y = lock_mouse_y;
+						if (sdl_mouse_relative) {
+							SDL_SetRelativeMouseMode(SDL_TRUE);
+						}
+
+						// Set mouse button states to false because you don't want
+						// to interact right after exiting.
+						sdl_mouse_l = false;
+						sdl_mouse_r = false;
+					}
+					if (button_pressed(bresult1)) {
+						// no-op
+					}
+					if (button_pressed(bresult2)) {
+						// Switch screens.
+						option_screen = OPT_OPTIONS;
+					}
+
+					// Text.
+					glUseProgram(text_shader_program);
+					gui3_init_frame(gui_w, gui_h);
+					gui3_shadowed_string(gui_w / 2.0f - gui3_measure("Game menu") / 2.0f * gui_scale, gui_h / 2.0f - (button_total_height_px + GUI_BUTTON_H * 4.0f) / 2.0f * gui_scale, gui_scale, "Game menu");
+					gui3_draw_all(gui_font);
+				} else if (option_screen == OPT_OPTIONS) {
+					// Buttons.
+					float button_small_spacing_px = 5.0f;
+					float button_large_spacing_px = 30.0f;
+					float medium_width = GUI_BUTTON_W * 0.8f;
+
+					float button_total_height_px = 0.0f;
+					button_total_height_px += GUI_BUTTON_H + button_small_spacing_px;
+					button_total_height_px += GUI_BUTTON_H + button_small_spacing_px;
+					button_total_height_px += GUI_BUTTON_H + button_small_spacing_px;
+					button_total_height_px += GUI_BUTTON_H + button_large_spacing_px;
+					button_total_height_px += GUI_BUTTON_H + button_small_spacing_px;
+					button_total_height_px += GUI_BUTTON_H;
+					float button_offset = -button_total_height_px / 2.0f;
+
+					gui4_slider("Music: " + std::to_string(int(option_music * 100.0f)) + "%", gui_w / 2.0f - medium_width * gui_scale - (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_music_raw);
+					gui4_slider("Sound: " + std::to_string(int(option_sound * 100.0f)) + "%", gui_w / 2.0f + (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_sound_raw);
+					button_offset += GUI_BUTTON_H + button_small_spacing_px;
+					gui4_toggle("Invert mouse", gui_w / 2.0f - medium_width * gui_scale - (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_invert_mouse);
+					gui4_slider("Sensitivity: " + std::to_string(int(option_sensitivity * 100.0f)) + "%", gui_w / 2.0f + (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_sensitivity_raw);
+					button_offset += GUI_BUTTON_H + button_small_spacing_px;
+					gui4_slider("Render distance: " + std::to_string(option_render_distance) + " chunks", gui_w / 2.0f - medium_width * gui_scale - (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_render_distance_raw);
+					gui4_toggle("View bobbing", gui_w / 2.0f + (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_view_bobbing);
+					button_offset += GUI_BUTTON_H + button_small_spacing_px;
+					gui4_slider("FOV: " + std::to_string(int(option_fov)), gui_w / 2.0f - medium_width * gui_scale - (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale, &option_fov_raw);
+					gui4_button_disabled("Super secret settings", gui_w / 2.0f + (button_small_spacing_px * gui_scale) / 2.0f, gui_h / 2.0f + button_offset * gui_scale, medium_width, gui_scale);
+
+					button_offset += GUI_BUTTON_H + button_large_spacing_px;
+					button_result bresult_controls = gui4_button_disabled(
+						"Controls",
+						gui_w / 2.0f - (gui_buttons.w * gui_scale) / 2.0f,
+						gui_h / 2.0f + button_offset * gui_scale,
+						GUI_BUTTON_W,
+						gui_scale
+					);
+					button_offset += GUI_BUTTON_H + button_small_spacing_px;
+					button_result bresult_done = gui4_button(
+						"Done",
+						gui_w / 2.0f - (gui_buttons.w * gui_scale) / 2.0f,
+						gui_h / 2.0f + button_offset * gui_scale,
+						GUI_BUTTON_W,
+						gui_scale
+					);
+					gui4_draw_all(gui_buttons, gui_font, quad_shader_program, text_shader_program);
+
+					// Text.
+					glUseProgram(text_shader_program);
+					gui3_init_frame(gui_w, gui_h);
+					gui3_shadowed_string(gui_w / 2.0f - gui3_measure("Game menu") / 2.0f * gui_scale, gui_h / 2.0f - (button_total_height_px + GUI_BUTTON_H * 4.0f) / 2.0f * gui_scale, gui_scale, "Game menu");
+					gui3_draw_all(gui_font);
+				} 
+			}
+
+			glDisable(GL_BLEND);
+			glUseProgram(0);
+		}
+
 		// Swap the back buffer to the front.
 
 		SDL_GL_SwapWindow(sdl_window);
