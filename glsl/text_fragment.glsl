@@ -3,7 +3,7 @@
 uniform sampler2D the_sampler;
 
 in vec2 frag_texture;
-in float frag_lighting;
+in vec3 frag_lighting;
 
 out vec4 frag_color;
 
