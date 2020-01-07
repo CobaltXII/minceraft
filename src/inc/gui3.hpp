@@ -118,6 +118,20 @@ void gui3_active_string(float x, float y, float scale, std::string text) {
 		q += float(char_widths[text[i]] + 1) * scale;
 	}
 }
+
+void gui3_disabled_string(float x, float y, float scale, std::string text) {
+	float p = x;
+	for (int i = 0; i < text.length(); i++) {
+		gui3_char(p + scale, y + scale, scale, text[i], 0.125f);
+		p += float(char_widths[text[i]] + 1) * scale;
+	}
+	float q = x;
+	for (int i = 0; i < text.length(); i++) {
+		gui3_char(q, y, scale, text[i], 0.5f);
+		q += float(char_widths[text[i]] + 1) * scale;
+	}
+}
+
 float gui3_measure(std::string text) {
 	float o = 0.0f;
 	for (int i = 0; i < text.length(); i++) {
