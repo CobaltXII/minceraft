@@ -61,13 +61,6 @@ GLuint load_block_texture_array()
 			exit(11);
 		}
 
-		if (sub_channels != channels)
-		{
-			std::cout << "Channel count of \"" << path << "\" (" << sub_channels << ") does not match the expected channel count (" << channels << ")." << std::endl;
-
-			exit(12); 
-		}
-
 		// Copy the sub-texture's texels to the texel array.
 
 		memcpy(texels + (i * x_res * y_res * channels), sub_data, x_res * y_res * channels);
