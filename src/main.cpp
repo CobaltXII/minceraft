@@ -630,6 +630,7 @@ int main(int argc, char** argv)
 							SDL_WarpMouseInWindow(sdl_window, sdl_x_res / 2, sdl_y_res / 2);
 							sdl_mouse_x = sdl_x_res / 2;
 							sdl_mouse_y = sdl_y_res / 2;
+							option_screen = OPT_PAUSE;
 						} else {
 							sdl_mouse_x = lock_mouse_x;
 							sdl_mouse_y = lock_mouse_y;
@@ -1996,6 +1997,10 @@ int main(int argc, char** argv)
 						gui_scale
 					);
 					gui4_draw_all(gui_buttons, gui_font, quad_shader_program, text_shader_program);
+
+					if (button_pressed(bresult_done)) {
+						option_screen = OPT_PAUSE;
+					}
 
 					// Text.
 					glUseProgram(text_shader_program);
